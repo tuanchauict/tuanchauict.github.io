@@ -1,5 +1,67 @@
 body{
   margin 0
   outline 0
+  -webkit-font-smoothing:antialiased;
+  font-family 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif
 
+  *{
+    box-sizing border-box
+  }
 }
+
+leftBoxWidth = 300px
+.box{
+  display inline-block
+  position absolute
+  top 0px
+  bottom 0px
+
+  &.left-box{
+    left 0
+    width leftBoxWidth
+    border-right 1px solid #E9E9E9
+  }
+
+  &.right-box{
+    left leftBoxWidth + 1
+    right 0
+  }
+}
+
+inputContainerPaddingTop = 20px
+inputContainerPaddingBottom = 20px
+
+.input-container{
+  padding 20px 10px
+  input.input-txt{
+    display block
+    outline 0px
+    margin 0
+    border 1px solid #E0E0E0
+    font-size 16px
+    padding 8px 10px
+    width 100%
+
+    &:focus{
+      border-color #4D90FE
+    }
+  }
+}
+
+.suggest-list{
+  position absolute
+  top 77px
+  bottom 0
+  width 100%
+  overflow-y auto
+
+  .suggest-item{
+    padding 10px 15px
+    cursor pointer
+
+    &:hover{
+      background #f2f2f2
+    }
+  }
+}
+

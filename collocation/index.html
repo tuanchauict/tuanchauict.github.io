@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp" manifest="/collocation/cache.manifest">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp">
+<!--<html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp" manifest="/collocation/cache.manifest">-->
 <head>
 	<link rel="stylesheet" href="css/style.css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -10,10 +11,31 @@
 	<script type="application/javascript" src="js/app.js"></script>
 	<script type="application/javascript" src="js/utils.js"></script>
 	<script type="application/javascript" src="js/controller.js"></script>
+	<script type="application/javascript" src="js/data-handler.js"></script>
 </head>
 
 <body ng-controller="CollocationController">
 
+<div class="box left-box">
+	<div class="input-container">
+		<input class="input-txt" type="text" ng-model="filter.queryText" placeholder="enter text" ng-keyup="filter.onKeyUp($event)"/>
+	</div>
+	<div class="suggest-list">
+		<div class="suggest-item"
+		ng-repeat="item in filter.indexMaps | queryInput: filter.queryText"
+		data-id={{item.id}}
+		ng-click="filter.onItemClick(item)"
+		>
+			<div >
+				<span class="suggest-item-word">{{ item.word }}</span>
+				<span class="suggest-item-type">{{ item.type }}</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="box right-box">
+
+</div>
 
 </body>
 </html>
