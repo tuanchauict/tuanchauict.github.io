@@ -44,6 +44,11 @@ request.onupgradeneeded = function(event) {
 var reloadHttpData = function ($http, callback) {
 	$http.get('/collocation/data/index.json')
 		.success(function (data, status, headers, config) {
+			console.log("data", data);
+			// var gunzip = new Zlib.Gunzip(data);
+			// var plain = gunzip.decompress();
+			// console.log("unzip: ", plain);
+
 			var indexMaps = createMapsFromIndex(data);
 
 			saveIndexes(indexMaps);
@@ -152,6 +157,7 @@ var getWordDefinition = function (wordId, callback) {
 };
 
 var checkDataAAvailable = function(){
+	return false;
 	if(localStorage.getItem("dbVersion")){
 		return true;
 	}

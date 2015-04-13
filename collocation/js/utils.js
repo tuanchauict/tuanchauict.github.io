@@ -36,12 +36,6 @@ var checkVersion = function($scope, $http, $timeout){
 		}
 	}
 
-	// $.ajax("//collocation/data/version.json", {
-	// 	success: function(data){
-	// 		console.log(data);
-	// 	}
-	// });
-
 	$http.get("/collocation/data/version.json", httpConfig)
 	.success(function(data, status, headers, config){
 		// console.log(data);
