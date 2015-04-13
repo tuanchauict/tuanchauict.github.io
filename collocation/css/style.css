@@ -194,3 +194,8 @@ body * {
 .loader .loader-dialog .loading-information {
   text-align: center;
 }
+.facebook-like {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
