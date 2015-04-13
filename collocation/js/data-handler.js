@@ -157,7 +157,6 @@ var getWordDefinition = function (wordId, callback) {
 };
 
 var checkDataAAvailable = function(){
-	return false;
 	if(localStorage.getItem("dbVersion")){
 		return true;
 	}
