@@ -141,6 +141,7 @@ body * {
   vertical-align: bottom;
   margin-left: 10px;
   font-size: 28px;
+  height: 32px;
 }
 .mean-container .mean .ex {
   border-left: 1px solid #ccc;
