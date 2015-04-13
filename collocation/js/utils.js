@@ -19,12 +19,6 @@ var checkVersion = function($scope, $http, $timeout){
 				$scope.loader.text = "Extracting data..."
 				break;
 			case DataLoaderState.finish:
-				// $timeout(function(){
-				// 	$scope.$apply(function(){
-				// 		$scope.loader.active = false
-				// 	});
-
-				// }, 3000);
 				getWordDefinition(1, function(){
 					console.log("con heo");
 					$scope.$apply(function(){

@@ -58,6 +58,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 			}
 		},
 		onItemClick: function(item){
+			window.location = "#" + item.word
 			getWordDefinition(item.id, this.onGetWordDefinitionSuccess)
 		},
 		onGetWordDefinitionSuccess: function(word){
@@ -76,5 +77,15 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 			content: ''
 		}
 	}
+	var hash = window.location.hash;
+	if(hash){
+		var text = hash.substr(1)
+		var arr = text.split("?")
+		text = arr[0]
+		console.log(text);
 
+		$scope.filter.queryText = decodeURIComponent(text);
+
+	}
+	console.log(window.location.hash);
 }]);

@@ -23,7 +23,10 @@
             <input class="input-txt" type="text" ng-model="filter.queryText" placeholder="enter text" ng-keydown="filter.onKeyDown($event)" />
         </div>
         <div class="suggest-list">
-            <div class="suggest-item {{ filter.currentSelectedIndex == $index ? 'highlight' : ''}}" ng-repeat="item in (filter.currentSuggestWord = (filter.indexMaps | queryInput: filter.queryText))" data-id={{item.id}} ng-click="filter.onItemClick(item)" ng-mouseover="filter.currentSelectedIndex=$index">
+            <div class="suggest-item {{ filter.currentSelectedIndex == $index ? 'highlight' : ''}}" 
+            	ng-repeat="item in (filter.currentSuggestWord = (filter.indexMaps | queryInput: filter.queryText))" 
+            	data-id={{item.id}} ng-click="filter.onItemClick(item)" 
+            	ng-mouseover="filter.currentSelectedIndex=$index">
                 <div>
                     <span class="suggest-item-word">{{ item.word }}</span>
                     <span class="suggest-item-type">{{ item.type }}</span>
