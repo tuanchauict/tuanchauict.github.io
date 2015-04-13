@@ -31,7 +31,7 @@ var checkVersion = function($scope, $http, $timeout){
 	}
 	$http.get("/collocation/data/version.json")
 	.success(function(data, status, headers, config){
-		console.log(data);
+		// console.log(data);
 		dbVersion = data.dbVersion;
 		if(data.version > version){
 			//TODO notify refresh
