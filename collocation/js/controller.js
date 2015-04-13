@@ -25,10 +25,10 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 		currentSuggestWord: [],
 		currentSelectedIndex: 0,
 		onKeyDown: function(event){
-			console.log(event.which);
+			// console.log(event.which);
 			switch(event.which){
 				case 13:
-					console.log(this.currentSuggestWord);
+					event.preventDefault()
 					if(this.currentSuggestWord.length > 0){
 						if(this.currentSelectedIndex < 0){
 							this.currentSelectedIndex = 0;
@@ -40,12 +40,14 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 					}
 					break;
 				case 38:
+					event.preventDefault()
 					this.currentSelectedIndex -= 1;
 					if(this.currentSelectedIndex < 0){
 						this.currentSelectedIndex = 0;
 					}
 					break;
 				case 40:
+					event.preventDefault()
 					this.currentSelectedIndex += 1;
 					if(this.currentSelectedIndex >= this.currentSuggestWord.length){
 						this.currentSelectedIndex = this.currentSuggestWord.length - 1;
