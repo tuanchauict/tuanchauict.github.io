@@ -4,6 +4,8 @@
 <!-- <html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp" manifest="/collocation/cache.manifest"> -->
 
 <head>
+	<meta property="og:image" content="/collocation/img/thumbnail.png" />
+
     <link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -31,12 +33,18 @@
     </div>
     <div class="box right-box">
         <div class="right-box-container">
+
             <div class="word-title-container">
                 <span class="word">{{words.currentWord.word}}</span>
                 <span class="type">{{words.currentWord.type}}</span>
+
             </div>
+
             <div class="mean-container">
                 <div class="mean" ng-bind-html="words.currentWord.content | toTrusted"></div>
+            </div>
+            <div class="fb-like-container">
+            	<div class="fb-like" data-href="http://tuanchauict.github.io/collocation/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
             </div>
         </div>
     </div>
@@ -53,17 +61,14 @@
     </div>
     <div class="facebook-like">
         <div id="fb-root"></div>
-        <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=265052040364121";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <div class="fb-like" data-href="http://tuanchauict.github.io/collocation/" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=265052040364121";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+        
     </div>
 </body>
 

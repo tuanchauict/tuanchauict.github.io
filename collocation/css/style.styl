@@ -2,18 +2,7 @@ sansSerifFont = 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, ver
 serifFont = Cardo
 
  
-  ::-webkit-scrollbar {
-    width: 3px;
-  }
   
-  ::-webkit-scrollbar:hover{
-    width 6px
-  }
- 
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(88,88,88,0.1);
-    // outline: 1px solid slategrey;
-  }
 
 
 body{
@@ -94,6 +83,19 @@ inputContainerPaddingLeftRight = 20px
     &.highlight{
       background #FFFFD3
     }
+  }
+  
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  &::-webkit-scrollbar:hover{
+    width 6px
+  }
+ 
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(88,88,88,0.1);
+    // outline: 1px solid slategrey;
   }
 }
 
@@ -258,6 +260,16 @@ inputContainerPaddingLeftRight = 20px
 
 .facebook-like{
   position absolute
-  right 10px
+  left 290px
   top 10px
+}
+
+.fb-like-container{
+  padding-bottom 40px
+}
+
+.fb-like{
+  // position absolute!important;
+  // top 5px
+    // margin-left 10px
 }
