@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp">
-<!--<html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp" manifest="/collocation/cache.manifest">-->
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" ng-app="CollocationApp" manifest="/collocation/cache.manifest"> -->
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/style.css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>English Collocation</title>
@@ -18,13 +19,14 @@
 
 <div class="box left-box">
 	<div class="input-container">
-		<input class="input-txt" type="text" ng-model="filter.queryText" placeholder="enter text" ng-keyup="filter.onKeyUp($event)"/>
+		<input class="input-txt" type="text" ng-model="filter.queryText" placeholder="enter text" ng-keydown="filter.onKeyDown($event)"/>
 	</div>
 	<div class="suggest-list">
-		<div class="suggest-item"
-		ng-repeat="item in filter.indexMaps | queryInput: filter.queryText"
+		<div class="suggest-item {{ filter.currentSelectedIndex == $index ? 'highlight' : ''}}"
+		ng-repeat="item in (filter.currentSuggestWord = (filter.indexMaps | queryInput: filter.queryText))"
 		data-id={{item.id}}
 		ng-click="filter.onItemClick(item)"
+		ng-mouseover="filter.currentSelectedIndex=$index"
 		>
 			<div >
 				<span class="suggest-item-word">{{ item.word }}</span>
@@ -34,8 +36,28 @@
 	</div>
 </div>
 <div class="box right-box">
-
+	<div class="right-box-container">
+		<div class="word-title-container">
+			<span class="word">{{words.currentWord.word}}</span>
+			<span class="type">{{words.currentWord.type}}</span>
+		</div>
+		<div class="mean-container">
+			<div class="mean" ng-bind-html="words.currentWord.content | toTrusted"></div>
+		</div>
+	</div>
+</div>
+<div class="loader" ng-if="loader.active" >
+	<div class="modal"></div>
+	<div class="loader-dialog">
+		<div class="loading-image">
+			<img src="/collocation/img/loader.gif">
+		</div>
+		<div class="loading-information">{{ loader.text }}</div>
+	</div>
 </div>
 
+<div class="new-version">
+
+</div>
 </body>
 </html>

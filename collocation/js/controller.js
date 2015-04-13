@@ -1,13 +1,17 @@
 /**
  * Created by tuanchauict on 4/7/15.
  */
-app.controller("CollocationController", ["$scope", "$http", function ($scope, $http) {
-	checkVersion($scope, $http)
+app.controller("CollocationController", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
+	checkVersion($scope, $http, $timeout)
 
 	$scope.verson = {
 		current: version
 	}
 
+	$scope.loader = {
+		active: !checkDataAAvailable(),
+		text: "Loading indexes..."
+	}
 
 
 	$scope.filter = {
@@ -18,16 +22,57 @@ app.controller("CollocationController", ["$scope", "$http", function ($scope, $h
 			map2: {},
 			map3: {}
 		},
-		onKeyUp: function(event){
-			//console.log(event);
+		currentSuggestWord: [],
+		currentSelectedIndex: 0,
+		onKeyDown: function(event){
+			console.log(event.which);
+			switch(event.which){
+				case 13:
+					console.log(this.currentSuggestWord);
+					if(this.currentSuggestWord.length > 0){
+						if(this.currentSelectedIndex < 0){
+							this.currentSelectedIndex = 0;
+						}
+						else if(this.currentSelectedIndex >= this.currentSuggestWord.length){
+							this.currentSelectedIndex = this.currentSuggestWord.length - 1;
+						}
+						this.onItemClick(this.currentSuggestWord[this.currentSelectedIndex ])
+					}
+					break;
+				case 38:
+					this.currentSelectedIndex -= 1;
+					if(this.currentSelectedIndex < 0){
+						this.currentSelectedIndex = 0;
+					}
+					break;
+				case 40:
+					this.currentSelectedIndex += 1;
+					if(this.currentSelectedIndex >= this.currentSuggestWord.length){
+						this.currentSelectedIndex = this.currentSuggestWord.length - 1;
+					}
+					break;
+				default:
+					this.currentSelectedIndex = 0;
+			}
 		},
 		onItemClick: function(item){
-			console.log(item);
+			getWordDefinition(item.id, this.onGetWordDefinitionSuccess)
+		},
+		onGetWordDefinitionSuccess: function(word){
+			$scope.$apply(function () {
+	            $scope.message = "Timeout called!";
+	            $scope.words.currentWord = word;
+	        });
 		}
 	}
 
 	$scope.words = {
-
+		currentWord: {
+			id: -1,
+			word: '',
+			type: '',
+			content: ''
+		}
 	}
 
 }]);

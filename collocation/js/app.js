@@ -14,6 +14,7 @@ app.filter('queryInput', function() {
 		var result = [];
 		var usedMap = [];
 		var arr = [];
+		queryText = queryText.toLowerCase();
 		if(queryText.length == 1){
 			usedMap = indexMaps.map1;
 			arr = usedMap[queryText];
@@ -42,7 +43,7 @@ app.filter('queryInput', function() {
 				var item = indexes[index];
 				if(item.key.indexOf(queryText) == 0){
 					result.push(item);
-					if(result.length > 100){
+					if(result.length > 50){
 						break;
 					}
 				}
@@ -53,3 +54,10 @@ app.filter('queryInput', function() {
 		return result;
 	};
 });
+
+
+app.filter('toTrusted', ['$sce', function ($sce) {
+	return function (text) {
+		return $sce.trustAsHtml(text);
+	}
+}]);

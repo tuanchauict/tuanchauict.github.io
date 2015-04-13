@@ -1,15 +1,18 @@
+sansSerifFont = 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif
+serifFont = Cardo
+
 body{
   margin 0
   outline 0
   -webkit-font-smoothing:antialiased;
-  font-family 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif
-
+  font-family sansSerifFont
+  -webkit-font-smoothing:antialiased;
   *{
     box-sizing border-box
   }
 }
 
-leftBoxWidth = 300px
+leftBoxWidth = 280px
 .box{
   display inline-block
   position absolute
@@ -19,20 +22,23 @@ leftBoxWidth = 300px
   &.left-box{
     left 0
     width leftBoxWidth
-    border-right 1px solid #E9E9E9
+    // border-right 1px solid #E9E9E9
+    background #fbfbfb
   }
 
   &.right-box{
     left leftBoxWidth + 1
     right 0
+    overflow-y auto
   }
 }
 
 inputContainerPaddingTop = 20px
 inputContainerPaddingBottom = 20px
+inputContainerPaddingLeftRight = 20px
 
 .input-container{
-  padding 20px 10px
+  padding 30px inputContainerPaddingLeftRight 20px
   input.input-txt{
     display block
     outline 0px
@@ -54,14 +60,200 @@ inputContainerPaddingBottom = 20px
   bottom 0
   width 100%
   overflow-y auto
+  padding-bottom 40px
+  
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  &::-webkit-scrollbar:hover{
+    width 6px
+  }
+ 
+  // &::-webkit-scrollbar-track {
+  //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  // }
+   
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(88,88,88,0.1);
+    // outline: 1px solid slategrey;
+  }
 
   .suggest-item{
-    padding 10px 15px
+    padding 10px inputContainerPaddingLeftRight
     cursor pointer
 
     &:hover{
       background #f2f2f2
     }
+    
+    .suggest-item-type{
+      font-size 12px
+      color #888
+      margin-left 8px
+    }
+    
+    &.highlight{
+      background #FFFFD3
+    }
   }
 }
 
+.right-box-container{
+  padding-left 30px
+  padding-right 30px 
+  overflow-y auto
+  
+}
+
+.word-title-container{
+  margin 27px 0 20px
+  
+  .word{
+    font-size 35px
+    color #00AEEF
+    font-weight bold
+    
+  }
+  
+  .type{
+    font-size 20px
+    color #888
+    margin-left 5px
+  }
+}
+
+.mean-container{
+  font-family serifFont
+  font-size 20px
+  .mean{
+  
+    u{
+      display block
+    }
+    
+    u{
+      color #FF9100
+      // border-bottom 1px solid #FF9100
+      font-decoration none
+      font-weight bold
+      margin-bottom 10px
+    }
+    
+    p{
+      i{
+        color #366ECA
+        margin-left 5px
+        margin-right 5px
+      }
+      
+      a.show_hide{
+        display block
+        padding 5px 5px
+        background #bbb
+        font-weight bold
+        font-size 13px
+        cursor default
+        
+        color #fff
+        font-family Helvetica, tahoma
+        text-decoration none
+      }
+      
+      & sup,& tt{
+        
+        display: inline-block;
+        
+        height: 24px;
+        line-height: 22px;
+      }
+      
+      sup{  
+        font-size: 14px;
+        font-family Helvetica, tahoma
+        background: none repeat scroll 0 0 #FF0000;
+        border-radius: 50%;
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+        width: 24px;
+        padding-top 2px
+      }
+      
+      tt{
+        font-family serifFont
+        vertical-align bottom
+        margin-left 10px
+        font-size 28px
+      }
+    }
+    
+    .ex{
+      border-left 1px solid #CCCCCC
+      padding 5px 20px 7px
+      margin-top 5px
+      
+      b{
+        color #3025A9
+      }
+      
+    }
+
+    .excontent{
+      border-left 1px solid #CCCCCC
+      padding 2px 40px 4px
+      // margin-top 2px
+      margin-bottom 5px
+      
+      &:before{
+        content: "-"
+        margin-right 5px
+      }
+      
+      i{
+        color #366ECA
+        margin-left 10px
+      }
+    }
+  }
+
+}
+
+
+.loader{
+  position fixed
+  left 0
+  right 0
+  top 0
+  bottom 0
+  z-index 100
+  .modal{
+    width 100%
+    height 100%
+    background rgba(0,0,0, 0.4)
+  }
+  
+  loaderWidth = 400px
+  loaderHeight = 200px
+  .loader-dialog{
+    position absolute
+    width loaderWidth
+    height loaderHeight
+    left 50%
+    top 50%
+    margin-left -(loaderWidth/2)
+    margin-top -(loaderHeight/2)
+    background #fff
+    border-radius 3px
+    box-shadow 0 0 10px rgba(0,0,0,0.4)
+    
+    .loading-image{
+      margin 40px auto 20px
+      text-align center
+    }
+    
+    .loading-information{
+      text-align center
+    }
+  }
+}

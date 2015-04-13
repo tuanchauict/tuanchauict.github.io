@@ -52,19 +52,17 @@ var reloadHttpData = function ($http, callback) {
 
 			$http.get('/collocation/data/content.json')
 				.success(function (data, status, headers, config) {
-					//TODO save data to storage
+					callback(DataLoaderState.content);
 					var wordsObjectStorage = getWordsObjectStorage("readwrite");
 					console.log(wordsObjectStorage);
 					wordsObjectStorage.oncomplete = function(event){
-
 						console.log("transaction push data complete");
 					};
 					console.log(data);
 					for(var i = 0; i < data.length; i++){
 						wordsObjectStorage.add(data[i]);
 					}
-
-					callback(DataLoaderState.content);
+					
 					callback(DataLoaderState.finish);
 
 					localStorage.setItem("dbVersion", dbVersion);
@@ -130,7 +128,6 @@ var getWordsObjectStorage = function(type){
 };
 
 var loadIndexFromStorage = function (callback) {
-	//TODO load all index from storage
 	var indexMapsString = localStorage.getItem("indexMaps");
 	if(indexMapsString){
 		var indexMaps = JSON.parse(indexMapsString);
@@ -141,13 +138,16 @@ var loadIndexFromStorage = function (callback) {
 var getWordDefinition = function (wordId, callback) {
 	//TODO load word definition from storage
 	var objectStorage = getWordsObjectStorage();
-	console.log(objectStorage);
+	// console.log(objectStorage);
 	var request = objectStorage.get(wordId);
 	request.onerror = function(event){
-		console.error(event);
+		// console.error(event);
 	};
 	request.onsuccess = function(event){
-		console.log("request word: ", event);
+		// console.log("request word: ", event);
+		if(callback){
+			callback(event.target.result);
+		}
 	}
 };
 
