@@ -1,6 +1,21 @@
 sansSerifFont = 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif
 serifFont = Cardo
 
+ 
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  ::-webkit-scrollbar:hover{
+    width 6px
+  }
+ 
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(88,88,88,0.1);
+    // outline: 1px solid slategrey;
+  }
+
+
 body{
   margin 0
   outline 0
@@ -61,24 +76,7 @@ inputContainerPaddingLeftRight = 20px
   width 100%
   overflow-y auto
   padding-bottom 40px
-  
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-  
-  &::-webkit-scrollbar:hover{
-    width 6px
-  }
  
-  // &::-webkit-scrollbar-track {
-  //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  // }
-   
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(88,88,88,0.1);
-    // outline: 1px solid slategrey;
-  }
-
   .suggest-item{
     padding 10px inputContainerPaddingLeftRight
     cursor pointer
@@ -260,6 +258,6 @@ inputContainerPaddingLeftRight = 20px
 
 .facebook-like{
   position absolute
-  right 0
-  top 0
+  right 10px
+  top 10px
 }

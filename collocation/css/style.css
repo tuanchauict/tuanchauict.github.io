@@ -1,3 +1,12 @@
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar:hover {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(88,88,88,0.1);
+}
 body {
   margin: 0;
   outline: 0;
@@ -46,15 +55,6 @@ body * {
   width: 100%;
   overflow-y: auto;
   padding-bottom: 40px;
-}
-.suggest-list::-webkit-scrollbar {
-  width: 3px;
-}
-.suggest-list::-webkit-scrollbar:hover {
-  width: 6px;
-}
-.suggest-list::-webkit-scrollbar-thumb {
-  background-color: rgba(88,88,88,0.1);
 }
 .suggest-list .suggest-item {
   padding: 10px 20px;
@@ -196,6 +196,6 @@ body * {
 }
 .facebook-like {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 10px;
+  top: 10px;
 }
