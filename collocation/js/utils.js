@@ -2,6 +2,12 @@
  * Created by tuanchauict on 4/7/15.
  */
 
+var httpConfig = {
+	headers: {
+		"Access-Control-Allow-Headers":"origin, content-type, accept, x-requested-with"
+	}
+}
+
 var checkVersion = function($scope, $http, $timeout){
 	var loadDataCallback = function(loadingState, data){
 		switch (loadingState){
@@ -29,7 +35,14 @@ var checkVersion = function($scope, $http, $timeout){
 
 		}
 	}
-	$http.get("/collocation/data/version.json")
+
+	// $.ajax("//collocation/data/version.json", {
+	// 	success: function(data){
+	// 		console.log(data);
+	// 	}
+	// });
+
+	$http.get("/collocation/data/version.json", httpConfig)
 	.success(function(data, status, headers, config){
 		// console.log(data);
 		dbVersion = data.dbVersion;
@@ -43,7 +56,9 @@ var checkVersion = function($scope, $http, $timeout){
 			loadIndexFromStorage(loadDataCallback)
 		}
 	}).error(function(data, status, headers, config){
-
+		if(checkDataAAvailable()) {
+			loadIndexFromStorage(loadDataCallback)
+		}
 	});
 };
 
