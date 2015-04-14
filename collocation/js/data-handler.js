@@ -17,7 +17,7 @@ var DataLoaderState = {
 var request = window.indexedDB.open("CollocationDB", dbVersion);
 
 request.onerror = function(event){
-	console.log(event);
+	// console.log(event);
 	alert("Database error: " + event.target.errorCode);
 };
 
@@ -31,20 +31,20 @@ request.onsuccess = function(event){
 
 request.onupgradeneeded = function(event) {
 	db = event.target.result;
-	console.log("on upgrade database");
+	// console.log("on upgrade database");
 
 	// Create an objectStore for this database
 	var objectStore = db.createObjectStore("words", { keyPath: "id" });
 	//objectStore.createIndex("word", "word", {unique: true})
 	objectStore.createIndex("id", "id", {unique: true});
-	console.log(objectStore);
+	// console.log(objectStore);
 
 };
 
 var reloadHttpData = function ($http, callback) {
 	$http.get('/collocation/data/index.json')
 		.success(function (data, status, headers, config) {
-			console.log("data", data);
+			// console.log("data", data);
 			// var gunzip = new Zlib.Gunzip(data);
 			// var plain = gunzip.decompress();
 			// console.log("unzip: ", plain);
@@ -59,9 +59,9 @@ var reloadHttpData = function ($http, callback) {
 				.success(function (data, status, headers, config) {
 					callback(DataLoaderState.content);
 					var wordsObjectStorage = getWordsObjectStorage("readwrite");
-					console.log(wordsObjectStorage);
+					// console.log(wordsObjectStorage);
 					wordsObjectStorage.oncomplete = function(event){
-						console.log("transaction push data complete");
+						// console.log("transaction push data complete");
 					};
 					console.log(data);
 					for(var i = 0; i < data.length; i++){
@@ -76,7 +76,7 @@ var reloadHttpData = function ($http, callback) {
 				});
 		})
 		.error(function (data, status, headers, config) {
-			console.log(data);
+			// console.log(data);
 			callback("data")
 		});
 
