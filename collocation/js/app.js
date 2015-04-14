@@ -51,7 +51,7 @@ app.filter('queryInput', function() {
 				var item = indexes[index];
 				if(item.key.indexOf(queryText) == 0){
 					result.push(item);
-					if(result.length > 50){
+					if(result.length > 40){
 						break;
 					}
 				}

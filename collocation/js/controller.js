@@ -25,6 +25,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 
 	$scope.filter = {
 		queryText: '',
+		
 		indexMaps: {
 			indexes: [],
 			map1: {},
