@@ -4,14 +4,23 @@
 app.controller("CollocationController", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
 	checkVersion($scope, $http, $timeout)
 
-	$scope.verson = {
+	$scope.version = {
 		current: version
-	}
+	};
+
+	$scope.options = {
+		firstOpen: true,
+
+		isHideFirstInput: function(){
+			console.log("hide =", !this.firstOpen || typeof $scope.filter.queryText == "string" && $scope.filter.queryText.length > 0);
+			return !this.firstOpen || $scope.filter.queryText && $scope.filter.queryText.length > 0;
+		}
+	};
 
 	$scope.loader = {
 		active: !checkDataAAvailable(),
 		text: "Loading indexes..."
-	}
+	};
 
 
 	$scope.filter = {
@@ -26,6 +35,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 		currentSelectedIndex: 0,
 		onKeyDown: function(event){
 			// console.log(event.which);
+
 			switch(event.which){
 				case 13:
 					event.preventDefault()
@@ -56,6 +66,9 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 				default:
 					this.currentSelectedIndex = 0;
 			}
+		},
+		onKeyUp: function(event){
+			window.location = '#' + this.queryText
 		},
 		onItemClick: function(item){
 			window.location = "#" + item.word

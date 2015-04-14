@@ -20,13 +20,17 @@
 <body ng-controller="CollocationController">
     <div class="box left-box">
         <div class="input-container">
-            <input class="input-txt" type="text" ng-model="filter.queryText" placeholder="enter text" ng-keydown="filter.onKeyDown($event)" />
+            <input class="input-txt" 
+            	type="text" 
+            	ng-model="filter.queryText" 
+            	placeholder="enter text" 
+            	ng-keydown="filter.onKeyDown($event)" 
+            	ng-keyup="filter.onKeyUp($event)"
+            	focus-me="true"
+            	/>
         </div>
         <div class="suggest-list">
-            <div class="suggest-item {{ filter.currentSelectedIndex == $index ? 'highlight' : ''}}" 
-            	ng-repeat="item in (filter.currentSuggestWord = (filter.indexMaps | queryInput: filter.queryText))" 
-            	data-id={{item.id}} ng-click="filter.onItemClick(item)" 
-            	ng-mouseover="filter.currentSelectedIndex=$index">
+            <div class="suggest-item {{ filter.currentSelectedIndex == $index ? 'highlight' : ''}}" ng-repeat="item in (filter.currentSuggestWord = (filter.indexMaps | queryInput: filter.queryText))" data-id={{item.id}} ng-click="filter.onItemClick(item)" ng-mouseover="filter.currentSelectedIndex=$index">
                 <div>
                     <span class="suggest-item-word">{{ item.word }}</span>
                     <span class="suggest-item-type">{{ item.type }}</span>
@@ -48,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="loader" ng-if="loader.active">
+    <div class="loader"  ng-if="loader.active">
         <div class="modal"></div>
         <div class="loader-dialog">
             <div class="loading-image">
@@ -59,35 +63,48 @@
     </div>
     <div class="new-version">
     </div>
-    <div class="facebook-like">
-        <div id="fb-root"></div>
+    <!-- <div class="first-open-div" ng-hide="options.isHideFirstInput()">
+
+    	<div class="input-container">
+    		<div class="logo">
+    			<div class="logo-line-1">Oxford Collocation</div>
+    			<div class="logo-line-2">Dictionary</div>
+    			
+    		</div>
+    		<input class="input-txt" type="text" ng-model="filter.queryText" focus-me="options.firstOpen" ng-keyup="options.firstOpen = filter.queryText.length > 0" />
+    	</div>
+    </div> -->
+    <div class="thrid-party-services">
+        <div class="facebook-like">
+            <div id="fb-root"></div>
+            <script>
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=265052040364121";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            </script>
+        </div>
         <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=265052040364121";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-61830568-1', 'auto');
+        ga('send', 'pageview');
         </script>
     </div>
-    <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-61830568-1', 'auto');
-    ga('send', 'pageview');
-    </script>
 </body>
 
 </html>
