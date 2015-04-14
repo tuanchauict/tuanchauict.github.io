@@ -1,0 +1,19 @@
+@media (max-width: 780px) {
+  .box.left-box {
+    width: 100%;
+    height: 75px;
+    z-index: 2;
+    overflow-y: hidden;
+  }
+  .box.left-box.active {
+    height: 100%;
+  }
+  .box.right-box {
+    top: 81px;
+    left: 0;
+    background: #fff;
+  }
+  .word-title-container {
+    margin-top: 20px;
+  }
+}

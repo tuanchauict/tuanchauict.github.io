@@ -6,6 +6,7 @@
     <meta property="og:image" content="/collocation/img/thumbnail.png" />
     <link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/collocation/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/collocation/css/style-small.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>English Collocation</title>
     <!-- <script type="application/javascript" src="js/jquery-2.1.3.min.js"></script> -->
@@ -18,7 +19,7 @@
 </head>
 
 <body ng-controller="CollocationController">
-    <div class="box left-box">
+    <div class="box left-box {{ options.inputQueryFocus }}">
         <div class="input-container">
             <input class="input-txt" 
             	type="text" 
@@ -26,7 +27,9 @@
             	placeholder="enter text" 
             	ng-keydown="filter.onKeyDown($event)" 
             	ng-keyup="filter.onKeyUp($event)"
-            	focus-me="true"
+            	focus-me="true",
+                ng-focus="options.onInputQueryFocus(true)"
+             
             	/>
         </div>
         <div class="suggest-list">

@@ -14,6 +14,15 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 		isHideFirstInput: function(){
 			console.log("hide =", !this.firstOpen || typeof $scope.filter.queryText == "string" && $scope.filter.queryText.length > 0);
 			return !this.firstOpen || $scope.filter.queryText && $scope.filter.queryText.length > 0;
+		},
+		inputQueryFocus: 'inactive',
+		onInputQueryFocus: function(focus){
+			if(focus){
+				this.inputQueryFocus = 'active';
+			}
+			else{
+				this.inputQueryFocus = 'inactive';
+			}
 		}
 	};
 
@@ -72,6 +81,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 			window.location = '#' + this.queryText
 		},
 		onItemClick: function(item){
+			$scope.options.onInputQueryFocus(false);
 			window.location = "#" + item.word
 			getWordDefinition(item.id, this.onGetWordDefinitionSuccess)
 		},
