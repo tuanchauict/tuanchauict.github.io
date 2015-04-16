@@ -48,7 +48,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 
 			switch(event.which){
 				case 13:
-					event.preventDefault()
+					event.preventDefault();
 					if(this.currentSuggestWord.length > 0){
 						if(this.currentSelectedIndex < 0){
 							this.currentSelectedIndex = 0;
@@ -56,18 +56,18 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 						else if(this.currentSelectedIndex >= this.currentSuggestWord.length){
 							this.currentSelectedIndex = this.currentSuggestWord.length - 1;
 						}
-						this.onItemClick(this.currentSuggestWord[this.currentSelectedIndex ])
+						this.onItemClick(this.currentSuggestWord[this.currentSelectedIndex ]);
 					}
 					break;
 				case 38:
-					event.preventDefault()
+					event.preventDefault();
 					this.currentSelectedIndex -= 1;
 					if(this.currentSelectedIndex < 0){
 						this.currentSelectedIndex = 0;
 					}
 					break;
 				case 40:
-					event.preventDefault()
+					event.preventDefault();
 					this.currentSelectedIndex += 1;
 					if(this.currentSelectedIndex >= this.currentSuggestWord.length){
 						this.currentSelectedIndex = this.currentSuggestWord.length - 1;
@@ -78,12 +78,13 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 			}
 		},
 		onKeyUp: function(event){
-			window.location = '#' + this.queryText
+			window.location = '#' + this.queryText;
 		},
 		onItemClick: function(item){
 			$scope.options.onInputQueryFocus(false);
-			window.location = "#" + item.word
-			getWordDefinition(item.id, this.onGetWordDefinitionSuccess)
+			window.location = "#" + item.word;
+			getWordDefinition(item.id, this.onGetWordDefinitionSuccess);
+			// this.queryText = item.word;
 		},
 		onGetWordDefinitionSuccess: function(word){
 			$scope.$apply(function () {
@@ -91,7 +92,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 	            $scope.words.currentWord = word;
 	        });
 		}
-	}
+	};
 
 	$scope.words = {
 		currentWord: {
@@ -100,12 +101,12 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 			type: '',
 			content: ''
 		}
-	}
+	};
 	var hash = window.location.hash;
 	if(hash){
-		var text = hash.substr(1)
-		var arr = text.split("?")
-		text = arr[0]
+		var text = hash.substr(1);
+		var arr = text.split("?");
+		text = arr[0];
 		console.log(text);
 
 		$scope.filter.queryText = decodeURIComponent(text);

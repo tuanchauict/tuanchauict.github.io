@@ -8,6 +8,26 @@ body {
 body * {
   box-sizing: border-box;
 }
+.logo {
+  width: 500px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -50px;
+}
+.logo .logo-line-1 {
+  font-family: Cardo;
+  font-size: 60px;
+  text-align: center;
+}
+.logo .logo-line-2 {
+  font-size: 25px;
+  text-align: right;
+  margin-top: -18px;
+  color: #aaa;
+}
 .first-open-div {
   position: fixed;
   width: 100%;
