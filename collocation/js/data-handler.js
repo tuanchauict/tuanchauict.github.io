@@ -42,7 +42,7 @@ request.onupgradeneeded = function(event) {
 };
 
 var reloadHttpData = function ($http, callback) {
-	$http.get('/collocation/data/index.json')
+	$http.jsonp('https://simon-ielts.herokuapp.com/data/collocation/index?callback=JSON_CALLBACK')
 		.success(function (data, status, headers, config) {
 			// console.log("data", data);
 			// var gunzip = new Zlib.Gunzip(data);
@@ -55,7 +55,7 @@ var reloadHttpData = function ($http, callback) {
 
 			callback(DataLoaderState.index, indexMaps);
 
-			$http.get('/collocation/data/content.json')
+			$http.jsonp('https://simon-ielts.herokuapp.com/data/collocation/content?callback=JSON_CALLBACK')
 				.success(function (data, status, headers, config) {
 					callback(DataLoaderState.content);
 					var wordsObjectStorage = getWordsObjectStorage("readwrite");
