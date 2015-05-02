@@ -30,7 +30,7 @@ var checkVersion = function($scope, $http, $timeout){
 		}
 	};
 
-	$http.get("https://simon-ielts.herokuapp.com/data/collocation/version?callback=JSON_CALLBACK", httpConfig)
+	$http.jsonp("https://simon-ielts.herokuapp.com/data/collocation/version?callback=JSON_CALLBACK", httpConfig)
 	.success(function(data, status, headers, config){
 		// console.log(data);
 		dbVersion = data.dbVersion;
