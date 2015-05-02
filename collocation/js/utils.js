@@ -6,31 +6,31 @@ var httpConfig = {
 	headers: {
 		"Access-Control-Allow-Headers":"origin, content-type, accept, x-requested-with"
 	}
-}
+};
 
 var checkVersion = function($scope, $http, $timeout){
 	var loadDataCallback = function(loadingState, data){
 		switch (loadingState){
 			case DataLoaderState.index:
 				$scope.filter.indexMaps = data;
-				$scope.loader.text = "Loading content..."
+				$scope.loader.text = "Loading content...";
 
 				break;
 			case DataLoaderState.content:
-				$scope.loader.text = "Extracting data..."
+				$scope.loader.text = "Extracting data...";
 				break;
 			case DataLoaderState.finish:
 				getWordDefinition(1, function(){
 					$scope.$apply(function(){
-						$scope.loader.active = false
+						$scope.loader.active = false;
 					});
 				});
 				break;
 
 		}
-	}
+	};
 
-	$http.get("/collocation/data/version.json", httpConfig)
+	$http.get("https://simon-ielts.herokuapp.com/data/collocation/version?callback=JSON_CALLBACK", httpConfig)
 	.success(function(data, status, headers, config){
 		// console.log(data);
 		dbVersion = data.dbVersion;
@@ -41,11 +41,11 @@ var checkVersion = function($scope, $http, $timeout){
 			reloadHttpData($http, loadDataCallback);
 		}
 		else {
-			loadIndexFromStorage(loadDataCallback)
+			loadIndexFromStorage(loadDataCallback);
 		}
 	}).error(function(data, status, headers, config){
 		if(checkDataAAvailable()) {
-			loadIndexFromStorage(loadDataCallback)
+			loadIndexFromStorage(loadDataCallback);
 		}
 	});
 };
