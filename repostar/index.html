@@ -1,0 +1,67 @@
+<html >
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="repostar/css/style.css">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Repo Stars</title>
+    <script type="text/javascript" src="repostar/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="repostar/js/angular.min.js"></script>
+    <script type="text/javascript" src="repostar/js/app.js"></script>
+</head>
+
+<body ng-app="RepoStarApp">
+    <div class="content" ng-controller="RepoContainer as repo">
+        <div class="inputs-container">
+            <div class="text-input">
+                <label for="url">GitHub repository's URL</label>
+                <input id="url" class="form-control" placeholder="ex: https://github.com/square/retrofit" type="text" ng-model="repo.form.url" ng-change="repo.update()" />
+
+            </div>
+            <div class="row checkboxes-container">
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="repo.form.watch" ng-change="repo.update()">
+                            <span>Watches</span>
+                        </label>    
+                    </div>    
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="repo.form.star" ng-change="repo.update()">
+                            <span>Stars</span>
+                        </label>    
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="repo.form.folk" ng-change="repo.update()">
+                            <span>Folks</span>
+                        </label>    
+                    </div>
+                </div>
+                
+            </div>
+            <div class="result-container">
+                <label for="result">Result</label>
+                <input id="result" type="text" class="form-control" ng-model="repo.image" disabled="">
+                <!-- <div class="input-group">
+                  <input id="result-text" type="text" class="form-control" ng-model="repo.image" disabled="">
+                  <span class="input-group-btn">
+                  <button id="copy-btn" class="btn btn-default" type="button" ng-click="repo.copy()" data-clipboard-text="Con heo">Copy</button>
+                </span> -->
+            </div><!-- /input-group -->
+        </div>
+        <div class="image-container">
+            <img src="{{ repo.image }}"/>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
