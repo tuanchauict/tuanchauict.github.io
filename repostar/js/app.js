@@ -10,6 +10,7 @@ app.controller("RepoContainer", function(){
     };
     var baseUrl = "http://tuan-flask.herokuapp.com/service/star?url=";
     repo.image = "";
+    repo.imageMd = "";
 
     repo.update = function(){
         if(repo.form.url.length > 0){
@@ -26,10 +27,12 @@ app.controller("RepoContainer", function(){
                     repo.image += "folk";
                 }
             }
-            console.log(repo.image);
+
+            repo.imageMd = "![](" + repo.image + ")";
         }
         else{
             repo.image = "";
+            repo.imageMd = "";
         }
     };
 
