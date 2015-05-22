@@ -9,7 +9,6 @@ var md = (function(text, minLevel, maxLevel){
     var reCloseBracket = /\]/g
 
     var lines = text.split('\n');
-    
 
     var headers = [];
     var result = [[],[]];
@@ -66,8 +65,6 @@ var md = (function(text, minLevel, maxLevel){
                     else{
                         var raw = t.match(reRawText);
                         header.id = raw.join('').toLowerCase();
-                        arr[5] = '[' + header.id + ']';
-                        console.log("a5 =", arr[5]);
                     }
                 // }
                 // else{
@@ -75,7 +72,7 @@ var md = (function(text, minLevel, maxLevel){
                 //     header.id = raw.join('-');
                 //     arr.push('[' + header.id + ']', h);
                 // }
-                result[count].push(arr.join(''))
+                
 
                 header.id = header.id.toLowerCase();
 
@@ -89,6 +86,9 @@ var md = (function(text, minLevel, maxLevel){
                 if(mapId[header.id] > 0){
                     header.id += '_' + mapId[header.id];
                 }
+
+                arr[4] = '[' + header.id + ']';
+                result[count].push(arr.join(''))
             }
             else{
                 result[count].push(line);    
