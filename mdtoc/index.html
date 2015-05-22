@@ -6,29 +6,23 @@
     <style type="text/css">
         #content, #result{
             position: absolute;
-            width: 45%;
+            width: 50%;
             top: 20px;
-            height: 400px;
+            height: 100%;
         }
 
         #content{
-            left: 20;
+            left: 0;
         }
         #result{
-            right: 20px;
+            right: 00px;
         }
-        #run{
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 50px;
-            margin-left: -25px;
-        }
+        
     </style>
 </head>
 <body>
-    <textarea id="content"></textarea>
+    <textarea id="content" onchange="run()"></textarea>
     <textarea id="result"></textarea>
-    <button id="run" onclick="run()">Run</button>
+
 </body>
 </html>
