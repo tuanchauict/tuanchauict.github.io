@@ -1,6 +1,6 @@
 
 fontSans = 'Source Sans Pro', HelveticaNeue-Light, 'Helvetica Neue', 'Open Sans', "Trebuchet MS", Helvetica, sans-serif;
-
+fontMono = Monaco, Menlo, Consolas, "Courier New", monospace;
 baseFontSize = 14px;
 
 html {
@@ -42,11 +42,44 @@ body {
             font-family fontSans!important
         }
         
+
+
+        code, pre{
+            padding: 0 3px 2px;
+            font-family fontMono
+            font-size: 14px;
+            color: #333333;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+        
+        code {
+            padding: 2px 4px;
+            color: #d14;
+            white-space: nowrap;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+        
+        code {
+            padding: 0;
+            color: inherit;
+            white-space: pre;
+            white-space: pre-wrap;
+            background-color: transparent;
+            border: 0;
+        }
+
         pre{
-            background-color #FFFDF1
-            border-left 2px solid #FE9A2E
-            font-size baseFontSize * 0.8 !important
+            background-color #F5F5F5
+            border-left 1px solid rgba(0, 0, 0, 0.15);
+            font-size baseFontSize * 0.875 !important
             padding 10px
+            line-height 20px
+            white-space pre-wrap
+            border-radius 4px
+            font-family fontMono!important
         }
     }
     
