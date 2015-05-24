@@ -1,12 +1,13 @@
-var md = (function(text, minLevel, maxLevel){
+var md = (function(text, maxLevel){
     maxLevel = maxLevel | 6;
-    minLevel = minLevel | 1;
-    var re = /^(\s{0,3})(#+)(.*?)(\[[a-zA-Z0-9\-_+ ]+\])?(\s*)(#*)(\s*)$/
-    var reTOCOpen = /^<!--\s*MarkdownTOC\s*-->\s*$/
-    var reTOCClose = /^<!--\s*!MarkdownTOC\s*-->\s*$/
-    var reRawText = /[a-zA-Z0-9\-_]+/g
-    var reOpenBracket = /\[/g
-    var reCloseBracket = /\]/g
+    var re = /^(\s{0,3})(#+)(.*?)(\[[a-zA-Z0-9\-_+ ]+\])?(\s*)(#*)(\s*)$/;
+    var reTOCOpen = /^<!--\s*MarkdownTOC\s*-->\s*$/;
+    var reTOCClose = /^<!--\s*!MarkdownTOC\s*-->\s*$/;
+    var reRawText = /[a-zA-Z0-9\-_]+/g;
+    var reOpenBracket = /\[/g;
+    var reCloseBracket = /\]/g;
+
+
 
     var lines = text.split('\n');
 
@@ -20,7 +21,7 @@ var md = (function(text, minLevel, maxLevel){
 
     for(var i = 0, l = lines.length; i < l; i++){
         var line = lines[i];
-        if(line.match(reTOCOpen) && count == 0){
+        if(line.match(reTOCOpen) && count === 0){
             count = 1;
             flagOpen = true;
             continue;
@@ -48,7 +49,7 @@ var md = (function(text, minLevel, maxLevel){
             // };
 
 
-            if(h && h.length <= maxLevel && h.length >= minLevel){
+            if(h && h.length <= maxLevel){
                 arr[0] = '';
                 var header = {
                     level: h.length,
@@ -88,7 +89,7 @@ var md = (function(text, minLevel, maxLevel){
                 }
 
                 arr[4] = '[' + header.id + ']';
-                result[count].push(arr.join(''))
+                result[count].push(arr.join(''));
             }
             else{
                 result[count].push(line);    
@@ -105,19 +106,50 @@ var md = (function(text, minLevel, maxLevel){
         text: text
     }
     */
-    var strHeaders = headers.map(function(header){
-        var result = [];
-        for(var i = header.level - minLevel; i > 0; i--){
-            result.push('\t')
+
+    var minLevel = 10000;
+
+    
+
+    for(i = 0; i < headers.length; i++){
+        if(headers[i].level < minLevel){
+            minLevel = headers[i].level;
         }
-        result.push('* [', header.text.trim().replace(reOpenBracket, '\\[').replace(reCloseBracket, '\\]'), '](#', header.id ,')');
-        return result.join('');
-    });
+    }
+
+    var lastLevel = minLevel - 1;
+
+    var strHeaders = [];
+
+    var initLevel = function(level){
+        var result = [];
+        for(var i = level - minLevel; i > 0; i--){
+            result.push('\t');
+        }
+        return result;
+    };
 
 
+    for(i = 0; i < headers.length; i++){
+        var h = headers[i];
 
-    if(count == 0){
-        return '\n\n<!-- MarkdownTOC -->\n\n' + strHeaders.join('\n') + '\n\n<!-- !MarkdownTOC -->\n\n' + result[0].join('\n')
+        while(lastLevel < h.level - 1 && lastLevel < maxLevel){
+            lastLevel += 1;
+            var nl = initLevel(lastLevel);
+            nl.push('- _');
+            strHeaders.push(nl.join(''));
+        }
+
+        lastLevel = h.level;
+
+        var r = initLevel(h.level);
+        r.push('- [', h.text.trim().replace(reOpenBracket, '\\[').replace(reCloseBracket, '\\]'), '](#', h.id ,')');
+
+        strHeaders.push(r.join(''));
+    }
+
+    if(count === 0){
+        return '\n\n<!-- MarkdownTOC -->\n\n' + strHeaders.join('\n') + '\n\n<!-- !MarkdownTOC -->\n\n' + result[0].join('\n');
     }
     else{
         return result[0].join('\n') + '\n\n<!-- MarkdownTOC -->\n\n' + strHeaders.join('\n') + '\n\n<!-- !MarkdownTOC -->\n\n' + result[1].join('\n');
@@ -130,4 +162,4 @@ var run = function(){
 
     // console.log(md(text));
     document.getElementById('result').value = md(text);
-}
+};
