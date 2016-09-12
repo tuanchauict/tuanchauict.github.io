@@ -338,10 +338,25 @@ var UIColorPicker = (function UIColorPicker() {
 		var r = this.r.toString(16);
 		var g = this.g.toString(16);
 		var b = this.b.toString(16);
+
 		if (this.r < 16) r = '0' + r;
 		if (this.g < 16) g = '0' + g;
 		if (this.b < 16) b = '0' + b;
 		var value = '#' + r + g + b;
+		return value.toUpperCase();
+	};
+
+	Color.prototype.getHexa2 = function getHexa2() {
+		var r = this.r.toString(16);
+		var g = this.g.toString(16);
+		var b = this.b.toString(16);
+		var a = (Math.round(this.a * 255)).toString(16);
+		
+		if(this.a < 16/255) a = '0' + a;
+		if (this.r < 16) r = '0' + r;
+		if (this.g < 16) g = '0' + g;
+		if (this.b < 16) b = '0' + b;
+		var value = '#' + a + r + g + b;
 		return value.toUpperCase();
 	};
 
@@ -529,14 +544,25 @@ var UIColorPicker = (function UIColorPicker() {
 			this.select();
 		});
 
-		input.addEventListener('keydown', function(e){
+		input.addEventListener('keyup', function(e){
+			console.log(e.which);			
 			var value = parseInt(input.value);
+			var step = 1;
+			if(topic === 'alpha'){
+				step = 0.05;
+				value = parseFloat(input.value);
+			}
 			if(e.which == 40){
-				input.value = value - 1;
+				input.value = value - step;
 				onChangeFunc(e);
 			} else if(e.which == 38){
-				input.value = value + 1;
+				input.value = value + step;
 				onChangeFunc(e);
+			}
+			console.log(topic);
+
+			if(e.which == 13){
+				onChangeFunc();	
 			}
 		});
 
@@ -782,6 +808,7 @@ var UIColorPicker = (function UIColorPicker() {
 
 		e.target.value = this.color.a;
 		this.updateAlphaPicker();
+		this.setColor(this.color);
 	};
 
 	ColorPicker.prototype.inputChangeHexa = function inputChangeHexa(e) {
@@ -1566,7 +1593,7 @@ var ColorPickerTool = (function ColorPickerTool() {
 
 			RGBA.value.value = color.getRGBA();
 			HSLA.value.value = color.getHSLA();
-			HEXA.value.value = color.getHexa();
+			HEXA.value.value = color.getHexa2();
 		};
 
 		var InfoProperty = function InfoProperty(info) {
