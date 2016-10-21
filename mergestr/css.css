@@ -106,3 +106,7 @@ body * {
 .row-half.highlight .value{
     color: #fff;
 }
+
+.row-half .value pre{
+    margin:0;
+}

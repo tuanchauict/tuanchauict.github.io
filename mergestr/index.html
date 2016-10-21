@@ -34,19 +34,19 @@
         </div>
     </div>
     <div class="comparison-container">
-        <div class="comparison-title">{{countUnSelectedShared()}}/{{data.sharedKey.array.length}}</div>
+        <div class="comparison-title">Conflicted: {{countUnSelectedShared()}}/{{data.sharedKey.array.length}}</div>
         <div class="row" ng-repeat="r in data.sharedKey.array">
             <div class="row-half"
                  ng-class="{'highlight': (r.value1 == r.value)}"
                  ng-click="selectValue(r, r.value1)">
                 <div class="key">{{extractKey(r.value1)}}</div>
-                <div class="value">{{extractValue(r.value1)}}</div>
+                <div class="value"><pre>{{extractValue(r.value1)}}</pre></div>
             </div>
             <div class="row-half"
                  ng-class="{'highlight': (r.value2 == r.value)}"
                  ng-click="selectValue(r, r.value2)">
                 <div class="key">{{extractKey(r.value2)}}</div>
-                <div class="value">{{extractValue(r.value2)}}</div>
+                <div class="value"><pre>{{extractValue(r.value2)}}</pre></div>
             </div>
         </div>
     </div>
