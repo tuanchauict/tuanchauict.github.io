@@ -21,7 +21,9 @@ app.controller('MainController', ['$scope', function ($scope) {
             map: {}
         },
         mergeArray: [],
-        sharedKey: {}
+        sharedKey: {
+          array: []
+        }
     };
 
     $scope.data = data;
