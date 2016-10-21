@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="css.css" type="text/css" rel="stylesheet"/>
+    <title>Merge</title>
+    <script src="angular.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body ng-app="MergeApp">
+<div class="main" ng-controller="MainController">
+    <div class="input-container">
+        <div class="input-column">
+            <div class="input-title">
+                <p>Old Strings - {{data.oldMap.key.length}}</p>
+            </div>
+            <textarea id="old" ng-model="input.oldString" ng-change="onOldChanged()" wrap="off" ></textarea>
+        </div>
+        <div class="input-column">
+
+            <div class="input-title">
+                <p>New Strings - {{data.newMap.key.length}}</p>
+            </div>
+            <textarea id="new" ng-model="input.newString" ng-change="onNewChanged()" wrap="off"></textarea>
+        </div>
+        <div class="input-column">
+            <div class="input-title">
+                <Span>Result - {{data.mergeArray.length}}</Span>
+                <input type="button" ng-click="saveFile()" value="Save">
+            </div>
+            <textarea ng-model="input.result" wrap="off"></textarea>
+        </div>
+    </div>
+    <div class="comparison-container">
+        <div class="comparison-title">{{countUnSelectedShared()}}/{{data.sharedKey.array.length}}</div>
+        <div class="row" ng-repeat="r in data.sharedKey.array">
+            <div class="row-half"
+                 ng-class="{'highlight': (r.value1 == r.value)}"
+                 ng-click="selectValue(r, r.value1)">
+                <div class="key">{{extractKey(r.value1)}}</div>
+                <div class="value">{{extractValue(r.value1)}}</div>
+            </div>
+            <div class="row-half"
+                 ng-class="{'highlight': (r.value2 == r.value)}"
+                 ng-click="selectValue(r, r.value2)">
+                <div class="key">{{extractKey(r.value2)}}</div>
+                <div class="value">{{extractValue(r.value2)}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    dragDrop(document.getElementById('old'), 'oldString');
+    dragDrop(document.getElementById('new'), 'newString');
+</script>
+</body>
+
+</html>
