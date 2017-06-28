@@ -1,0 +1,1 @@
+var appData={a:"1"};Vue.use(Sortable);var app=new Vue({el:"#app",data:function(){var a=new MobileDetect(window.navigator.userAgent),e=localStorage.getItem("stockIds");return{mobile:"iOS"===a.os()&&"iPad"!==a.mobile()||"AndroidOS"==a.os(),stocks:[{id:"HAG",name:"Hoang Anh Gia Lai"},{id:"MBB",name:"Ngan Hang Quan Doi"}]}},method:{onSortUpdate:function(a){}}});

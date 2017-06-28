@@ -1,12 +1,116 @@
 <html>
 <head>
     <title>Bang Gia</title>
+    <link href="./css.css" type="text/css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.6/mobile-detect.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+    <script src="https://unpkg.com/vue-sortable@0.1.3"></script>
+    <script src="./constants.js"></script>
+    <script src="./template.js"></script>
 </head>
 <body>
+Hello
 <div id="app">
-    {{ a }}
+    <div v-if="mobile">
+        MOBILE
+    </div>
+    <div id="desktop" v-if="!mobile">
+        <table class="listStock" cellpadding="0" cellspacing="0">
+            <colgroup>
+                <col width="3%">
+                <col width="3.5%">
+                <col width="3.5%">
+                <col width="3.5%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="6%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="6%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+                <col width="4%">
+            </colgroup>
+            <thead>
+            <tr class="header">
+                <td style="background-color:#333333;" nowrap="" rowspan="2">Mã<br>CK</td>
+                <td style="background-color:#333333;" nowrap="" rowspan="2">Trần</td>
+                <td style="background-color:#333333;" nowrap="" rowspan="2">Sàn</td>
+                <td style="background-color:#333333;" rowspan="2">TC</td>
+                <td colspan="6">Dư mua</td>
+                <td colspan="3" style="background-color:#333333;">Khớp lệnh</td>
+                <td colspan="6">Dư bán</td>
+                <td style="background-color:#333333;" rowspan="2">Tổng<br> KL</td>
+                <td style="background-color:#333333;" colspan="3">Giá khớp</td>
+                <td rowspan="2">NN<br>mua</td>
+                <td rowspan="2">NN<br> bán</td>
+            </tr>
+            <tr class="header">
+                <td>Giá3</td>
+                <td>KL 3</td>
+                <td>Giá2</td>
+                <td>KL 2</td>
+                <td>Giá1</td>
+                <td>KL 1</td>
+                <td style="background-color:#333333;">Thay đổi</td>
+                <td style="background-color:#333333;">Giá</td>
+                <td style="background-color:#333333;">KL</td>
+                <td>Giá1</td>
+                <td>KL 1</td>
+                <td>Giá2</td>
+                <td>KL 2</td>
+                <td>Giá3</td>
+                <td>KL 3</td>
+                <td style="background-color:#333333;">TB</td>
+                <td style="background-color:#333333;">Cao</td>
+                <td style="background-color:#333333;">Thấp</td>
+            </tr>
+            </thead>
+            <tbody v-sortable:basic>
+            <tr v-for="item in stocks" class="row">
+                <td v-bind:title="item.name" style="BACKGROUND-COLOR:#1d1d1d;text-align:left;" class="i">{{item.id}}</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="c">48.85</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="f">42.55</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="e">45.7</td>
+                <td title="" class="i">46.25</td>
+                <td title="" class="i">365</td>
+                <td title="" class="i">46.3</td>
+                <td title="" class="i">57</td>
+                <td title="" class="i">46.35</td>
+                <td title="" class="i">739</td>
+                <td title="" style="text-align:left;BACKGROUND-COLOR:#1d1d1d;PADDING-LEFT:3px;" class="i">FPT▲0.65</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="i">46.35</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d;" class="i">2,506</td>
+                <td title="" class="i">46.4</td>
+                <td title="" class="i">1,600</td>
+                <td title="" class="i">46.45</td>
+                <td title="" class="i">1,150</td>
+                <td title="" class="i">46.5</td>
+                <td title="" class="i">1,776</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="e">94,030</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="i">45.97</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="i">46.4</td>
+                <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="d">45.65</td>
+                <td title="Room còn lai: 06" class="q">15,000</td>
+                <td title="Room còn lai: 06" class="q">15,020</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="./app.js"></script>
 </body>

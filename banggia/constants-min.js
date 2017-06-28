@@ -1,0 +1,1 @@
+var Store={stockIds:"stockIds"};
