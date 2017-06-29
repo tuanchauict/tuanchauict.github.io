@@ -37,6 +37,6 @@ body, body * {
     border-right: none;
 }
 
-.row:hover td{
+#desktop table.listStock > tbody > tr:hover > td{
     border-bottom: #ff0000 2px solid;
 }
