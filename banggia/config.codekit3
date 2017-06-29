@@ -15,6 +15,12 @@
 		"oAP": "\/.idea\/banggia.iml",
 		"oF": 0
 		},
+	"\/.idea\/codeStyleSettings.xml": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.idea\/codeStyleSettings.xml",
+		"oF": 0
+		},
 	"\/.idea\/dictionaries\/tuanchau.xml": {
 		"ft": 8192,
 		"oA": 2,
@@ -109,6 +115,29 @@
 		"oA": 2,
 		"oAP": "\/index.html",
 		"oF": 0
+		},
+	"\/style.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/style-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"\/style.styl": {
+		"aP": 0,
+		"bl": 0,
+		"dS": 0,
+		"ft": 8,
+		"iC": 0,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/style.css",
+		"oF": 0,
+		"oS": 0,
+		"rrU": 0
 		},
 	"\/template-min.js": {
 		"ft": 64,

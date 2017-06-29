@@ -9,7 +9,19 @@ var app = new Vue({
         for (var i = 0; i < 5; i++) {
             stocks.push({
                 id: '00' + i,
-                name: 'Hoang Anh Gia Lai'
+                name: 'Hoang Anh Gia Lai',
+                price0: {
+                    ceil: 9,
+                    floor: 8,
+                    reference: 8.5
+                },
+                live: {
+                    match: {
+                        price: 9,
+                        volume: 10000
+                    }
+                }
+
             })
         }
 
@@ -22,6 +34,16 @@ var app = new Vue({
         onSortUpdate: function (event) {
             console.log("update", event);
             console.log(this.$data.stocks);
+        },
+
+        detectChangeClass: function(item){
+            if(item.live.price > item.price0.reference){
+                return 'i';
+            } else if(item.live.price == item.price0.reference){
+                return 'e';
+            } else {
+                return 'd';
+            }
         }
     }
 });
