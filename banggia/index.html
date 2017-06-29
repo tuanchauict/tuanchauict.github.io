@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Bang Gia</title>
+    <link href="https://necolas.github.io/normalize.css/latest/normalize.css" type="text/css" rel="stylesheet">
     <link href="./css.css" type="text/css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.6/mobile-detect.min.js"></script>
@@ -80,9 +82,9 @@ Hello
                 <td style="background-color:#333333;">Thấp</td>
             </tr>
             </thead>
-            <tbody v-sortable="{onUpdate: onSortUpdate, animation: true}">
+            <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
             <tr v-for="item in stocks" class="row">
-                <td v-bind:title="item.name" style="BACKGROUND-COLOR:#1d1d1d;text-align:left;" class="i">{{item.id}}</td>
+                <td class="movable" v-bind:title="item.name" style="BACKGROUND-COLOR:#1d1d1d;text-align:left;" class="i">{{item.id}}</td>
                 <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="c">48.85</td>
                 <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="f">42.55</td>
                 <td title="" style="BACKGROUND-COLOR:#1d1d1d" class="e">45.7</td>

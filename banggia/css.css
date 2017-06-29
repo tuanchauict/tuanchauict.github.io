@@ -40,3 +40,17 @@ body, body * {
 #desktop table.listStock > tbody > tr:hover > td{
     border-bottom: #ff0000 2px solid;
 }
+
+#desktop table.listStock > tbody > tr:hover > td.movable{
+    background: #0f0;
+
+}
+
+.sortable-ghost{
+
+}
+
+#desktop table.listStock > tbody > tr[draggable="true"]{
+    background: #444;
+}
+
