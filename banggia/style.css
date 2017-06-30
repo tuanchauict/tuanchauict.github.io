@@ -50,8 +50,17 @@ body * {
 #desktop table tbody tr td.e {
   color: #ff0;
 }
+#desktop table tbody tr td .close {
+  display: none;
+  float: right;
+  cursor: pointer;
+  margin-right: 3px;
+}
 #desktop table tbody tr:hover td {
   border-bottom: #f00 2px solid;
+}
+#desktop table tbody tr:hover td .close {
+  display: inline;
 }
 #desktop table tbody tr .movable {
   cursor: move;

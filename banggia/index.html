@@ -82,15 +82,15 @@ Hello
                 <td>KL 2</td>
                 <td>Giá3</td>
                 <td>KL 3</td>
-                <td class="group0">TB</td>
                 <td class="group0">Cao</td>
+                <td class="group0">TB</td>
                 <td class="group0">Thấp</td>
             </tr>
             </thead>
             <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
             <tr v-for="item in stocks" class="row">
                 <td class="group0 text" :class="detectChangeClass(item)" v-bind:title="item.name">
-                    <span class="movable">{{item.id}}</span><i>&times;</i>
+                    <span class="movable">{{item.id}}</span><i class="close">&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
                 <td title="" class="group0 e">{{item.price0.reference}}</td>
@@ -153,8 +153,8 @@ Hello
                 <td class="q" :title="'Room còn lai: ' + item.live.foreign.sellRoom">{{item.live.foreign.sellVolume}}</td>
             </tr>
             <tr>
-                <td rowspan="3">
-                    <div><input type="text"/></div>
+                <td colspan="3">
+                    <div><input type="text" style="color: #000"/></div>
                 </td>
             </tr>
             </tbody>
