@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    <meta charset="UTF-8">
+
     <title>Bang Gia</title>
     <link href="https://necolas.github.io/normalize.css/latest/normalize.css" type="text/css" rel="stylesheet">
     <link href="./style.css" type="text/css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.6/mobile-detect.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
-    <script src="vue-sortable.js"></script>
+    <script src="libs/vue-websocket.js"></script>
+    <script src="libs/vue-sortable.js"></script>
     <script src="./constants.js"></script>
     <script src="./template.js"></script>
+    <script src="model-adapter.js"></script>
+
 </head>
 <body>
 Hello
@@ -84,37 +89,79 @@ Hello
             </thead>
             <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
             <tr v-for="item in stocks" class="row">
-                <td class="group0 text movable i" v-bind:title="item.name">{{item.id}}
+                <td class="group0 text" :class="detectChangeClass(item)" v-bind:title="item.name">
+                    <span class="movable">{{item.id}}</span><i>&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
                 <td title="" class="group0 e">{{item.price0.reference}}</td>
                 <td title="" class="group0 f">{{item.price0.floor}}</td>
-                <td title="" class="{{detectChangeClass(item)}}">46.25</td>
-                <td title="" class="i">365</td>
-                <td title="" class="i">46.3</td>
-                <td title="" class="i">57</td>
-                <td title="" class="i">46.35</td>
-                <td title="" class="i">739</td>
-                <td title="" class="group0 text i">FPT▲0.65</td>
-                <td title="" class="group0 i">46.35</td>
-                <td title="" class="group0 i">2,506</td>
-                <td title="" class="i">46.4</td>
-                <td title="" class="i">1,600</td>
-                <td title="" class="i">46.45</td>
-                <td title="" class="i">1,150</td>
-                <td title="" class="i">46.5</td>
-                <td title="" class="i">1,776</td>
-                <td title="" class="group0 e">94,030</td>
-                <td title="" class="group0 i">45.97</td>
-                <td title="" class="group0 i">46.4</td>
-                <td title="" class="group0 d">45.65</td>
-                <td title="Room còn lai: 06" class="q">15,000</td>
-                <td title="Room còn lai: 06" class="q">15,020</td>
+
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[0].price)">
+                    {{item.live.buy[0].price}}
+                </td>
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[0].price)">
+                    {{item.live.buy[0].volume}}
+                </td>
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[1].price)">
+                    {{item.live.buy[1].price}}
+                </td>
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[1].price)">
+                    {{item.live.buy[1].volume}}
+                </td>
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[2].price)">
+                    {{item.live.buy[2].price}}
+                </td>
+                <td title="" class="b" :class="detectChangeClass(item, item.live.buy[2].price)">
+                    {{item.live.buy[2].volume}}
+                </td>
+
+                <td title="" class="group0 text" :class="detectChangeClass(item)">FPT▲{{getChangeValue(item)}}</td>
+                <td title="" class="group0" :class="detectChangeClass(item)">{{item.live.match.price}}</td>
+                <td title="" class="group0" :class="detectChangeClass(item)">{{item.live.match.volume}}</td>
+
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[2].price)">
+                    {{item.live.sell[2].price}}
+                </td>
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[2].price)">
+                    {{item.live.sell[2].volume}}
+                </td>
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[1].price)">
+                    {{item.live.sell[1].price}}
+                </td>
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[1].price)">
+                    {{item.live.sell[1].volume}}
+                </td>
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[0].price)">
+                    {{item.live.sell[0].price}}
+                </td>
+                <td title="" class="s" :class="detectChangeClass(item, item.live.sell[0].price)">
+                    {{item.live.sell[0].volume}}
+                </td>
+
+                <td title="" class="group0 e">{{item.live.stats.totalVolume}}</td>
+                <td title="" class="group0" :class="detectChangeClass(item, item.live.stats.high)">
+                    {{item.live.stats.high}}
+                </td>
+                <td title="" class="group0" :class="detectChangeClass(item, item.live.stats.average)">
+                    {{item.live.stats.average}}
+                </td>
+                <td title="" class="group0" :class="detectChangeClass(item, item.live.stats.low)">
+                    {{item.live.stats.low}}
+                </td>
+
+                <td class="q" :title="'Room còn lai: ' + item.live.foreign.buyRoom">{{item.live.foreign.buyVolume}}</td>
+                <td class="q" :title="'Room còn lai: ' + item.live.foreign.sellRoom">{{item.live.foreign.sellVolume}}</td>
+            </tr>
+            <tr>
+                <td rowspan="3">
+                    <div><input type="text"/></div>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 <script src="./app.js"></script>
+<script src="model.js"></script>
 </body>
 </html>

@@ -1,8 +1,10 @@
+Vue.use(VueWebsocket, "ws://banggia.mbs.com.vn/sjsrlt/286/2n82rmql/websocket");
+
 
 var app = new Vue({
     el: '#app',
     data: function () {
-        var md = new MobileDetect(window.navigator.userAgent);
+
         var stockIds = localStorage.getItem('stockIds');
 
         var stocks = [];
@@ -19,6 +21,46 @@ var app = new Vue({
                     match: {
                         price: 9,
                         volume: 10000
+                    },
+                    buy: [
+                        {
+                            price: 9,
+                            volume: 1000
+                        },
+                        {
+                            price: 9,
+                            volume: 1000
+                        },
+                        {
+                            price: 9,
+                            volume: 1000
+                        }
+                    ],
+                    sell: [
+                        {
+                            price: 9,
+                            volume: 1000
+                        },
+                        {
+                            price: 9,
+                            volume: 1000
+                        },
+                        {
+                            price: 9,
+                            volume: 1000
+                        }
+                    ],
+                    stats: {
+                        totalVolume: 90000,
+                        high: 9,
+                        low: 8,
+                        average: 8.5
+                    },
+                    foreign: {
+                        buyVolume: 144,
+                        buyRoom: 4,
+                        sellAmount: 0,
+                        sellRoom: 1
                     }
                 }
 
@@ -26,8 +68,15 @@ var app = new Vue({
         }
 
         return {
-            mobile: (md.os() === 'iOS' && md.mobile() !== 'iPad') || (md.os() === 'AndroidOS'),
+            stockCodes: 'HAG',
             stocks: stocks
+        }
+    },
+    computed: {
+        mobile: function () {
+            console.log(this.stockCodes);
+            var md = new MobileDetect(window.navigator.userAgent);
+            return (md.os() === 'iOS' && md.mobile() !== 'iPad') || (md.os() === 'AndroidOS');
         }
     },
     methods: {
@@ -35,15 +84,47 @@ var app = new Vue({
             console.log("update", event);
             console.log(this.$data.stocks);
         },
+        detectChangeClass: function (item, value) {
+            var p = item.live.match.price;
+            if (typeof value !== 'undefined') {
+                p = value;
+            }
+            if(value === '' || value < 0)
+                return '';
 
-        detectChangeClass: function(item){
-            if(item.live.price > item.price0.reference){
-                return 'i';
-            } else if(item.live.price == item.price0.reference){
+            if (value === 'ATC' || value === 'ATO') {
+                return 'atoatc';
+            }
+
+            var r = item.price0.reference;
+            if (p > r) {
+                return p == item.price0.ceil ? 'c' : 'i';
+            } else if (p == r) {
                 return 'e';
             } else {
-                return 'd';
+                return p == item.price0.floor ? 'f' : 'd';
+            }
+        },
+        getChangeValue: function (item) {
+            return item.live.match.price - item.price0.reference;
+        }
+    },
+    socket: {
+        events: {
+            changed: function (msg) {
+                console.log(msg);
+            },
+            connect: function () {
+                console.log("connect");
+            },
+            disconnect: function () {
+                console.log("disconnect");
+            },
+            error: function (e) {
+                console.log(e);
             }
         }
     }
 });
+
+app.stocks[0].id = 'MBB';

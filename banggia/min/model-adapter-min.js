@@ -1,0 +1,1 @@
+var modelAdapter={mbsV1:function(n){var r=n.split("#");return{}},mbsV2:function(n){return{}},vndirect:function(n){return{}}};
