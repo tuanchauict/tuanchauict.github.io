@@ -1,0 +1,67 @@
+body {
+  background: #000;
+}
+body,
+body * {
+  color: #fff;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 12px;
+  margin: 0;
+}
+#desktop table {
+  width: 100%;
+  border-top: #505050 1px solid;
+}
+#desktop table td {
+  border-right: #505050 1px solid;
+  border-bottom: #505050 1px solid;
+  padding-left: 2px;
+  padding-right: 0;
+  height: 20px;
+  vertical-align: middle;
+}
+#desktop table thead tr {
+  text-align: center;
+}
+#desktop table thead tr td.group0 {
+  background-color: #333;
+}
+#desktop table tbody tr td {
+  text-align: right;
+}
+#desktop table tbody tr td.text {
+  text-align: left;
+}
+#desktop table tbody tr td.group0 {
+  background-color: #1d1d1d;
+}
+#desktop table tbody tr td.i {
+  color: #0f0;
+}
+#desktop table tbody tr td.d {
+  color: #f00;
+}
+#desktop table tbody tr td.c {
+  color: #f0f;
+}
+#desktop table tbody tr td.f {
+  color: #6ff;
+}
+#desktop table tbody tr td.e {
+  color: #ff0;
+}
+#desktop table tbody tr:hover td {
+  border-bottom: #f00 2px solid;
+}
+#desktop table tbody tr .movable {
+  cursor: move;
+}
+#desktop table tbody tr[draggable="true"] {
+  background: #404;
+}
+#desktop table tbody tr[draggable="true"] .movable {
+  cursor: move;
+}
+#desktop table tbody tr[draggable="true"] td.group0 {
+  background: #404;
+}

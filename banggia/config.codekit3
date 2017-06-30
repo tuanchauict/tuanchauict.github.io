@@ -81,25 +81,92 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/css-min.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/css-min-min.css",
-		"oF": 0,
-		"oS": 3
+	"\/index.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/index.html",
+		"oF": 0
 		},
-	"\/css.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
+	"\/libs\/vue-sortable.js": {
+		"ft": 64,
+		"mi": 1,
 		"oA": 0,
-		"oAP": "\/css-min.css",
+		"oAP": "\/libs\/vue-sortable-min.js",
 		"oF": 0,
-		"oS": 3
+		"sC": 1,
+		"tS": 0
+		},
+	"\/libs\/vue-websocket.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/libs\/vue-websocket-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/libs\/vue.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/libs\/vue-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/app-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/app-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/constants-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/constants-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/database-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/database-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/model-adapter-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/model-adapter-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/model-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/model-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/model-adapter.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/model-adapter-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
 		},
 	"\/model.js": {
 		"ft": 64,
@@ -109,12 +176,6 @@
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
-		},
-	"\/index.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/index.html",
-		"oF": 0
 		},
 	"\/style.css": {
 		"aP": 1,
@@ -162,24 +223,6 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/vue-sortable-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/vue-sortable.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/vue-sortable-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/vue.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/vue-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
