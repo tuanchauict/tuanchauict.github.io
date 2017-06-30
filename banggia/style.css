@@ -7,6 +7,7 @@ body * {
   font-family: arial, helvetica, sans-serif;
   font-size: 12px;
   margin: 0;
+  box-sizing: border-box;
 }
 #desktop table {
   width: 100%;
@@ -56,11 +57,21 @@ body * {
   cursor: pointer;
   margin-right: 3px;
 }
+#desktop table tbody tr td.input div {
+  width: 100%;
+  border-bottom: none;
+}
+#desktop table tbody tr td.input div input {
+  width: 100%;
+}
 #desktop table tbody tr:hover td {
   border-bottom: #f00 2px solid;
 }
 #desktop table tbody tr:hover td .close {
   display: inline;
+}
+#desktop table tbody tr:hover td.input {
+  border-bottom: none;
 }
 #desktop table tbody tr .movable {
   cursor: move;

@@ -9,6 +9,7 @@ body {
     font-family arial, helvetica, sans-serif;
     font-size 12px;
     margin 0;
+    box-sizing border-box
   }
 }
 
@@ -29,7 +30,7 @@ body {
       tr {
         text-align: center;
         
-        td{
+        td {
           &.group0 {
             background-color #333333
           }
@@ -52,7 +53,7 @@ body {
           &.i {
             color #00ff00
           }
-          &.d{
+          &.d {
             color #ff0000
           }
           &.c {
@@ -71,6 +72,14 @@ body {
             cursor pointer
             margin-right 3px
           }
+          
+          &.input div{
+            width 100%
+            input {
+              width 100%
+            }
+            border-bottom none
+          }
         }
         
         &:hover td {
@@ -79,6 +88,10 @@ body {
           .close {
             display inline;
             
+          }
+          
+          &.input {
+            border-bottom none
           }
         }
         
@@ -90,7 +103,7 @@ body {
           .movable {
             cursor move
           }
-          td.group0{
+          td.group0 {
             background #404
           }
           background #404
