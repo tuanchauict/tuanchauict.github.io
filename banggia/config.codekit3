@@ -87,6 +87,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/database-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/database-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/index.html": {
 		"ft": 8192,
 		"oA": 2,
@@ -179,6 +188,15 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/database-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/msb-rest.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/msb-rest-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
