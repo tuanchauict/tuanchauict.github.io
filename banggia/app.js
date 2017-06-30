@@ -24,11 +24,11 @@ var app = new Vue({
                     },
                     buy: [
                         {
-                            price: 9,
+                            price: 8.5,
                             volume: 1000
                         },
                         {
-                            price: 9,
+                            price: 8.2,
                             volume: 1000
                         },
                         {
@@ -98,11 +98,11 @@ var app = new Vue({
 
             var r = item.price0.reference;
             if (p > r) {
-                return p == item.price0.ceil ? 'c' : 'i';
+                return p >= item.price0.ceil ? 'c' : 'i';
             } else if (p == r) {
                 return 'e';
             } else {
-                return p == item.price0.floor ? 'f' : 'd';
+                return p <= item.price0.floor ? 'f' : 'd';
             }
         },
         getChangeValue: function (item) {
