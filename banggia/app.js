@@ -14,7 +14,6 @@ var app = new Vue({
     },
     computed: {
         mobile: function () {
-            console.log(this.stockCodes);
             var md = new MobileDetect(window.navigator.userAgent);
             return (md.os() === 'iOS' && md.mobile() !== 'iPad') || (md.os() === 'AndroidOS');
         }
@@ -29,8 +28,9 @@ var app = new Vue({
             if (typeof value !== 'undefined') {
                 p = value;
             }
-            if(value === '' || value < 0)
+            if(value === '' || value < 0){
                 return '';
+            }
 
             if (value === 'ATC' || value === 'ATO') {
                 return 'atoatc';
@@ -39,7 +39,7 @@ var app = new Vue({
             var r = item.price0.reference;
             if (p > r) {
                 return p >= item.price0.ceil ? 'c' : 'i';
-            } else if (p == r) {
+            } else if (p === r) {
                 return 'e';
             } else {
                 return p <= item.price0.floor ? 'f' : 'd';
@@ -71,5 +71,3 @@ var app = new Vue({
         }
     }
 });
-
-app.stocks[0].id = 'MBB';

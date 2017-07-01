@@ -56,6 +56,10 @@ body * {
   float: right;
   cursor: pointer;
   margin-right: 3px;
+  color: #888;
+}
+#desktop table tbody tr td .close:hover {
+  color: #fff;
 }
 #desktop table tbody tr td.input div {
   width: 100%;
