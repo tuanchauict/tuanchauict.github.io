@@ -1,15 +1,66 @@
-normal-border = #505050 1px solid
-hover-border = #ff0000 2px solid
+normal-border = #505050 1pt solid
+hover-border = #ff0000 2pt solid
 
 body {
   background #000
   
   &, * {
-    color #ffffff;
     font-family arial, helvetica, sans-serif;
-    font-size 12px;
+    font-size 9pt;
     margin 0;
     box-sizing border-box
+  }
+}
+
+#mobile {
+  
+  &, * {
+    font-size 24pt
+  }
+  
+  .row {
+    
+    table {
+      width 100%
+      thead {
+        tr {
+          td {
+            
+            height 50pt
+            text-align center
+            
+            border-top #ffffff 3pt solid
+            
+            & .text {
+              font-weight bold
+            }
+          }
+        }
+      }
+      
+      td {
+        border-right normal-border
+        border-bottom normal-border
+        padding-left 0
+        padding-right 2pt
+        height 20pt
+        vertical-align middle
+        text-align right
+        width 13%
+        
+        &:nth-child(4) {
+          width 22%
+          text-align center
+        }
+      }
+      
+      tr {
+        td {
+        
+        }
+      }
+      
+    }
   }
 }
 
@@ -30,7 +81,14 @@ body {
       tr {
         text-align: center;
         
+        &:first-child {
+          td {
+            border-top #888 3px solid
+          }
+        }
+        
         td {
+          color #f0f0f0
           &.group0 {
             background-color #333333
           }
@@ -72,13 +130,13 @@ body {
             cursor pointer
             margin-right 3px
             color #888
-
+            
             &:hover {
               color #fff
             }
           }
           
-          &.input div{
+          &.input div {
             width 100%
             input {
               width 100%
@@ -116,4 +174,28 @@ body {
       }
     }
   }
+}
+
+.i, .i .text {
+  color #00ff00
+}
+
+.d, .d .text {
+  color #ff0000
+}
+
+.c, .c .text {
+  color: #ff00ff
+}
+
+.f, .f .text {
+  color: #66ffff
+}
+
+.e, .e .text {
+  color: #ffff00
+}
+
+.q {
+  color #fff
 }

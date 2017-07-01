@@ -1,1 +1,1 @@
-var storage={codes:["HAG","HNG","MBB","STB"],allStocks:[]};
+var storage={codes:["HAG","HNG","MBB","STB","MBS"],allStocks:[]};

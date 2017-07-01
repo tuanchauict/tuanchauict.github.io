@@ -1,73 +1,43 @@
-Vue.use(VueWebsocket, "ws://banggia.mbs.com.vn/sjsrlt/286/2n82rmql/websocket");
-
-
-var app = new Vue({
+var APP = new Vue({
     el: '#app',
-    data: function () {
-
-        var stockIds = localStorage.getItem('stockIds');
-
-        return {
-            stockCodes: ['HAG'],
+    data: {
+        stock: {
+            codes: [],
             stocks: []
         }
     },
     computed: {
-        mobile: function () {
-            var md = new MobileDetect(window.navigator.userAgent);
-            return (md.os() === 'iOS' && md.mobile() !== 'iPad') || (md.os() === 'AndroidOS');
-        }
+        mobile: detectMobile
     },
     methods: {
         onSortUpdate: function (event) {
             console.log("update", event);
             console.log(this.$data.stocks);
         },
-        detectChangeClass: function (item, value) {
-            var p = item.live.match.price;
-            if (typeof value !== 'undefined') {
-                p = value;
-            }
-            if(value === '' || value < 0){
-                return '';
-            }
-
-            if (value === 'ATC' || value === 'ATO') {
-                return 'atoatc';
-            }
-
-            var r = item.price0.reference;
-            if (p > r) {
-                return p >= item.price0.ceil ? 'c' : 'i';
-            } else if (p === r) {
-                return 'e';
-            } else {
-                return p <= item.price0.floor ? 'f' : 'd';
-            }
-        },
-        getChangeValue: function (item) {
-            var diff = item.live.match.price - item.price0.reference;
-            if(diff === 0)
-                return '';
-            var increase = diff > 0;
-            var percent = Math.abs(diff) / item.price0.reference * 100;
-            return (increase ? '+' : '') + round(diff, 100) + (increase ? '▲' : '▼') + round(percent, 100) + '%';
-        }
-    },
-    socket: {
-        events: {
-            changed: function (msg) {
-                console.log(msg);
-            },
-            connect: function () {
-                console.log("connect");
-            },
-            disconnect: function () {
-                console.log("disconnect");
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        }
+        stockGetChangeType: detectStockValueChangeType,
+        stockGetChangeValue: getStockChangeValue
     }
 });
+
+
+var stockInput = document.getElementById('stockInput');
+stockInput.onkeyup = function(event){
+    console.log(event.keyCode);
+    if(event.keyCode === 13){
+        var s = stockInput.value;
+        stockInput.value = '';
+        var uCodes = s.split(',');
+        var codes = APP.stock.codes;
+        var code;
+        for(var i = 0; i < uCodes.length; i++){
+            code = uCodes[i];
+            if(_ListStockInfo.hasOwnProperty(code) && !(code in codes)){
+                codes.push(code);
+            } else {
+                console.log('Invalid:', code);
+            }
+        }
+
+        fb.write('anh', 'default', codes);
+    }
+};

@@ -1,14 +1,12 @@
-var storage = {
-    codes: ['HAG', 'HNG', 'MBB', 'STB', 'MBS'],
-    allStocks: [
-
-    ]
-};
-
-
-
-
-
+// var storage = {
+//     codes: [],
+//     stocks: [],
+//
+//     addCode: function(code){
+//         this.codes.push(code);
+//         fb.write('anh', 'default', this.codes);
+//     }
+// };
 
 
 // var connection = new WebSocket(url.vndWebsocket, []);

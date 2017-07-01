@@ -3,19 +3,47 @@ body {
 }
 body,
 body * {
-  color: #fff;
   font-family: arial, helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 9pt;
   margin: 0;
   box-sizing: border-box;
 }
+#mobile,
+#mobile * {
+  font-size: 24pt;
+}
+#mobile .row table {
+  width: 100%;
+}
+#mobile .row table thead tr td {
+  height: 50pt;
+  text-align: center;
+  border-top: #fff 3pt solid;
+}
+#mobile .row table thead tr td .text {
+  font-weight: bold;
+}
+#mobile .row table td {
+  border-right: #505050 1pt solid;
+  border-bottom: #505050 1pt solid;
+  padding-left: 0;
+  padding-right: 2pt;
+  height: 20pt;
+  vertical-align: middle;
+  text-align: right;
+  width: 13%;
+}
+#mobile .row table td:nth-child(4) {
+  width: 22%;
+  text-align: center;
+}
 #desktop table {
   width: 100%;
-  border-top: #505050 1px solid;
+  border-top: #505050 1pt solid;
 }
 #desktop table td {
-  border-right: #505050 1px solid;
-  border-bottom: #505050 1px solid;
+  border-right: #505050 1pt solid;
+  border-bottom: #505050 1pt solid;
   padding-left: 2px;
   padding-right: 0;
   height: 20px;
@@ -23,6 +51,12 @@ body * {
 }
 #desktop table thead tr {
   text-align: center;
+}
+#desktop table thead tr:first-child td {
+  border-top: #888 3px solid;
+}
+#desktop table thead tr td {
+  color: #f0f0f0;
 }
 #desktop table thead tr td.group0 {
   background-color: #333;
@@ -74,7 +108,7 @@ body * {
   width: 100%;
 }
 #desktop table tbody tr:hover td {
-  border-bottom: #f00 2px solid;
+  border-bottom: #f00 2pt solid;
 }
 #desktop table tbody tr:hover td .close {
   display: inline;
@@ -93,4 +127,27 @@ body * {
 }
 #desktop table tbody tr[draggable="true"] td.group0 {
   background: #404;
+}
+.i,
+.i .text {
+  color: #0f0;
+}
+.d,
+.d .text {
+  color: #f00;
+}
+.c,
+.c .text {
+  color: #f0f;
+}
+.f,
+.f .text {
+  color: #6ff;
+}
+.e,
+.e .text {
+  color: #ff0;
+}
+.q {
+  color: #fff;
 }

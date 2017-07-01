@@ -78,20 +78,29 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/utils.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/constants-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
 	"\/database-min.js": {
 		"ft": 64,
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/database-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/firebase-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/firebase-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/firebase.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/firebase-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -138,6 +147,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/min\/constants-min-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/constants-min-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/min\/constants-min.js": {
 		"ft": 64,
 		"mi": 1,
@@ -174,6 +192,42 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/min\/model-sample-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/model-sample-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/msb-rest-min-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/msb-rest-min-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/msb-rest-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/msb-rest-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/min\/utils-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/min\/utils-min-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/model-adapter.js": {
 		"ft": 64,
 		"mi": 1,
@@ -183,11 +237,29 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/model-sample.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/model-sample-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/model.js": {
 		"ft": 64,
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/database-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/msb-rest-min.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/msb-rest-min-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -238,6 +310,15 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/template-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/utils.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/constants-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0

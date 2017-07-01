@@ -33,14 +33,14 @@
 // ^
 
 
-(function(){
+var mbsRest = (function () {
 
     var parse = function (line) {
         var arr = line.split('^');
 
         return {
             id: arr[0],
-            name: 'Hoang Anh Gia Lai',
+            name: _ListStockInfo[arr[0]],
             price0: {
                 ceil: parseFloat(arr[1]),
                 floor: parseFloat(arr[2]),
@@ -49,81 +49,106 @@
             live: {
                 match: {
                     price: parseNumber(arr[11]),
-                    volume: nomaliseAmount(parseNumber(arr[12]))
+                    volume: normaliseAmount(parseNumber(arr[12]))
                 },
                 buy: [
                     {
                         price: parseNumber(arr[4]),
-                        volume: nomaliseAmount(parseNumber(arr[5]))
+                        volume: normaliseAmount(parseNumber(arr[5]))
                     },
                     {
                         price: parseNumber(arr[6]),
-                        volume: nomaliseAmount(parseNumber(arr[7]))
+                        volume: normaliseAmount(parseNumber(arr[7]))
                     },
                     {
                         price: parseNumber(arr[8]),
-                        volume: nomaliseAmount(parseNumber(arr[9]))
+                        volume: normaliseAmount(parseNumber(arr[9]))
                     }
                 ],
                 sell: [
                     {
                         price: parseNumber(arr[13]),
-                        volume: nomaliseAmount(parseNumber(arr[14]))
+                        volume: normaliseAmount(parseNumber(arr[14]))
                     },
                     {
                         price: parseNumber(arr[15]),
-                        volume: nomaliseAmount(parseNumber(arr[16]))
+                        volume: normaliseAmount(parseNumber(arr[16]))
                     },
                     {
                         price: parseNumber(arr[17]),
-                        volume: nomaliseAmount(parseNumber(arr[18]))
+                        volume: normaliseAmount(parseNumber(arr[18]))
                     }
                 ],
                 stats: {
-                    totalVolume: nomaliseAmount(parseNumber(arr[19])),
+                    totalVolume: normaliseAmount(parseNumber(arr[19])),
                     high: parseNumber(arr[21]),
                     low: parseNumber(arr[22]),
                     average: parseNumber(arr[20])
                 },
                 foreign: {
-                    buyVolume: nomaliseAmount(parseNumber(arr[25])),
-                    buyRoom: nomaliseAmount(parseNumber(arr[27])),
-                    sellAmount: nomaliseAmount(parseNumber(arr[26])),
-                    sellRoom: nomaliseAmount(parseNumber(arr[27]))
+                    buyVolume: normaliseAmount(parseNumber(arr[25])),
+                    buyRoom: normaliseAmount(parseNumber(arr[27])),
+                    sellAmount: normaliseAmount(parseNumber(arr[26])),
+                    sellRoom: normaliseAmount(parseNumber(arr[27]))
                 }
             }
 
         }
     };
 
-
-    get(Url.mbsHttp.toUrl(Url.mbsHttp.full, storage.codes), function(text){
-        var lines = text.split("|")[2].split("#");
-        var set = new Set();
-        var codes = storage.codes;
-        for(var i = 0; i < codes.length; i++){
-            set.add(codes[i]);
-        }
-        var line;
-        var f3;
-        storage.stockCodes = [];
-        var stocks = storage.stockCodes;
-        for(var i = 0, l = lines.length; i < l; i++){
-            line = lines[i];
-            f3 = line.substr(0, 3);
-            if(set.has(f3)){
-                stocks.push(parse(line));
+    var reload = function (callback) {
+        get(Url.mbsHttp.toUrl(Url.mbsHttp.full, APP.stock.codes), function (text) {
+            var lines = text.split("|")[2].split("#");
+            var set = new Set();
+            var codes = APP.stock.codes;
+            console.log(codes);
+            var i;
+            for (i = 0; i < codes.length; i++) {
+                set.add(codes[i]);
             }
-        }
+            var line;
+            var f3;
 
-        app.stocks = updateStock(app.stocks, stocks);
+            var stock;
+            var map = {};
 
-        setInterval(function(){
-            get(Url.mbsHttp.toUrl(Url.mbsHttp.change, storage.codes), function (text) {
-                console.log(text);
-                //TODO
-            })
-        }, 1000);
+            for (i = 0, l = lines.length; i < l; i++) {
+                line = lines[i];
+                f3 = line.substr(0, 3);
+                if (set.has(f3)) {
+                    stock = parse(line);
+                    map[stock.id] = stock;
+                    console.log(stock);
+                }
+            }
+
+            var stocks = [];
+            var code;
+            for(i = 0, l = codes.length; i < l; i++){
+                code = codes[i];
+                if(map.hasOwnProperty(code)){
+                    stocks.push(map[codes[i]]);
+                }
+            }
+
+            APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
+            console.log(APP.stock.stocks);
+            if (callback) {
+                callback();
+            }
+        });
+    };
+
+    reload(function () {
+        // setInterval(function () {
+        //     get(Url.mbsHttp.toUrl(Url.mbsHttp.change, APP.stock.codes), function (text) {
+        //         // console.log(text);
+        //         //TODO
+        //     })
+        // }, 1000);
     });
 
+    return {
+        reload: reload
+    };
 }());
