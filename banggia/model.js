@@ -1,5 +1,5 @@
 var storage = {
-    codes: ['HAG', 'HNG', 'MBB', 'STB'],
+    codes: ['HAG', 'HNG', 'MBB', 'STB', 'MBS'],
     allStocks: [
 
     ]

@@ -7,69 +7,9 @@ var app = new Vue({
 
         var stockIds = localStorage.getItem('stockIds');
 
-        var stocks = [];
-        for (var i = 0; i < 5; i++) {
-            stocks.push({
-                id: '00' + i,
-                name: 'Hoang Anh Gia Lai',
-                price0: {
-                    ceil: 9,
-                    floor: 8,
-                    reference: 8.5
-                },
-                live: {
-                    match: {
-                        price: 9,
-                        volume: 10000
-                    },
-                    buy: [
-                        {
-                            price: 8.5,
-                            volume: 1000
-                        },
-                        {
-                            price: 8.2,
-                            volume: 1000
-                        },
-                        {
-                            price: 9,
-                            volume: 1000
-                        }
-                    ],
-                    sell: [
-                        {
-                            price: 9,
-                            volume: 1000
-                        },
-                        {
-                            price: 9,
-                            volume: 1000
-                        },
-                        {
-                            price: 9,
-                            volume: 1000
-                        }
-                    ],
-                    stats: {
-                        totalVolume: 90000,
-                        high: 9,
-                        low: 8,
-                        average: 8.5
-                    },
-                    foreign: {
-                        buyVolume: 144,
-                        buyRoom: 4,
-                        sellAmount: 0,
-                        sellRoom: 1
-                    }
-                }
-
-            })
-        }
-
         return {
-            stockCodes: 'HAG',
-            stocks: stocks
+            stockCodes: ['HAG'],
+            stocks: []
         }
     },
     computed: {
@@ -106,7 +46,12 @@ var app = new Vue({
             }
         },
         getChangeValue: function (item) {
-            return item.live.match.price - item.price0.reference;
+            var diff = item.live.match.price - item.price0.reference;
+            if(diff === 0)
+                return '';
+            var increase = diff > 0;
+            var percent = Math.abs(diff) / item.price0.reference * 100;
+            return (increase ? '+' : '') + round(diff, 100) + (increase ? '▲' : '▼') + round(percent, 100) + '%';
         }
     },
     socket: {

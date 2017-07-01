@@ -11,7 +11,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
     <script src="libs/vue-websocket.js"></script>
     <script src="libs/vue-sortable.js"></script>
-    <script src="./constants.js"></script>
+    <script src="utils.js"></script>
     <script src="./template.js"></script>
     <script src="model-adapter.js"></script>
 
@@ -35,9 +35,9 @@ Hello
                 <col width="4%">
                 <col width="4%">
                 <col width="4%">
+                <col width="4%">
+                <col width="4%">
                 <col width="6%">
-                <col width="4%">
-                <col width="4%">
                 <col width="4%">
                 <col width="4%">
                 <col width="4%">
@@ -56,8 +56,8 @@ Hello
             <tr class="header">
                 <td class="group0" nowrap="" rowspan="2">Mã<br>CK</td>
                 <td class="group0" nowrap="" rowspan="2">Trần</td>
-                <td class="group0" nowrap="" rowspan="2">Sàn</td>
                 <td class="group0" rowspan="2">TC</td>
+                <td class="group0" nowrap="" rowspan="2">Sàn</td>
                 <td colspan="6">Dư mua</td>
                 <td colspan="3" class="group0">Khớp lệnh</td>
                 <td colspan="6">Dư bán</td>
@@ -73,9 +73,9 @@ Hello
                 <td>KL 2</td>
                 <td>Giá1</td>
                 <td>KL 1</td>
-                <td class="group0">Thay đổi</td>
                 <td class="group0">Giá</td>
                 <td class="group0">KL</td>
+                <td class="group0">Thay đổi</td>
                 <td>Giá1</td>
                 <td>KL 1</td>
                 <td>Giá2</td>
@@ -90,7 +90,7 @@ Hello
             <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
             <tr v-for="item in stocks" class="row">
                 <td class="group0 text" :class="detectChangeClass(item)" v-bind:title="item.name">
-                    <span class="movable">{{item.id}}</span><i class="close">&times;</i>
+                    <span class="movable">{{item.id}}</span><i class="close" title="Close">&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
                 <td title="" class="group0 e">{{item.price0.reference}}</td>
@@ -115,9 +115,9 @@ Hello
                     {{item.live.buy[2].volume}}
                 </td>
 
-                <td title="" class="group0 text" :class="detectChangeClass(item)">FPT▲{{getChangeValue(item)}}</td>
                 <td title="" class="group0" :class="detectChangeClass(item)">{{item.live.match.price}}</td>
                 <td title="" class="group0" :class="detectChangeClass(item)">{{item.live.match.volume}}</td>
+                <td title="" class="group0 text" :class="detectChangeClass(item)">{{getChangeValue(item)}}</td>
 
                 <td title="" class="s" :class="detectChangeClass(item, item.live.sell[2].price)">
                     {{item.live.sell[2].price}}
