@@ -18,194 +18,206 @@
 </head>
 <body>
 <div id="app">
-    <div>
-        <input id="stockInput" type="text" style="color: #000" placeholder="CK1,CK2"/>
-    </div>
-    <div id="mobile" v-if="mobile">
-        <div class="row" v-for="item in stock.stocks">
-            <table>
+    <div id="content">
+        <div>
+            <input id="stockInput" type="text" style="color: #000" placeholder="CK1,CK2"/>
+        </div>
+        <div id="mobile" v-if="mobile">
+            <div class="row" v-for="item in stock.stocks">
+                <table>
+                    <thead>
+                    <tr>
+                        <td colspan="7">
+                            <span class="text" :class="stockGetChangeType(item)">{{item.id}}</span> - <span class="e">{{item.live.stats.totalVolume}}</span>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td title="" class="group0 c">{{item.price0.ceil}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[0].price)">{{item.live.buy[0].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[0].price)">{{item.live.buy[0].volume}}</td>
+                        <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.sell[2].price)">{{item.live.sell[2].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.sell[2].price)">{{item.live.sell[2].volume}}</td>
+                        <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.high)">
+                            {{item.live.stats.high}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td title="" class="group0 e">{{item.price0.reference}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[1].price)">{{item.live.buy[1].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[1].price)">{{item.live.buy[1].volume}}</td>
+                        <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.volume}}</td>
+                        <td :class="stockGetChangeType(item, item.live.sell[1].price)">{{item.live.sell[1].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.sell[1].price)">{{item.live.sell[1].volume}}</td>
+                        <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.average)">
+                            {{item.live.stats.average}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td title="" class="group0 f">{{item.price0.floor}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[2].price)">{{item.live.buy[2].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.buy[2].price)">{{item.live.buy[2].volume}}</td>
+                        <td title="" class="group0 text" :class="stockGetChangeType(item)">{{stockGetChangeValue(item)}}
+                        </td>
+                        <td :class="stockGetChangeType(item, item.live.sell[0].price)">{{item.live.sell[0].price}}</td>
+                        <td :class="stockGetChangeType(item, item.live.sell[0].price)">{{item.live.sell[0].volume}}</td>
+                        <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.low)">
+                            {{item.live.stats.low}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <div id="desktop" v-if="!mobile">
+            <table class="listStock" cellpadding="0" cellspacing="0">
+                <colgroup>
+                    <col width="3%">
+                    <col width="3.5%">
+                    <col width="3.5%">
+                    <col width="3.5%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="6%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="6%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                    <col width="4%">
+                </colgroup>
                 <thead>
-                <tr>
-                    <td colspan="7">
-                        <span class="text" :class="stockGetChangeType(item)">{{item.id}}</span> - <span class="e">{{item.live.stats.totalVolume}}</span>
-                    </td>
+                <tr class="header">
+                    <td class="group0" nowrap="" rowspan="2">Mã<br>CK</td>
+                    <td class="group0" nowrap="" rowspan="2">Trần</td>
+                    <td class="group0" rowspan="2">TC</td>
+                    <td class="group0" nowrap="" rowspan="2">Sàn</td>
+                    <td colspan="6">Dư mua</td>
+                    <td colspan="3" class="group0">Khớp lệnh</td>
+                    <td colspan="6">Dư bán</td>
+                    <td class="group0" rowspan="2">Tổng<br> KL</td>
+                    <td class="group0" colspan="3">Giá khớp</td>
+                    <td rowspan="2">NN<br>mua</td>
+                    <td rowspan="2">NN<br> bán</td>
+                </tr>
+                <tr class="header">
+                    <td>Giá3</td>
+                    <td>KL 3</td>
+                    <td>Giá2</td>
+                    <td>KL 2</td>
+                    <td>Giá1</td>
+                    <td>KL 1</td>
+                    <td class="group0">Giá</td>
+                    <td class="group0">KL</td>
+                    <td class="group0">Thay đổi</td>
+                    <td>Giá1</td>
+                    <td>KL 1</td>
+                    <td>Giá2</td>
+                    <td>KL 2</td>
+                    <td>Giá3</td>
+                    <td>KL 3</td>
+                    <td class="group0">Cao</td>
+                    <td class="group0">TB</td>
+                    <td class="group0">Thấp</td>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
+                <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
+                <tr v-for="item in stock.stocks" class="row">
+                    <td class="group0 text" :class="stockGetChangeType(item)" v-bind:title="item.name">
+                        <span class="movable text">{{item.id}}</span><i class="close" title="Close">&times;</i>
+                    </td>
                     <td title="" class="group0 c">{{item.price0.ceil}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[0].price)">{{item.live.buy[0].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[0].price)">{{item.live.buy[0].volume}}</td>
+                    <td title="" class="group0 e">{{item.price0.reference}}</td>
+                    <td title="" class="group0 f">{{item.price0.floor}}</td>
+
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
+                        {{item.live.buy[0].price}}
+                    </td>
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
+                        {{item.live.buy[0].volume}}
+                    </td>
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
+                        {{item.live.buy[1].price}}
+                    </td>
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
+                        {{item.live.buy[1].volume}}
+                    </td>
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
+                        {{item.live.buy[2].price}}
+                    </td>
+                    <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
+                        {{item.live.buy[2].volume}}
+                    </td>
+
                     <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.sell[2].price)">{{item.live.sell[2].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.sell[2].price)">{{item.live.sell[2].volume}}</td>
+                    <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.volume}}</td>
+                    <td title="" class="group0 text" :class="stockGetChangeType(item)">{{stockGetChangeValue(item)}}
+                    </td>
+
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
+                        {{item.live.sell[2].price}}
+                    </td>
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
+                        {{item.live.sell[2].volume}}
+                    </td>
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
+                        {{item.live.sell[1].price}}
+                    </td>
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
+                        {{item.live.sell[1].volume}}
+                    </td>
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
+                        {{item.live.sell[0].price}}
+                    </td>
+                    <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
+                        {{item.live.sell[0].volume}}
+                    </td>
+
+                    <td title="" class="group0 e">{{item.live.stats.totalVolume}}</td>
                     <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.high)">
                         {{item.live.stats.high}}
                     </td>
-                </tr>
-                <tr>
-                    <td title="" class="group0 e">{{item.price0.reference}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[1].price)">{{item.live.buy[1].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[1].price)">{{item.live.buy[1].volume}}</td>
-                    <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.volume}}</td>
-                    <td :class="stockGetChangeType(item, item.live.sell[1].price)">{{item.live.sell[1].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.sell[1].price)">{{item.live.sell[1].volume}}</td>
                     <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.average)">
                         {{item.live.stats.average}}
                     </td>
-                </tr>
-                <tr>
-                    <td title="" class="group0 f">{{item.price0.floor}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[2].price)">{{item.live.buy[2].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.buy[2].price)">{{item.live.buy[2].volume}}</td>
-                    <td title="" class="group0 text" :class="stockGetChangeType(item)">{{stockGetChangeValue(item)}}
-                    </td>
-                    <td :class="stockGetChangeType(item, item.live.sell[0].price)">{{item.live.sell[0].price}}</td>
-                    <td :class="stockGetChangeType(item, item.live.sell[0].price)">{{item.live.sell[0].volume}}</td>
                     <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.low)">
                         {{item.live.stats.low}}
+                    </td>
+
+                    <td class="q" :title="'Room còn lai: ' + item.live.foreign.buyRoom">
+                        {{item.live.foreign.buyVolume}}
+                    </td>
+                    <td class="q" :title="'Room còn lai: ' + item.live.foreign.sellRoom">
+                        {{item.live.foreign.sellVolume}}
                     </td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
-
     </div>
-    <div id="desktop" v-if="!mobile">
-        <table class="listStock" cellpadding="0" cellspacing="0">
-            <colgroup>
-                <col width="3%">
-                <col width="3.5%">
-                <col width="3.5%">
-                <col width="3.5%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="6%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="6%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-                <col width="4%">
-            </colgroup>
-            <thead>
-            <tr class="header">
-                <td class="group0" nowrap="" rowspan="2">Mã<br>CK</td>
-                <td class="group0" nowrap="" rowspan="2">Trần</td>
-                <td class="group0" rowspan="2">TC</td>
-                <td class="group0" nowrap="" rowspan="2">Sàn</td>
-                <td colspan="6">Dư mua</td>
-                <td colspan="3" class="group0">Khớp lệnh</td>
-                <td colspan="6">Dư bán</td>
-                <td class="group0" rowspan="2">Tổng<br> KL</td>
-                <td class="group0" colspan="3">Giá khớp</td>
-                <td rowspan="2">NN<br>mua</td>
-                <td rowspan="2">NN<br> bán</td>
-            </tr>
-            <tr class="header">
-                <td>Giá3</td>
-                <td>KL 3</td>
-                <td>Giá2</td>
-                <td>KL 2</td>
-                <td>Giá1</td>
-                <td>KL 1</td>
-                <td class="group0">Giá</td>
-                <td class="group0">KL</td>
-                <td class="group0">Thay đổi</td>
-                <td>Giá1</td>
-                <td>KL 1</td>
-                <td>Giá2</td>
-                <td>KL 2</td>
-                <td>Giá3</td>
-                <td>KL 3</td>
-                <td class="group0">Cao</td>
-                <td class="group0">TB</td>
-                <td class="group0">Thấp</td>
-            </tr>
-            </thead>
-            <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
-            <tr v-for="item in stock.stocks" class="row">
-                <td class="group0 text" :class="stockGetChangeType(item)" v-bind:title="item.name">
-                    <span class="movable text">{{item.id}}</span><i class="close" title="Close">&times;</i>
-                </td>
-                <td title="" class="group0 c">{{item.price0.ceil}}</td>
-                <td title="" class="group0 e">{{item.price0.reference}}</td>
-                <td title="" class="group0 f">{{item.price0.floor}}</td>
-
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
-                    {{item.live.buy[0].price}}
-                </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
-                    {{item.live.buy[0].volume}}
-                </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
-                    {{item.live.buy[1].price}}
-                </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
-                    {{item.live.buy[1].volume}}
-                </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
-                    {{item.live.buy[2].price}}
-                </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
-                    {{item.live.buy[2].volume}}
-                </td>
-
-                <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.price}}</td>
-                <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.volume}}</td>
-                <td title="" class="group0 text" :class="stockGetChangeType(item)">{{stockGetChangeValue(item)}}</td>
-
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
-                    {{item.live.sell[2].price}}
-                </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
-                    {{item.live.sell[2].volume}}
-                </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
-                    {{item.live.sell[1].price}}
-                </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
-                    {{item.live.sell[1].volume}}
-                </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
-                    {{item.live.sell[0].price}}
-                </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
-                    {{item.live.sell[0].volume}}
-                </td>
-
-                <td title="" class="group0 e">{{item.live.stats.totalVolume}}</td>
-                <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.high)">
-                    {{item.live.stats.high}}
-                </td>
-                <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.average)">
-                    {{item.live.stats.average}}
-                </td>
-                <td title="" class="group0" :class="stockGetChangeType(item, item.live.stats.low)">
-                    {{item.live.stats.low}}
-                </td>
-
-                <td class="q" :title="'Room còn lai: ' + item.live.foreign.buyRoom">{{item.live.foreign.buyVolume}}</td>
-                <td class="q" :title="'Room còn lai: ' + item.live.foreign.sellRoom">{{item.live.foreign.sellVolume}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div id="passcodeContainer" v-if="!owner">
+        <div>
+            <input id="password" type="password" placeholder="Enter passcode">
+        </div>
     </div>
+    <div id="userinfo"><a href="#" onclick="doLogout()">Logout</a></div>
 </div>
 <script src="./app.js"></script>
 <script src="model.js"></script>

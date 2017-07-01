@@ -37,13 +37,14 @@ function Firebase() {
                     callback(o);
             });
     };
+
+    this.getOwner = function(passcode, callback) {
+        database.ref('users/' + passcode).once('value').then(function(snapshot){
+            var owner = snapshot.val();
+            callback(owner);
+        });
+    }
 }
 
 var fb = new Firebase();
 fb.init();
-fb.setOnStockChangedListener('anh', 'default', function (codes) {
-    console.log("stock changed", codes);
-    APP.stock.codes = codes;
-
-    mbsRest.reload();
-});
