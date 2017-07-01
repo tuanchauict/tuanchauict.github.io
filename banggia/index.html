@@ -89,8 +89,8 @@ Hello
             </thead>
             <tbody v-sortable="{onUpdate: onSortUpdate, animation: true, handle: '.movable'}">
             <tr v-for="item in stocks" class="row">
-                <td class="group0 text" :class="detectChangeClass(item, 100)" v-bind:title="item.name">
-                    <span class="movable">{{item.id}}</span><i class="close" title="Close">&times;</i>
+                <td class="group0 text" :class="detectChangeClass(item)" v-bind:title="item.name">
+                    <span class="movable text">{{item.id}}</span><i class="close" title="Close">&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
                 <td title="" class="group0 e">{{item.price0.reference}}</td>

@@ -36,19 +36,24 @@ body * {
 #desktop table tbody tr td.group0 {
   background-color: #1d1d1d;
 }
-#desktop table tbody tr td.i {
+#desktop table tbody tr td.i,
+#desktop table tbody tr td.i .text {
   color: #0f0;
 }
-#desktop table tbody tr td.d {
+#desktop table tbody tr td.d,
+#desktop table tbody tr td.d .text {
   color: #f00;
 }
-#desktop table tbody tr td.c {
+#desktop table tbody tr td.c,
+#desktop table tbody tr td.c .text {
   color: #f0f;
 }
-#desktop table tbody tr td.f {
+#desktop table tbody tr td.f,
+#desktop table tbody tr td.f .text {
   color: #6ff;
 }
-#desktop table tbody tr td.e {
+#desktop table tbody tr td.e,
+#desktop table tbody tr td.e .text {
   color: #ff0;
 }
 #desktop table tbody tr td .close {
