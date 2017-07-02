@@ -46,5 +46,4 @@ function Firebase() {
     }
 }
 
-var fb = new Firebase();
-fb.init();
+

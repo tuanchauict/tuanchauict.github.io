@@ -1,3 +1,5 @@
+var tbodySortable;
+
 ;(function () {
 
     var vSortable = {};
@@ -15,9 +17,12 @@
     vSortable.install = function (Vue) {
         Vue.directive('sortable', {
             bind: function (el, binding, vnode) {
+                // console.log("Con heo", binding, vnode);
                 options = binding.value || {};
 
-                var sortable = new Sortable(el, options);
+                var sortable = Sortable.create(el, options);
+                console.log(sortable);
+                tbodySortable = sortable;
 
                 const vm = vnode.context;
                 if (binding.arg && !vm.sortable) {
@@ -28,6 +33,7 @@
                 if (binding.arg && vm.sortable[binding.arg]) {
                     console.warn('[vue-sortable] cannot set already defined sortable id: \'' + binding.arg + '\'');
                 } else if( binding.arg ) {
+                    // console.log(binding.arg, vm);
                     vm.sortable[binding.arg] = sortable
                 }
             }
