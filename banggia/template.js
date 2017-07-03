@@ -2,16 +2,8 @@
  * Created by tuanchau on 6/28/17.
  */
 
-var localTd = {
-    template: '#desktopTr',
-    props: ['item'],
-    name: 'local-td'
-};
 
 var localTable = {
-    components:{
-        localTd:localTd
-    },
     template: '#desktopTable',
     props: ['value'],
     name: 'local-table',
@@ -23,6 +15,21 @@ var localTable = {
             set: function(value) {
                 this.$emit('input', value)
             }
+        }
+    },
+    methods: {
+        stockGetChangeType: detectStockValueChangeType,
+        stockGetChangeValue: getStockChangeValue,
+        onUpdate: function(){
+            console.log("con heo");
+            this.$emit('end');
+        },
+        onRemove: function(index){
+            console.log('remove', index);
+            this.list.splice(index, 1);
+            this.$emit('end');
+
+
         }
     }
 };

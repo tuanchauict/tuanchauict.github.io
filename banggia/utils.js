@@ -8,11 +8,12 @@ var Store = {
 var Url = {
     proxy: 'http://herokuperoxy-1-us.herokuapp.com/proxy/?url=',
     mbsHttp: {
-        full: 'http://quote24pro.mbs.com.vn/Handler/LoadFull.ashx?Sequence=0&TradingCenter=&listCode={{code}}&{}',
-        change: 'http://quote24pro.mbs.com.vn/Handler/Mixed/LoadChange.ashx?Sequence=333350&TradingCenter=&ListCode={{code}}&{}&_=' + new Date().getTime(),
+        full: 'http://quote24pro.mbs.com.vn/Handler/LoadFull.ashx?Sequence=0&TradingCenter=&listCode={{code}}&{}&_={{timestamp}}',
+        change: 'http://quote24pro.mbs.com.vn/Handler/Mixed/LoadChange.ashx?Sequence=333350&TradingCenter=&ListCode={{code}}&{}&_={{timestamp}}',
 
         toUrl: function (url, codes) {
-            return Url.proxy + encodeURIComponent(url.replace('{{code}}', codes.join(',')));
+            url = url.replace('{{code}}', codes.join(',')).replace('{{timestamp}}', new Date().getTime());
+            return Url.proxy + encodeURIComponent(url);
         }
     },
     mbsWebsocket: [

@@ -1,8 +1,3 @@
-var sample = [];
-for(var i = 0; i < 5; i++){
-    sample.push(makeSample('00' + i));
-}
-
 var APP = new Vue({
     components:{
         localTable:localTable
@@ -12,31 +7,19 @@ var APP = new Vue({
         owner: localStorage.getItem('owner'),
         stock: {
             codes: [],
-            stocks: sample
+            stocks: []
         }
     },
     computed: {
         mobile: detectMobile
     },
     methods: {
-        onSortUpdate: function (event) {
-            // console.log("update", event);
+        onStocksChanged: function (event) {
+            console.log("update", event);
             console.log(this.stock.stocks);
-            // var el = tbodySortable.closest(event.item);
-            // console.log(el);
+            console.log(this.stock.codes);
+            fb.write(this.owner, 'default', this.stock.codes);
         },
-        onRemoveItemClicked: function(index){
-            // tbodySortable.destroy();
-            var stocks = this.stock.stocks;
-            // // this.stock.stocks = [];
-            stocks.splice(index, 1);
-            // // this.stock.stocks = stocks;
-            // var el = editableList.closest(evt.item); // get dragged item
-            // el && el.parentNode.removeChild(el);
-
-        },
-        stockGetChangeType: detectStockValueChangeType,
-        stockGetChangeValue: getStockChangeValue,
         onPasswordKeyUp: function (e) {
             if(event.keyCode === 13){
                 var s = e.target.value;
@@ -58,11 +41,11 @@ var APP = new Vue({
             if(event.keyCode === 13){
                 var s = e.target.value;
                 e.target.value = '';
-                var uCodes = s.split(',');
+                var uCodes = s.split(/\s*,\s*/);
                 var codes = APP.stock.codes;
                 var code;
                 for(var i = 0; i < uCodes.length; i++){
-                    code = uCodes[i].toUpperCase();
+                    code = uCodes[i].trim().toUpperCase();
                     if(_ListStockInfo.hasOwnProperty(code) && !(code in codes)){
                         codes.push(code);
                     } else {
@@ -72,22 +55,27 @@ var APP = new Vue({
 
                 fb.write(APP.owner, 'default', codes);
             }
+        },
+        doLogout: function(){
+            this.owner = null;
+            localStorage.removeItem('owner')
         }
+
     }
 });
 
 var fb = new Firebase();
-// fb.init();
+fb.init();
 
 function listenToFirebase(owner){
     if(!owner)
         return;
     fb.setOnStockChangedListener(owner, 'default', function (codes) {
         console.log("stock changed", codes);
-        // APP.stock.codes = codes;
+        APP.stock.codes = codes;
 
-        // mbsRest.reload();
+        mbsRest.reload();
     });
 }
 
-// listenToFirebase(APP.owner);
+listenToFirebase(APP.owner);

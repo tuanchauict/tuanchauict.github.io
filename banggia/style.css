@@ -36,10 +36,12 @@ body * {
 }
 #userinfo {
   position: absolute;
-  right: 0;
+  right: 10pt;
+  top: 10pt;
 }
 #userinfo a {
   color: #0ff;
+  font-size: 14pt;
 }
 #mobile,
 #mobile * {
@@ -69,6 +71,13 @@ body * {
 #mobile .row table td:nth-child(4) {
   width: 22%;
   text-align: center;
+}
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20pt;
+  padding: 10pt;
+  color: #fff;
 }
 #desktop .col1 {
   width: 3%;
@@ -104,12 +113,8 @@ body * {
 #desktop .col20 {
   width: 6%;
 }
-#desktop .row {
-  color: #fff;
-}
 #desktop table {
   width: 100%;
-  border-top: #505050 1pt solid;
 }
 #desktop table td {
   border-right: #505050 1pt solid;

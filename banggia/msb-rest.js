@@ -97,6 +97,7 @@ var mbsRest = (function () {
     };
 
     var reload = function (callback) {
+        console.log(APP.stock.codes);
         get(Url.mbsHttp.toUrl(Url.mbsHttp.full, APP.stock.codes), function (text) {
             var lines = text.split("|")[2].split("#");
             var set = new Set();
@@ -131,7 +132,7 @@ var mbsRest = (function () {
                 }
             }
 
-            // APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
+            APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
             // console.log(APP.stock.stocks);
             if (callback) {
                 callback();
@@ -140,12 +141,12 @@ var mbsRest = (function () {
     };
 
     reload(function () {
-        // setInterval(function () {
-        //     get(Url.mbsHttp.toUrl(Url.mbsHttp.change, APP.stock.codes), function (text) {
-        //         // console.log(text);
-        //         //TODO
-        //     })
-        // }, 1000);
+        setInterval(function () {
+            get(Url.mbsHttp.toUrl(Url.mbsHttp.change, APP.stock.codes), function (text) {
+                // console.log(text);
+                //TODO
+            })
+        }, 1000);
     });
 
     return {
