@@ -101,7 +101,7 @@ var mbsRest = (function () {
             var lines = text.split("|")[2].split("#");
             var set = new Set();
             var codes = APP.stock.codes;
-            console.log(codes);
+            // console.log(codes);
             var i;
             for (i = 0; i < codes.length; i++) {
                 set.add(codes[i]);
@@ -118,7 +118,7 @@ var mbsRest = (function () {
                 if (set.has(f3)) {
                     stock = parse(line);
                     map[stock.id] = stock;
-                    console.log(stock);
+                    // console.log(stock);
                 }
             }
 
@@ -131,8 +131,8 @@ var mbsRest = (function () {
                 }
             }
 
-            APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
-            console.log(APP.stock.stocks);
+            // APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
+            // console.log(APP.stock.stocks);
             if (callback) {
                 callback();
             }

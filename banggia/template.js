@@ -2,13 +2,27 @@
  * Created by tuanchau on 6/28/17.
  */
 
-Vue.component('stock-header', {
-    props: ['mobile'],
-    template: ''
-});
+var localTd = {
+    template: '#desktopTr',
+    props: ['item'],
+    name: 'local-td'
+};
 
-Vue.component('stock-row', {
-    props: ['mobile', 'data'],
-    template:  '<li>{{mobile ? "Mobile" : "Desktop"}} - {{data.id}} - {{data.name}}</li>'
-});
-
+var localTable = {
+    components:{
+        localTd:localTd
+    },
+    template: '#desktopTable',
+    props: ['value'],
+    name: 'local-table',
+    computed: {
+        list: {
+            get: function() {
+                return this.value
+            },
+            set: function(value) {
+                this.$emit('input', value)
+            }
+        }
+    }
+};

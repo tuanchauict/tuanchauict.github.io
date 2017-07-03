@@ -70,6 +70,43 @@ body * {
   width: 22%;
   text-align: center;
 }
+#desktop .col1 {
+  width: 3%;
+}
+#desktop .col2,
+#desktop .col3,
+#desktop .col4 {
+  width: 3.5%;
+}
+#desktop .col5,
+#desktop .col6,
+#desktop .col7,
+#desktop .col8,
+#desktop .col9,
+#desktop .col10,
+#desktop .col11,
+#desktop .col12,
+#desktop .col14,
+#desktop .col15,
+#desktop .col16,
+#desktop .col17,
+#desktop .col18,
+#desktop .col19,
+#desktop .col21,
+#desktop .col22,
+#desktop .col23,
+#desktop .col24,
+#desktop .col25,
+#desktop .col26 {
+  width: 4%;
+}
+#desktop .col13,
+#desktop .col20 {
+  width: 6%;
+}
+#desktop .row {
+  color: #fff;
+}
 #desktop table {
   width: 100%;
   border-top: #505050 1pt solid;

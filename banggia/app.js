@@ -1,10 +1,18 @@
+var sample = [];
+for(var i = 0; i < 5; i++){
+    sample.push(makeSample('00' + i));
+}
+
 var APP = new Vue({
+    components:{
+        localTable:localTable
+    },
     el: '#app',
     data: {
         owner: localStorage.getItem('owner'),
         stock: {
             codes: [],
-            stocks: []
+            stocks: sample
         }
     },
     computed: {
@@ -13,7 +21,7 @@ var APP = new Vue({
     methods: {
         onSortUpdate: function (event) {
             // console.log("update", event);
-            // console.log(this.stock.stocks);
+            console.log(this.stock.stocks);
             // var el = tbodySortable.closest(event.item);
             // console.log(el);
         },
@@ -69,17 +77,17 @@ var APP = new Vue({
 });
 
 var fb = new Firebase();
-fb.init();
+// fb.init();
 
 function listenToFirebase(owner){
     if(!owner)
         return;
     fb.setOnStockChangedListener(owner, 'default', function (codes) {
         console.log("stock changed", codes);
-        APP.stock.codes = codes;
+        // APP.stock.codes = codes;
 
-        mbsRest.reload();
+        // mbsRest.reload();
     });
 }
 
-listenToFirebase(APP.owner);
+// listenToFirebase(APP.owner);
