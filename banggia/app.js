@@ -14,9 +14,17 @@ var APP = new Vue({
         mobile: detectMobile
     },
     methods: {
+        stockGetChangeType: detectStockValueChangeType,
+        stockGetChangeValue: getStockChangeValue,
         onStocksChanged: function (event) {
             console.log("update", event);
             console.log(this.stock.stocks);
+            var codes = [];
+            var stocks = this.stock.stocks;
+            for(var i = 0; i < stocks.length; i++){
+                codes.push(stocks[i].id);
+            }
+            this.stock.codes = codes;
             console.log(this.stock.codes);
             fb.write(this.owner, 'default', this.stock.codes);
         },

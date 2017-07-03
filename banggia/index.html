@@ -84,7 +84,7 @@
             <td class="group0">Thấp</td>
         </tr>
         </thead>
-        <draggable :element="'tbody'" :list="list" @end="onUpdate()" :options="{animation: 100}">
+        <draggable :element="'tbody'" :list="list" @end="onUpdate()" :options="{animation: 100, handle: '.movable'}">
             <tr v-for="(item, index) in list" style="color: #fff" :key="item">
                 <td class="group0 text" :class="stockGetChangeType(item)" v-bind:title="item.name">
                     <span class="movable text">{{item.id}}</span>
@@ -167,6 +167,7 @@
                    v-on:keyup="onStockInputKeyUp"/>
         </div>
         <div id="mobile" v-if="mobile">
+            <draggable >
             <div class="row" v-for="item in stock.stocks">
                 <table>
                     <thead>
@@ -215,6 +216,7 @@
                 </table>
 
             </div>
+            </draggable>
 
         </div>
         <div id="desktop" v-if="!mobile">
