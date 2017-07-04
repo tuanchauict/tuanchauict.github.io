@@ -74,16 +74,59 @@ function normaliseAmount(number) {
     while (number > 0) {
         low = number % 1000;
         number = Math.floor(number / 1000);
-        p = number == 0 ? '' : low >= 100 ? '' : low >= 10 ? '0' : '00';
+        p = number === 0 ? '' : low >= 100 ? '' : low >= 10 ? '0' : '00';
         r = p + low + ',' + r;
     }
     return r;
 }
 
+function checkChangeObject(oldObject, newObject, keys){
+    for (var i  = 0; i < keys.length; i++){
+        var key = keys[i];
+        if(newObject[key] && oldObject[key] !== newObject[key]){
+            oldObject[key + 'Update'] = 3;
+        }
+    }
+}
 
+function checkChange(oldStock, newStock){
+    var lo = oldStock.live;
+    var ln = newStock.live;
+
+    checkChangeObject(lo.match, ln.match, ['price', 'volume']);
+    for(var i = 0; i < 3; i++){
+        checkChangeObject(lo.buy[i].match, ln.buy[i].match, ['price', 'volume']);
+        checkChangeObject(lo.sell[i].match, ln.sell[i].match, ['price', 'volume']);
+    }
+    checkChangeObject(lo.stats, ln.stats, ['totalVolume', 'high', 'low', 'average']);
+    checkChangeObject(lo.foreign, ln.foreign, ['buyVolume', 'buyRoom', 'sellAmount', 'sellRoom']);
+}
 
 function updateStock(oldStocks, newStocks) {
-    return newStocks;
+    var m = {};
+    var i;
+    var stock;
+    var id;
+    for(i = 0; i < oldStocks.length; i++){
+        stock = oldStocks[i];
+        m[stock.id] = stock;
+    }
+    for(i = 0; i < newStocks.length; i++){
+        stock = newStocks[i];
+        id = stock.id;
+        if(m.hasOwnProperty(id)){
+            checkChange(m[id], stock);
+        } else {
+            m[id] = stock;
+        }
+    }
+    var stocks = [];
+    for(i = 0; i < newStocks.length; i++){
+        id = newStocks[i].id;
+        stocks.push(m[id]);
+    }
+
+    return stocks;
 }
 
 function detectStockValueChangeType(item, value) {
@@ -117,3 +160,4 @@ function getStockChangeValue(item) {
     var percent = Math.abs(diff) / item.price0.reference * 100;
     return (increase ? '+' : '') + round(diff, 100) + (increase ? '▲' : '▼') + round(percent, 100) + '%';
 }
+

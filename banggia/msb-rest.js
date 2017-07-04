@@ -96,6 +96,21 @@ var mbsRest = (function () {
         }
     };
 
+    var parseRealtime = function(stock, text){
+       if(stock === null){
+            stock = {
+                live: {
+                    match: {},
+                    buy: {},
+                    sell: {},
+                    stats: {},
+                    foreign: {}
+                }
+            };
+       }
+
+    };
+
     var reload = function (callback) {
         console.log(APP.stock.codes);
         get(Url.mbsHttp.toUrl(Url.mbsHttp.full, APP.stock.codes), function (text) {
@@ -144,7 +159,19 @@ var mbsRest = (function () {
         setInterval(function () {
             get(Url.mbsHttp.toUrl(Url.mbsHttp.change, APP.stock.codes), function (text) {
                 // console.log(text);
-                //TODO
+                var codes = APP.stock.codes;
+                var set = new Set();
+                var i;
+                for (i = 0; i < codes.length; i++) {
+                    set.add(codes[i]);
+                }
+
+                var lines = text.split('#');
+                for(i = 0; i < lines.length; i++){
+                    var line = lines[i].substr(4);
+
+                }
+
             })
         }, 1000);
     });
