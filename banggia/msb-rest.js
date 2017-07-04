@@ -143,7 +143,7 @@ var mbsRest = (function () {
     reload(function () {
         setInterval(function () {
             get(Url.mbsHttp.toUrl(Url.mbsHttp.full, APP.stock.codes), function (text) {
-                console.log(text);
+                // console.log(text);
                 //TODO
                 var lines = text.split("|")[2].split("#");
                 var set = new Set();
