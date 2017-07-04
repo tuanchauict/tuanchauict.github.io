@@ -142,9 +142,48 @@ var mbsRest = (function () {
 
     reload(function () {
         setInterval(function () {
-            get(Url.mbsHttp.toUrl(Url.mbsHttp.change, APP.stock.codes), function (text) {
-                // console.log(text);
+            get(Url.mbsHttp.toUrl(Url.mbsHttp.full, APP.stock.codes), function (text) {
+                console.log(text);
                 //TODO
+                var lines = text.split("|")[2].split("#");
+                var set = new Set();
+                var codes = APP.stock.codes;
+                // console.log(codes);
+                var i;
+                for (i = 0; i < codes.length; i++) {
+                    set.add(codes[i]);
+                }
+                var line;
+                var f3;
+
+                var stock;
+                var map = {};
+
+                for (i = 0, l = lines.length; i < l; i++) {
+                    line = lines[i];
+                    f3 = line.substr(0, 3);
+                    if (set.has(f3)) {
+                        stock = parse(line);
+                        map[stock.id] = stock;
+                        // console.log(stock);
+                    }
+                }
+
+                var stocks = [];
+                var code;
+                for(i = 0, l = codes.length; i < l; i++){
+                    code = codes[i];
+                    if(map.hasOwnProperty(code)){
+                        stocks.push(map[codes[i]]);
+                    }
+                }
+
+                APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
+                // console.log(APP.stock.stocks);
+                // if (callback) {
+                //     callback();
+                // }
+
             })
         }, 1000);
     });
