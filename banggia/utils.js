@@ -98,6 +98,9 @@ function checkChange(oldStock, newStock){
         checkChangeObject(lo.buy[i], ln.buy[i], ['price', 'volume']);
         checkChangeObject(lo.sell[i], ln.sell[i], ['price', 'volume']);
     }
+    oldStock.price0 = newStock.price0;
+    oldStock.live.stats = newStock.live.stats;
+    oldStock.live.foreign = newStock.live.foreign;
     // checkChangeObject(lo.stats, ln.stats, ['totalVolume', 'high', 'low', 'average']);
     // checkChangeObject(lo.foreign, ln.foreign, ['buyVolume', 'buyRoom', 'sellAmount', 'sellRoom']);
 }
