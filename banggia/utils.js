@@ -84,22 +84,22 @@ function checkChangeObject(oldObject, newObject, keys){
     for (var i  = 0; i < keys.length; i++){
         var key = keys[i];
         if(newObject[key] && oldObject[key] !== newObject[key]){
-            oldObject[key + 'Update'] = 3;
+            oldObject[key + 'Update'] = 0.8;
         }
+        oldObject[key] = newObject[key];
     }
 }
 
 function checkChange(oldStock, newStock){
     var lo = oldStock.live;
     var ln = newStock.live;
-
     checkChangeObject(lo.match, ln.match, ['price', 'volume']);
     for(var i = 0; i < 3; i++){
-        checkChangeObject(lo.buy[i].match, ln.buy[i].match, ['price', 'volume']);
-        checkChangeObject(lo.sell[i].match, ln.sell[i].match, ['price', 'volume']);
+        checkChangeObject(lo.buy[i], ln.buy[i], ['price', 'volume']);
+        checkChangeObject(lo.sell[i], ln.sell[i], ['price', 'volume']);
     }
-    checkChangeObject(lo.stats, ln.stats, ['totalVolume', 'high', 'low', 'average']);
-    checkChangeObject(lo.foreign, ln.foreign, ['buyVolume', 'buyRoom', 'sellAmount', 'sellRoom']);
+    // checkChangeObject(lo.stats, ln.stats, ['totalVolume', 'high', 'low', 'average']);
+    // checkChangeObject(lo.foreign, ln.foreign, ['buyVolume', 'buyRoom', 'sellAmount', 'sellRoom']);
 }
 
 function updateStock(oldStocks, newStocks) {

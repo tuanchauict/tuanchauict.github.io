@@ -94,46 +94,46 @@
                 <td title="" class="group0 e">{{item.price0.reference}}</td>
                 <td title="" class="group0 f">{{item.price0.floor}}</td>
 
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price) + (item.live.buy[0].priceUpdate ? ' change' : '')">
                     {{item.live.buy[0].price}}
                 </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[0].price) + (item.live.buy[0].volumeUpdate ? ' change' : '')">
                     {{item.live.buy[0].volume}}
                 </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price) + (item.live.buy[1].priceUpdate ? ' change' : '')">
                     {{item.live.buy[1].price}}
                 </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[1].price) + (item.live.buy[1].volumeUpdate ? ' change' : '')">
                     {{item.live.buy[1].volume}}
                 </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price) + (item.live.buy[2].priceUpdate ? ' change' : '')">
                     {{item.live.buy[2].price}}
                 </td>
-                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price)">
+                <td title="" class="b" :class="stockGetChangeType(item, item.live.buy[2].price) + (item.live.buy[2].volumeUpdate ? ' change' : '')">
                     {{item.live.buy[2].volume}}
                 </td>
 
-                <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.price}}</td>
-                <td title="" class="group0" :class="stockGetChangeType(item)">{{item.live.match.volume}}</td>
-                <td title="" class="group0 text" :class="stockGetChangeType(item)">{{stockGetChangeValue(item)}}
+                <td title="" class="group0" :class="stockGetChangeType(item) + (item.live.match.priceUpdate ? ' change' : '')">{{item.live.match.price}}</td>
+                <td title="" class="group0" :class="stockGetChangeType(item) + (item.live.match.volumeUpdate ? ' change' : '')">{{item.live.match.volume}}</td>
+                <td title="" class="group0 text" :class="stockGetChangeType(item) + (item.live.match.priceUpdate ? ' change' : '')">{{stockGetChangeValue(item)}}
                 </td>
 
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price) + (item.live.buy[2].priceUpdate ? ' change' : '')">
                     {{item.live.sell[2].price}}
                 </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[2].price) + (item.live.buy[2].volumeUpdate ? ' change' : '')">
                     {{item.live.sell[2].volume}}
                 </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price) + (item.live.buy[1].priceUpdate ? ' change' : '')">
                     {{item.live.sell[1].price}}
                 </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[1].price) + (item.live.buy[1].volumeUpdate ? ' change' : '')">
                     {{item.live.sell[1].volume}}
                 </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price) + (item.live.buy[0].priceUpdate ? ' change' : '')">
                     {{item.live.sell[0].price}}
                 </td>
-                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price)">
+                <td title="" class="s" :class="stockGetChangeType(item, item.live.sell[0].price) + (item.live.buy[0].volumeUpdate ? ' change' : '')">
                     {{item.live.sell[0].volume}}
                 </td>
 

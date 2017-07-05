@@ -79,6 +79,9 @@ body * {
   padding: 10pt;
   color: #fff;
 }
+.change {
+  background: #283593 !important;
+}
 #desktop .col1 {
   width: 3%;
 }
@@ -183,7 +186,7 @@ body * {
   width: 100%;
 }
 #desktop table tbody tr:hover td {
-  border-bottom: #f00 2pt solid;
+  border-bottom: #f00 1.5pt solid;
 }
 #desktop table tbody tr:hover td .close {
   display: inline;

@@ -87,3 +87,31 @@ function listenToFirebase(owner){
 }
 
 listenToFirebase(APP.owner);
+
+
+function updateValue(v, delta) {
+    if(v && v > 0){
+        return v - delta;
+    } else
+        return 0;
+}
+//
+setInterval(function() {
+    var stocks = APP.stock.stocks;
+    var live;
+    var stock;
+    var j;
+    for(var i = 0; i < stocks.length; i++){
+        stock = stocks[i];
+        live = stock.live;
+        live.match.priceUpdate = updateValue(live.match.priceUpdate, 0.5);
+        live.match.volumeUpdate = updateValue(live.match.volumeUpdate, 0.5);
+
+        for(j = 0; j < 3; j++){
+            live.buy[j].priceUpdate = updateValue(live.buy[j].priceUpdate, 0.5);
+            live.buy[j].volumeUpdate = updateValue(live.buy[j].volumeUpdate, 0.5);
+            live.sell[j].priceUpdate = updateValue(live.sell[j].priceUpdate, 0.5);
+            live.sell[j].volumeUpdate = updateValue(live.sell[j].volumeUpdate, 0.5);
+        }
+    }
+}, 200);
