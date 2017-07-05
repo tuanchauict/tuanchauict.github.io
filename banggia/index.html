@@ -167,7 +167,7 @@
                    v-on:keyup="onStockInputKeyUp"/>
         </div>
         <div id="mobile" v-if="mobile">
-            <draggable >
+            <draggable :options="{animation: 100, handle: 'thead'}" >
             <div class="row" v-for="item in stock.stocks">
                 <table>
                     <thead>
