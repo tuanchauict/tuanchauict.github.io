@@ -125,14 +125,14 @@ var mbsRest = (function () {
 
             var stocks = [];
             var code;
-            for(i = 0, l = codes.length; i < l; i++){
+            for (i = 0, l = codes.length; i < l; i++) {
                 code = codes[i];
-                if(map.hasOwnProperty(code)){
+                if (map.hasOwnProperty(code)) {
                     stocks.push(map[codes[i]]);
                 }
             }
-
-            APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
+            if (APP.owner)
+                APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
             // console.log(APP.stock.stocks);
             if (callback) {
                 callback();
@@ -171,15 +171,15 @@ var mbsRest = (function () {
 
                 var stocks = [];
                 var code;
-                for(i = 0, l = codes.length; i < l; i++){
+                for (i = 0, l = codes.length; i < l; i++) {
                     code = codes[i];
-                    if(map.hasOwnProperty(code)){
+                    if (map.hasOwnProperty(code)) {
                         stocks.push(map[codes[i]]);
                     }
                 }
 
-                APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
-                console.log(APP.stock.stocks);
+                if (APP.owner)
+                    APP.stock.stocks = updateStock(APP.stock.stocks, stocks);
             })
         }, 1000);
     });

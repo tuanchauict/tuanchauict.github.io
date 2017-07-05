@@ -66,7 +66,10 @@ var APP = new Vue({
         },
         doLogout: function(){
             this.owner = null;
-            localStorage.removeItem('owner')
+            this.stock.codes = [];
+            this.stock.stocks = [];
+            localStorage.removeItem('owner');
+            console.log(this.owner);
         }
 
     }
