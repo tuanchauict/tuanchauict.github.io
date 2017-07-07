@@ -86,8 +86,8 @@
         </thead>
         <draggable :element="'tbody'" :list="list" @end="onUpdate()" :options="{animation: 100, handle: '.movable'}">
             <tr v-for="(item, index) in list" style="color: #fff" :key="item">
-                <td class="group0 text" :class="stockGetChangeType(item)" v-bind:title="item.name">
-                    <span class="movable text">{{item.id}}</span>
+                <td class="group0 text movable" :class="stockGetChangeType(item)" v-bind:title="item.name" style="position:relative;">
+                    <span class="text"><a :href="'https://banggia-hcm.vndirect.com.vn/chart/?symbol=' + item.id" target="_blank">{{item.id}}</a></span>
                     <i class="close" title="Remove" @click="onRemove(index)">&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
@@ -167,12 +167,13 @@
                    v-on:keyup="onStockInputKeyUp"/>
         </div>
         <div id="mobile" v-if="mobile">
-            <draggable :options="{animation: 100, handle: 'thead'}" >
+            <draggable :options="{animation: 100, handle: '.movable'}" >
             <div class="row" v-for="item in stock.stocks">
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="7">
+                        <td colspan="7" style="position:relative;">
+                            <img class="movable" src=""/>
                             <span class="text" :class="stockGetChangeType(item)">{{item.id}}</span> - <span class="e">{{item.live.stats.totalVolume}}</span>
                         </td>
                     </tr>
