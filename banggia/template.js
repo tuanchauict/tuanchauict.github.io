@@ -28,8 +28,10 @@ var localTable = {
             console.log('remove', index);
             this.list.splice(index, 1);
             this.$emit('end');
-
-
+        },
+        onLinkClicked: function (id) {
+            console.log("click", id);
+            window.open('https://banggia-hcm.vndirect.com.vn/chart/?symbol=' + id, '_blank');
         }
     }
 };

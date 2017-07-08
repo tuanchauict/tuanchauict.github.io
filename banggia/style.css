@@ -43,6 +43,9 @@ body * {
   color: #0ff;
   font-size: 14pt;
 }
+.link {
+  cursor: pointer;
+}
 #mobile,
 #mobile * {
   font-size: 24pt;

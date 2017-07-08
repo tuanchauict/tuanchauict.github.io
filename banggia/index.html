@@ -87,7 +87,7 @@
         <draggable :element="'tbody'" :list="list" @end="onUpdate()" :options="{animation: 100, handle: '.movable'}">
             <tr v-for="(item, index) in list" style="color: #fff" :key="item">
                 <td class="group0 text movable" :class="stockGetChangeType(item)" v-bind:title="item.name" style="position:relative;">
-                    <span class="text"><a :href="'https://banggia-hcm.vndirect.com.vn/chart/?symbol=' + item.id" target="_blank">{{item.id}}</a></span>
+                    <span class="text link" @click="onLinkClicked(item.id)" title="Xem biểu đồ kỹ thuật">{{item.id}}</span>
                     <i class="close" title="Remove" @click="onRemove(index)">&times;</i>
                 </td>
                 <td title="" class="group0 c">{{item.price0.ceil}}</td>
