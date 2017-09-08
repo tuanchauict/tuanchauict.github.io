@@ -31,7 +31,7 @@
                 </div>
 
             </md-toolbar>
-            <div v-if="hasOrderList">
+            <div v-if="hasOrderList()">
                 <md-list class="md-double-line">
                     <md-list-item v-for="item in allOrderList" :key="item.name" @click="selectOrderList(item)">
                         <!--<md-icon class="md-primary">list</md-icon>-->
@@ -51,6 +51,7 @@
                 <md-icon>add</md-icon>
             </md-button>
         </md-sidenav>
+
 
     </div>
 

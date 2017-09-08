@@ -40,8 +40,15 @@ function Firebase() {
         orderList.child(id).set({
             id: id,
             name: name,
-            createdDate: new Date().toISOString()
+            createdDate: new Date().toISOString(),
+            removable: true
         });
+
+        orderListDetail.child(id).child('_non_removable').set({
+           removable: false
+        });
+
+        return id;
     };
 
     this.removeOrderList = function (id) {
