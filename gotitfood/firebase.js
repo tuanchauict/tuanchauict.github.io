@@ -53,6 +53,7 @@ function Firebase() {
 
     this.removeOrderList = function (id) {
         orderList.child(id).remove();
+        orderListDetail.child(id).remove();
     };
 
     this.cloneOrderList = function (orderList) {
