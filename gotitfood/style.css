@@ -1,0 +1,6 @@
+.hover-only {
+  display: none !important;
+}
+.hover-only:hover {
+  display: inherit !important;
+}

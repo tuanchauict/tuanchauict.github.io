@@ -6,6 +6,7 @@ function Firebase() {
     var me = this;
     var database;
     var orderList;
+    var orderListDetail;
 
     this.init = function (onDataChangedCallback) {
         var config = {
@@ -19,6 +20,7 @@ function Firebase() {
         firebase.initializeApp(config);
         database = firebase.database();
         orderList = database.ref().child('orders');
+        orderListDetail = database.ref().child('orderDetail');
 
         orderList.on('value', function (snapshot) {
             var list = snapshot.val();
@@ -47,22 +49,31 @@ function Firebase() {
     };
 
     this.addOrderItem = function (orderListId, itemObject) {
-        if(!itemObject.hasOwnProperty("id")){
+        if (!itemObject.hasOwnProperty("id")) {
             itemObject['id'] = orderList.child(orderListId).push().key;
             itemObject['listId'] = orderListId;
-            itemObject['createdDate']  = new Date().toISOString();
-            itemObject['modifiedDate']  = new Date().toISOString();
+            itemObject['createdDate'] = new Date().toISOString();
+            itemObject['modifiedDate'] = new Date().toISOString();
         } else {
             itemObject['modifiedDate'] = new Date().toISOString();
         }
 
-        orderList.child(itemObject.id).set(itemObject);
+        orderListDetail.child(orderListId).child(itemObject.id).set(itemObject);
     };
 
-    this.removeOrderItem = function (id) {
-        orderList.child(id).remove();
+    this.removeOrderItem = function (orderListId, itemId) {
+        orderListDetail.child(orderListId).child(itemId).remove();
+    };
+
+    this.listenToOrderListChange = function (orderListId, onChangedCallback) {
+        orderListDetail.child(orderListId).on('value', function (snapshot) {
+            var list = snapshot.val();
+            if (onChangedCallback) {
+                onChangedCallback(list);
+            }
+        });
     }
+
+
 }
 
-var fb = new Firebase().init();
-fb.newOrderList("foo");
