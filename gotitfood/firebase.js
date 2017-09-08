@@ -45,7 +45,7 @@ function Firebase() {
         });
 
         orderListDetail.child(id).child('_non_removable').set({
-           removable: false
+            removable: false
         });
 
         return id;
@@ -53,6 +53,14 @@ function Firebase() {
 
     this.removeOrderList = function (id) {
         orderList.child(id).remove();
+    };
+
+    this.cloneOrderList = function (orderList) {
+
+    };
+
+    this.renameOrderList = function (orderList, newName) {
+
     };
 
     this.addOrderItem = function (orderListId, itemObject) {

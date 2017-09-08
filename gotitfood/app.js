@@ -11,8 +11,12 @@ var APP = new Vue({
         allOrderList: [],
         currentOrderList: [],
         currentSelectionOrderItemId: "",
-        newOrderDialog: {
+        newOrderListDialog: {
             name: ""
+        },
+        renameOrderListDialog: {
+            item: null,
+            newName: ""
         }
     },
     computed: {},
@@ -20,17 +24,37 @@ var APP = new Vue({
         hasOrderList: function () {
             return this.allOrderList !== null && this.allOrderList.length > 0;
         },
-        selectOrderList: function (orderList) {
-            this.currentOrderListId = orderList.id;
-            console.log(orderList);
+        selectOrderList: function (orderListId) {
+            this.currentOrderListId = orderListId;
+            console.log("selectOrderList: ", orderListId);
             FB.listenToOrderListChange(this.currentOrderListId, function (items) {
-                console.log(items);
-                currentOrderList = items;
+                console.log("items", items);
+                var arr = [];
+                var item;
+                for (var k in items) {
+                    item = items[k];
+                    if (item.removable) {
+                        arr.push(item);
+                    }
+                }
+                this.currentOrderList = arr.sort(function (a, b) {
+                    return a.createdDate > b.createdDate ? -1 : a.createdDate < b.createdDate ? 1 : 0;
+                });
             });
         },
         removeOrderList: function (orderList) {
             if (orderList.removable)
                 FB.removeOrderList(orderList.id);
+        },
+        cloneOrderList: function(orderList){
+            if(orderList.removable){
+                FB.cloneOrderList(orderList);
+            }
+        },
+        renameOrderList: function (orderList, newName) {
+            if(orderList.removable){
+                FB.renameOrderList(orderList, newName);
+            }
         },
         addNewOrderList: function (name) {
             FB.newOrderList(name);
@@ -64,7 +88,7 @@ var FB = new Firebase().init(function (allOrderList) {
     });
 
     if (firstInit && arr) {
-        APP.selectOrderList(arr[0]);
+        APP.selectOrderList(arr[0].id);
         firstInit = false;
     }
 });
