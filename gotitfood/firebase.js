@@ -5,8 +5,8 @@
 function Firebase() {
     var me = this;
     var database;
-    var orderList;
-    var orderListDetail;
+    var mOrderList;
+    var mOrderListDetail;
 
     this.init = function (onDataChangedCallback) {
         var config = {
@@ -19,10 +19,10 @@ function Firebase() {
         };
         firebase.initializeApp(config);
         database = firebase.database();
-        orderList = database.ref().child('orders');
-        orderListDetail = database.ref().child('orderDetail');
+        mOrderList = database.ref().child('orders');
+        mOrderListDetail = database.ref().child('orderDetail');
 
-        orderList.on('value', function (snapshot) {
+        mOrderList.on('value', function (snapshot) {
             var list = snapshot.val();
             if (list) {
                 console.log(list);
@@ -36,15 +36,15 @@ function Firebase() {
     };
 
     this.newOrderList = function (name) {
-        var id = orderList.push().key;
-        orderList.child(id).set({
+        var id = mOrderList.push().key;
+        mOrderList.child(id).set({
             id: id,
             name: name,
             createdDate: new Date().toISOString(),
             removable: true
         });
 
-        orderListDetail.child(id).child('_non_removable').set({
+        mOrderListDetail.child(id).child('_non_removable').set({
             removable: false
         });
 
@@ -52,21 +52,35 @@ function Firebase() {
     };
 
     this.removeOrderList = function (id) {
-        orderList.child(id).remove();
-        orderListDetail.child(id).remove();
+        mOrderList.child(id).remove();
+        mOrderListDetail.child(id).remove();
     };
 
-    this.cloneOrderList = function (orderList) {
+    this.cloneOrderList = function (orderList, newName) {
+        var id = mOrderList.push().key;
+        mOrderList.child(id).set({
+            id: id,
+            name: newName,
+            createdDate: new Date().toISOString(),
+            removable: true
+        });
 
+        mOrderListDetail.child(orderList.id).once('value').then(function(snapshot){
+            var detail = snapshot.val();
+            console.log("detail", detail);
+            //TODO
+        });
     };
 
     this.renameOrderList = function (orderList, newName) {
-
+        console.log("rename", orderList, newName);
+        orderList.name = newName;
+        mOrderList.child(orderList.id).update(orderList);
     };
 
     this.addOrderItem = function (orderListId, itemObject) {
         if (!itemObject.hasOwnProperty("id")) {
-            itemObject['id'] = orderList.child(orderListId).push().key;
+            itemObject['id'] = mOrderList.child(orderListId).push().key;
             itemObject['listId'] = orderListId;
             itemObject['createdDate'] = new Date().toISOString();
             itemObject['modifiedDate'] = new Date().toISOString();
@@ -74,15 +88,15 @@ function Firebase() {
             itemObject['modifiedDate'] = new Date().toISOString();
         }
 
-        orderListDetail.child(orderListId).child(itemObject.id).set(itemObject);
+        mOrderListDetail.child(orderListId).child(itemObject.id).set(itemObject);
     };
 
     this.removeOrderItem = function (orderListId, itemId) {
-        orderListDetail.child(orderListId).child(itemId).remove();
+        mOrderListDetail.child(orderListId).child(itemId).remove();
     };
 
     this.listenToOrderListChange = function (orderListId, onChangedCallback) {
-        orderListDetail.child(orderListId).on('value', function (snapshot) {
+        mOrderListDetail.child(orderListId).on('value', function (snapshot) {
             var list = snapshot.val();
             if (onChangedCallback) {
                 onChangedCallback(list);

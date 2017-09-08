@@ -16,6 +16,7 @@ var APP = new Vue({
         },
         renameOrderListDialog: {
             item: null,
+            oldName: "",
             newName: ""
         }
     },
@@ -46,9 +47,9 @@ var APP = new Vue({
             if (orderList.removable)
                 FB.removeOrderList(orderList.id);
         },
-        cloneOrderList: function(orderList){
+        cloneOrderList: function(orderList, newName){
             if(orderList.removable){
-                FB.cloneOrderList(orderList);
+                FB.cloneOrderList(orderList, newName);
             }
         },
         renameOrderList: function (orderList, newName) {

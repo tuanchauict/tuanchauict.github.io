@@ -95,6 +95,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/libs\/min\/vue-sortable-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/libs\/min\/vue-sortable-min.js",
+		"outputAbbreviatedPath": "\/libs\/min\/min\/vue-sortable-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/libs\/vue-sortable.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -172,6 +183,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/min\/firebase-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/min\/firebase-min.js",
+		"outputAbbreviatedPath": "\/min\/min\/firebase-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/min\/model-adapter-min.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -222,6 +244,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/min\/msb-rest-min.js",
 		"outputAbbreviatedPath": "\/min\/min\/msb-rest-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/min\/template-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/min\/template-min.js",
+		"outputAbbreviatedPath": "\/min\/min\/template-min-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
