@@ -5,9 +5,9 @@
         </div>
 
     </md-toolbar>
-    <div v-if="hasOrderList()">
+    <div v-if="hasOrderList">
         <md-list class="md-double-line">
-            <md-list-item v-for="item in allOrderList" :key="item.name" @click="selectOrderList(item)">
+            <md-list-item v-for="item in allOrderList.array" @click="selectOrderList(item.id)">
                 <!--<md-icon class="md-primary">list</md-icon>-->
                 <div class="md-list-text-container">
                     <span>{{item.name}}</span>
@@ -22,7 +22,6 @@
                         <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('renameOrderListDialog')">Rename</md-menu-item>
                         <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('cloneOrderListDialog')">Clone</md-menu-item>
                         <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
-
                     </md-menu-content>
                 </md-menu>
 

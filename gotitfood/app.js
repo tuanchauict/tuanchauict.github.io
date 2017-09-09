@@ -7,10 +7,18 @@ Vue.use(VueMaterial);
 var APP = new Vue({
     el: "#app",
     data: {
-        currentOrderListId: "",
-        allOrderList: [],
-        currentOrderList: [],
-        currentSelectionOrderItemId: "",
+        allOrderList: {
+            array: [],
+            map: {}
+        },
+        currentOrderList: {
+            items: {
+                array: [],
+                map: {}
+            },
+            id: "",
+            selectedItemId: ""
+        },
         newOrderListDialog: {
             name: ""
         },
@@ -18,42 +26,71 @@ var APP = new Vue({
             item: null,
             oldName: "",
             newName: ""
+        },
+        newOrderItemDialog: {
+            name: "",
+            amount: 1,
+            brand: "",
+            note: ""
         }
     },
-    computed: {},
-    methods: {
+    computed: {
         hasOrderList: function () {
-            return this.allOrderList !== null && this.allOrderList.length > 0;
+            return this.allOrderList.array !== null && this.allOrderList.array.length > 0;
         },
+        currentOrderList: function () {
+            var orderId = this.currentOrderList.id;
+            if (orderId && this.allOrderList.map) {
+                return this.allOrderList.map[orderId];
+            }
+            return null;
+        },
+        currentOrderListName: function () {
+            var orderId = this.currentOrderList.id;
+            if (orderId && this.allOrderList.map) {
+                return this.allOrderList.map[orderId].name;
+            }
+            return "";
+        }
+
+    },
+    methods: {
         selectOrderList: function (orderListId) {
-            this.currentOrderListId = orderListId;
+            var me = this;
+            var currentOrderList = me.currentOrderList;
+            currentOrderList.id = orderListId;
             console.log("selectOrderList: ", orderListId);
-            FB.listenToOrderListChange(this.currentOrderListId, function (items) {
+            FB.listenToOrderListChange(orderListId, function (items) {
                 console.log("items", items);
                 var arr = [];
                 var item;
                 for (var k in items) {
+                    if (!items.hasOwnProperty(k))
+                        continue;
                     item = items[k];
                     if (item.removable) {
                         arr.push(item);
                     }
                 }
-                this.currentOrderList = arr.sort(function (a, b) {
+                console.log(arr);
+                me.currentOrderList.items.array = arr.sort(function (a, b) {
                     return a.createdDate > b.createdDate ? -1 : a.createdDate < b.createdDate ? 1 : 0;
                 });
+                me.currentOrderList.items.map = items;
+                console.log(currentOrderList);
             });
         },
         removeOrderList: function (orderList) {
             if (orderList.removable)
                 FB.removeOrderList(orderList.id);
         },
-        cloneOrderList: function(orderList, newName){
-            if(orderList.removable){
+        cloneOrderList: function (orderList, newName) {
+            if (orderList.removable) {
                 FB.cloneOrderList(orderList, newName);
             }
         },
         renameOrderList: function (orderList, newName) {
-            if(orderList.removable){
+            if (orderList.removable) {
                 FB.renameOrderList(orderList, newName);
             }
         },
@@ -63,7 +100,22 @@ var APP = new Vue({
         },
         removeOrderItem: function (orderListId, itemId) {
             FB.removeOrderItem(orderListId, itemId);
+            //TODO change currentOrder
         },
+        addOrderItem: function(){
+            var info = this.newOrderItemDialog;
+            FB.addOrderItem(this.currentOrderList.id, {
+                name: info.name,
+                brand: info.brand,
+                amount: info.amount,
+                note: info.note
+            });
+            info.name = "";
+            info.brand = "";
+            info.note = "";
+            info.amount = 1;
+        },
+
         openDialog: function (ref) {
             this.$refs[ref].open();
         },
@@ -84,9 +136,11 @@ var FB = new Firebase().init(function (allOrderList) {
             arr.push(item);
         }
     }
-    APP.allOrderList = arr.sort(function (a, b) {
+    APP.allOrderList.array = arr.sort(function (a, b) {
         return a.createdDate > b.createdDate ? -1 : a.createdDate < b.createdDate ? 1 : 0;
     });
+
+    APP.allOrderList.map = allOrderList;
 
     if (firstInit && arr) {
         APP.selectOrderList(arr[0].id);

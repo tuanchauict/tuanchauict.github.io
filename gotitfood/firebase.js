@@ -7,6 +7,7 @@ function Firebase() {
     var database;
     var mOrderList;
     var mOrderListDetail;
+    var mCurrentOrderListId;
 
     this.init = function (onDataChangedCallback) {
         var config = {
@@ -65,7 +66,7 @@ function Firebase() {
             removable: true
         });
 
-        mOrderListDetail.child(orderList.id).once('value').then(function(snapshot){
+        mOrderListDetail.child(orderList.id).once('value').then(function (snapshot) {
             var detail = snapshot.val();
             console.log("detail", detail);
             //TODO
@@ -84,6 +85,7 @@ function Firebase() {
             itemObject['listId'] = orderListId;
             itemObject['createdDate'] = new Date().toISOString();
             itemObject['modifiedDate'] = new Date().toISOString();
+            itemObject['removable'] = true;
         } else {
             itemObject['modifiedDate'] = new Date().toISOString();
         }
@@ -96,12 +98,17 @@ function Firebase() {
     };
 
     this.listenToOrderListChange = function (orderListId, onChangedCallback) {
+        if (orderListId === mCurrentOrderListId)
+            return;
+        if (mCurrentOrderListId)
+            mOrderListDetail.child(mCurrentOrderListId).off('value');
         mOrderListDetail.child(orderListId).on('value', function (snapshot) {
             var list = snapshot.val();
             if (onChangedCallback) {
                 onChangedCallback(list);
             }
         });
+        mCurrentOrderListId = orderListId;
     }
 
 
