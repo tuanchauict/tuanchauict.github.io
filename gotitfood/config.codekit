@@ -42,7 +42,7 @@
 		},
 	"\/dialogs.html": {
 		"fileType": 8192,
-		"ignore": 1,
+		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/dialogs.html",
 		"outputAbbreviatedPath": "No Output Path",
@@ -51,7 +51,7 @@
 		},
 	"\/dialogs.kit": {
 		"fileType": 2048,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/dialogs.kit",
 		"outputAbbreviatedPath": "\/dialogs.html",
