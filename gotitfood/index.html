@@ -19,97 +19,90 @@
             </md-button>
             <h2 class="md-title">Got It! Food</h2>
         </md-toolbar>
-
-        <div>
-            Content here
+        <md-sidenav class="md-left" ref="sidebar">
+    <md-toolbar>
+        <div class="md-toolbar-container">
+            <h3 class="md-title">Order list</h3>
         </div>
 
-        <md-sidenav class="md-left" ref="sidebar">
-            <md-toolbar>
-                <div class="md-toolbar-container">
-                    <h3 class="md-title">Order list</h3>
+    </md-toolbar>
+    <div v-if="hasOrderList()">
+        <md-list class="md-double-line">
+            <md-list-item v-for="item in allOrderList" :key="item.name" @click="selectOrderList(item)">
+                <!--<md-icon class="md-primary">list</md-icon>-->
+                <div class="md-list-text-container">
+                    <span>{{item.name}}</span>
+                    <span>{{item.createdDate}}</span>
                 </div>
+                <md-menu>
+                    <md-button md-menu-trigger class="md-icon-button">
+                        <md-icon>more_vert</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>Share</md-menu-item>
+                        <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('renameOrderListDialog')">Rename</md-menu-item>
+                        <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('cloneOrderListDialog')">Clone</md-menu-item>
+                        <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
 
-            </md-toolbar>
-            <div v-if="hasOrderList()">
-                <md-list class="md-double-line">
-                    <md-list-item v-for="item in allOrderList" :key="item.name" @click="selectOrderList(item)">
-                        <!--<md-icon class="md-primary">list</md-icon>-->
-                        <div class="md-list-text-container">
-                            <span>{{item.name}}</span>
-                            <span>{{item.createdDate}}</span>
-                        </div>
-                        <md-menu>
-                            <md-button md-menu-trigger class="md-icon-button">
-                                <md-icon>more_vert</md-icon>
-                            </md-button>
-                            <md-menu-content>
-                                <md-menu-item>Share</md-menu-item>
-                                <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('renameOrderListDialog')">Rename</md-menu-item>
-                                <md-menu-item @click="renameOrderListDialog.item = item; renameOrderListDialog.oldName = item.name; openDialog('cloneOrderListDialog')">Clone</md-menu-item>
-                                <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
-
-                            </md-menu-content>
-                        </md-menu>
+                    </md-menu-content>
+                </md-menu>
 
 
-                        <md-divider class="md-inset"></md-divider>
-                    </md-list-item>
-                </md-list>
-            </div>
-            <md-button id="addOrderList" class="md-primary md-fab md-fab-bottom-right" @click="openDialog('addOrderListDialog')">
-                <md-icon>add</md-icon>
-            </md-button>
-        </md-sidenav>
-
-
+                <md-divider class="md-inset"></md-divider>
+            </md-list-item>
+        </md-list>
     </div>
-
-    <!--DIALOGS-->
+    <md-button id="addOrderList" class="md-primary md-fab md-fab-bottom-right" @click="openDialog('addOrderListDialog')">
+        <md-icon>add</md-icon>
+    </md-button>
+</md-sidenav>
+        <div>
+    Content here blah blah
+</div>    </div>
 
     <md-dialog md-open-from="#addOrderList" ref="addOrderListDialog">
-        <md-dialog-title>Add new order list</md-dialog-title>
-        <md-dialog-content>
-            <md-input-container>
-                <label>Order name</label>
-                <md-input v-model="newOrderListDialog.name"></md-input>
-            </md-input-container>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <md-button class="md-primary" @click="closeDialog('addOrderListDialog'); newOrderListDialog.name=''">Cancel</md-button>
-            <md-button class="md-primary" @click="closeDialog('addOrderListDialog'); addNewOrderList(newOrderListDialog.name)">Add</md-button>
+    <md-dialog-title>Add new order list</md-dialog-title>
+    <md-dialog-content>
+        <md-input-container>
+            <label>Order name</label>
+            <md-input v-model="newOrderListDialog.name"></md-input>
+        </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-primary" @click="closeDialog('addOrderListDialog'); newOrderListDialog.name=''">Cancel</md-button>
+        <md-button class="md-primary" @click="closeDialog('addOrderListDialog'); addNewOrderList(newOrderListDialog.name)">Add</md-button>
 
-        </md-dialog-actions>
-    </md-dialog>
+    </md-dialog-actions>
+</md-dialog>
 
-    <md-dialog md-open-from=".renameOrderList" ref="renameOrderListDialog">
-        <md-dialog-title>Change: {{renameOrderListDialog.oldName}}</md-dialog-title>
-        <md-dialog-content>
-            <md-input-container>
-                <label>Enter new name</label>
-                <md-input v-model="renameOrderListDialog.newName"></md-input>
-            </md-input-container>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <md-button class="md-primary" @click="closeDialog('renameOrderListDialog'); renameOrderListDialog.newName=''">Cancel</md-button>
-            <md-button class="md-primary" @click="closeDialog('renameOrderListDialog'); renameOrderList(renameOrderListDialog.item, renameOrderListDialog.newName); renameOrderListDialog.newName = ''">Rename</md-button>
-        </md-dialog-actions>
-    </md-dialog>
+<md-dialog md-open-from=".renameOrderList" ref="renameOrderListDialog">
+    <md-dialog-title>Change: {{renameOrderListDialog.oldName}}</md-dialog-title>
+    <md-dialog-content>
+        <md-input-container>
+            <label>Enter new name</label>
+            <md-input v-model="renameOrderListDialog.newName"></md-input>
+        </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-primary" @click="closeDialog('renameOrderListDialog'); renameOrderListDialog.newName=''">Cancel</md-button>
+        <md-button class="md-primary" @click="closeDialog('renameOrderListDialog'); renameOrderList(renameOrderListDialog.item, renameOrderListDialog.newName); renameOrderListDialog.newName = ''">Rename</md-button>
+    </md-dialog-actions>
+</md-dialog>
 
-    <md-dialog md-open-from=".cloneOrderList" ref="cloneOrderListDialog">
-        <md-dialog-title>Clone: {{renameOrderListDialog.oldName}}</md-dialog-title>
-        <md-dialog-content>
-            <md-input-container>
-                <label>Enter new name</label>
-                <md-input v-model="renameOrderListDialog.newName"></md-input>
-            </md-input-container>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <md-button class="md-primary" @click="closeDialog('cloneOrderListDialog'); renameOrderListDialog.newName=''">Cancel</md-button>
-            <md-button class="md-primary" @click="closeDialog('cloneOrderListDialog'); cloneOrderList(renameOrderListDialog.item, renameOrderListDialog.newName); renameOrderListDialog.newName = ''">Clone</md-button>
-        </md-dialog-actions>
-    </md-dialog>
-</div>
+
+<md-dialog md-open-from=".cloneOrderList" ref="cloneOrderListDialog">
+    <md-dialog-title>Clone: {{renameOrderListDialog.oldName}}</md-dialog-title>
+    <md-dialog-content>
+        <md-input-container>
+            <label>Enter new name</label>
+            <md-input v-model="renameOrderListDialog.newName"></md-input>
+        </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-primary" @click="closeDialog('cloneOrderListDialog'); renameOrderListDialog.newName=''">Cancel</md-button>
+        <md-button class="md-primary" @click="closeDialog('cloneOrderListDialog'); cloneOrderList(renameOrderListDialog.item, renameOrderListDialog.newName); renameOrderListDialog.newName = ''">Clone</md-button>
+    </md-dialog-actions>
+</md-dialog></div>
 
 <script src="firebase.js"></script>
 <script src="app.js"></script>

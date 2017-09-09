@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="libs/vue-material.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Got It! Food</title>
+    <script src="libs/vue.min.js"></script>
+    <script src="libs/firebase.js"></script>
+    <script src="libs/vue-material.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="">
+        <md-toolbar>
+            <md-button class="md-icon-button" @click="$refs.sidebar.toggle()">
+                <md-icon>menu</md-icon>
+            </md-button>
+            <h2 class="md-title">Got It! Food</h2>
+        </md-toolbar>
+        <!-- @import "sidebar.kit" -->
+
+        <!--@import "content.kit"-->
+    </div>
+
+    <!--@import "dialogs.html"-->
+</div>
+
+<script src="firebase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
