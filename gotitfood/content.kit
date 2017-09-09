@@ -1,9 +1,9 @@
 <div>
     <md-list class="md-double-line">
-        <div v-for="item in currentOrderList.items.array">
+        <div v-for="(item, index) in currentOrderList.items.array">
             <md-list-item @click="selectOrderItem(item.id)"
                           v-if="item.id !== currentOrderList.selectedItemId">
-                <span class="md-accent">#1</span>
+                <span class="md-accent" style="width: 3em">#{{index + 1}}</span>
                 <div class="md-list-text-container">
                     <span>{{item.name}}</span>
                     <span>{{item.createdDate}}</span>
@@ -13,13 +13,15 @@
                         <md-icon>more_vert</md-icon>
                     </md-button>
                     <md-menu-content>
-                        <md-menu-item @click="item.check=!item.check;saveEditOrderItem(item)">{{(item.check?"Uncheck":"Check")}}</md-menu-item>
+                        <md-menu-item @click="item.check=!item.check;saveEditOrderItem(item)">
+                            {{(item.check?"Uncheck":"Check")}}
+                        </md-menu-item>
                         <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
                     </md-menu-content>
                 </md-menu>
 
             </md-list-item>
-            <div v-if="item.id === currentOrderList.selectedItemId" style="padding: 2em">
+            <div v-if="item.id === currentOrderList.selectedItemId" style="padding: 3.4em">
                 <div>Edit</div>
                 <div>
                     <md-input-container>
