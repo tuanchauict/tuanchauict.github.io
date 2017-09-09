@@ -57,23 +57,52 @@
     </md-button>
 </md-sidenav>        <div>
     <md-list class="md-double-line">
-        <md-list-item v-for="item in currentOrderList.items.array">
-            <div class="md-list-text-container">
-                <span>{{item.name}}</span>
-                <span>{{item.createdDate}}</span>
+        <div v-for="item in currentOrderList.items.array">
+            <md-list-item @click="selectOrderItem(item.id)"
+                          v-if="item.id !== currentOrderList.selectedItemId">
+                <span class="md-accent">#1</span>
+                <div class="md-list-text-container">
+                    <span>{{item.name}}</span>
+                    <span>{{item.createdDate}}</span>
+                </div>
+                <md-menu>
+                    <md-button md-menu-trigger class="md-icon-button">
+                        <md-icon>more_vert</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item @click="item.check=!item.check;saveEditOrderItem(item)">{{(item.check?"Uncheck":"Check")}}</md-menu-item>
+                        <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+
+            </md-list-item>
+            <div v-if="item.id === currentOrderList.selectedItemId" style="padding: 2em">
+                <div>Edit</div>
+                <div>
+                    <md-input-container>
+                        <label>Item name</label>
+                        <md-input v-model="item.name"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Amount</label>
+                        <md-input v-model="item.amount" type="number"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Brand</label>
+                        <md-input v-model="item.brand"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Note</label>
+                        <md-input v-model="item.note"></md-input>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button class="md-raised" @click="cancelEditOrderItem(item)">Cancel</md-button>
+                    <md-button class="md-raised md-primary" @click="saveEditOrderItem(item)">Save</md-button>
+                </div>
             </div>
-            <md-menu>
-                <md-button md-menu-trigger class="md-icon-button">
-                    <md-icon>more_vert</md-icon>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
-                </md-menu-content>
-            </md-menu>
-
-
             <md-divider class="md-inset"></md-divider>
-        </md-list-item>
+        </div>
     </md-list>
 </div>    </div>
 

@@ -32,6 +32,13 @@ var APP = new Vue({
             amount: 1,
             brand: "",
             note: ""
+        },
+        editOrderContent: {
+            item: null,
+            name: "",
+            amount: 1,
+            brand: "",
+            note: ""
         }
     },
     computed: {
@@ -52,7 +59,6 @@ var APP = new Vue({
             }
             return "";
         }
-
     },
     methods: {
         selectOrderList: function (orderListId) {
@@ -102,20 +108,43 @@ var APP = new Vue({
             FB.removeOrderItem(orderListId, itemId);
             //TODO change currentOrder
         },
-        addOrderItem: function(){
+        addOrderItem: function () {
             var info = this.newOrderItemDialog;
             FB.addOrderItem(this.currentOrderList.id, {
                 name: info.name,
                 brand: info.brand,
                 amount: info.amount,
-                note: info.note
+                note: info.note,
+                check: false
             });
             info.name = "";
             info.brand = "";
             info.note = "";
             info.amount = 1;
         },
-
+        selectOrderItem: function (id) {
+            var currentOrderList = this.currentOrderList;
+            var selectedItem = currentOrderList.items.map[id];
+            currentOrderList.selectedItemId = id;
+            this.editOrderContent = {
+                name: selectedItem.name,
+                amount: selectedItem.amount,
+                brand: selectedItem.brand,
+                note: selectedItem.note
+            }
+        },
+        cancelEditOrderItem: function (item) {
+            var editOrderContent = this.editOrderContent;
+            item.name = editOrderContent.name;
+            item.amount = editOrderContent.amount;
+            item.brand = editOrderContent.brand;
+            item.note = editOrderContent.note;
+            this.currentOrderList.selectedItemId = "";
+        },
+        saveEditOrderItem: function (item) {
+            FB.addOrderItem(item.listId, item);
+            this.currentOrderList.selectedItemId = "";
+        },
         openDialog: function (ref) {
             this.$refs[ref].open();
         },
