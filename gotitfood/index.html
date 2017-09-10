@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="libs/vue-material.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
     <title>Got It! Food</title>
     <script src="libs/vue.min.js"></script>
     <script src="libs/firebase.js"></script>
@@ -17,7 +18,7 @@
     <md-button class="md-icon-button" @click="$refs.sidebar.toggle()">
         <md-icon>menu</md-icon>
     </md-button>
-    <h2 class="md-title" style="flex: 1">Got It! Food {{currentOrderListName}}</h2>
+    <h2 class="md-title" style="flex: 1" >Got It! Food <span v-if="currentOrderListName">| {{currentOrderListName}}</span></h2>
     <md-button id="add-order-item" @click="openDialog('addOrderItemDialog')">Add</md-button>
 </md-toolbar>
         <md-sidenav class="md-left" ref="sidebar">
@@ -60,10 +61,13 @@
         <div v-for="(item, index) in currentOrderList.items.array">
             <md-list-item @click="selectOrderItem(item.id)"
                           v-if="item.id !== currentOrderList.selectedItemId">
-                <span class="md-accent" style="width: 3em">#{{index + 1}}</span>
+                <span class="md-accent" style="width: 3em">
+                    <md-chip title="Amount">{{item.amount}}</md-chip>
+                </span>
                 <div class="md-list-text-container">
                     <span>{{item.name}}</span>
-                    <span>{{item.createdDate}}</span>
+                    <span><code>{{item.brand}}</code></span>
+                    <span>{{item.note}}</span>
                 </div>
                 <md-menu>
                     <md-button md-menu-trigger class="md-icon-button">
@@ -73,35 +77,41 @@
                         <md-menu-item @click="item.check=!item.check;saveEditOrderItem(item)">
                             {{(item.check?"Uncheck":"Check")}}
                         </md-menu-item>
-                        <md-menu-item @click="removeOrderList(item)">Remove</md-menu-item>
+                        <md-menu-item @click="removeOrderItem(item)">Remove</md-menu-item>
                     </md-menu-content>
                 </md-menu>
 
             </md-list-item>
             <div v-if="item.id === currentOrderList.selectedItemId" style="padding: 3.4em">
-                <div>Edit</div>
-                <div>
-                    <md-input-container>
-                        <label>Item name</label>
-                        <md-input v-model="item.name"></md-input>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Amount</label>
-                        <md-input v-model="item.amount" type="number"></md-input>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Brand</label>
-                        <md-input v-model="item.brand"></md-input>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Note</label>
-                        <md-input v-model="item.note"></md-input>
-                    </md-input-container>
-                </div>
-                <div>
-                    <md-button class="md-raised" @click="cancelEditOrderItem(item)">Cancel</md-button>
-                    <md-button class="md-raised md-primary" @click="saveEditOrderItem(item)">Save</md-button>
-                </div>
+
+                <md-card md-with-hover md-flex="10" style="width: 50em">
+                    <md-card-header>
+                        <div class="md-title">Edit</div>
+                    </md-card-header>
+                    <md-card-content>
+                        <md-input-container>
+                            <label>Item name</label>
+                            <md-input v-model="item.name" required></md-input>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Amount</label>
+                            <md-input v-model="item.amount" type="number"></md-input>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Brand</label>
+                            <md-input v-model="item.brand"></md-input>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Note</label>
+                            <md-textarea v-model="item.note"></md-textarea>
+                        </md-input-container>
+                    </md-card-content>
+                    <md-card-actions>
+                        <md-button class="md-raised" @click="cancelEditOrderItem(item)">Cancel</md-button>
+                        <md-button class="md-raised md-primary" @click="saveEditOrderItem(item)">Save
+                        </md-button>
+                    </md-card-actions>
+                </md-card>
             </div>
             <md-divider class="md-inset"></md-divider>
         </div>
@@ -113,7 +123,7 @@
     <md-dialog-content>
         <md-input-container>
             <label>Order name</label>
-            <md-input v-model="newOrderListDialog.name"></md-input>
+            <md-input v-model="newOrderListDialog.name" required></md-input>
         </md-input-container>
     </md-dialog-content>
     <md-dialog-actions>
@@ -128,7 +138,7 @@
     <md-dialog-content>
         <md-input-container>
             <label>Enter new name</label>
-            <md-input v-model="renameOrderListDialog.newName"></md-input>
+            <md-input v-model="renameOrderListDialog.newName" required></md-input>
         </md-input-container>
     </md-dialog-content>
     <md-dialog-actions>
@@ -143,7 +153,7 @@
     <md-dialog-content>
         <md-input-container>
             <label>Enter new name</label>
-            <md-input v-model="renameOrderListDialog.newName"></md-input>
+            <md-input v-model="renameOrderListDialog.newName" required></md-input>
         </md-input-container>
     </md-dialog-content>
     <md-dialog-actions>
@@ -152,12 +162,12 @@
     </md-dialog-actions>
 </md-dialog>
 
-<md-dialog md-open-from="#add-order-item" ref="addOrderItemDialog">
-    <md-dialog-title>Add new item</md-dialog-title>
+<md-dialog md-open-from="#add-order-item" ref="addOrderItemDialog" >
+    <md-dialog-title style="width: 40em">Add new item</md-dialog-title>
     <md-dialog-content>
         <md-input-container>
             <label>Item name</label>
-            <md-input v-model="newOrderItemDialog.name"></md-input>
+            <md-input v-model="newOrderItemDialog.name" required></md-input>
         </md-input-container>
         <md-input-container>
             <label>Amount</label>
@@ -169,7 +179,7 @@
         </md-input-container>
         <md-input-container>
             <label>Note</label>
-            <md-input v-model="newOrderItemDialog.note"></md-input>
+            <md-textarea v-model="newOrderItemDialog.note"></md-textarea>
         </md-input-container>
 
     </md-dialog-content>

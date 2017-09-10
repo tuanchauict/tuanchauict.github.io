@@ -62,9 +62,14 @@ var APP = new Vue({
     },
     methods: {
         selectOrderList: function (orderListId) {
+
             var me = this;
             var currentOrderList = me.currentOrderList;
+            if (orderListId === currentOrderList.id)
+                return;
+
             currentOrderList.id = orderListId;
+            currentOrderList.selectedItemId = null;
             console.log("selectOrderList: ", orderListId);
             FB.listenToOrderListChange(orderListId, function (items) {
                 console.log("items", items);
@@ -85,10 +90,28 @@ var APP = new Vue({
                 me.currentOrderList.items.map = items;
                 console.log(currentOrderList);
             });
+
         },
         removeOrderList: function (orderList) {
-            if (orderList.removable)
+            if (orderList.removable) {
+                var col = this.currentOrderList;
+                var cid = col.id;
+                var arr = this.allOrderList.array;
+                if (orderList.id === cid) {
+                    var index = arr.indexOf(orderList);
+                    if (index === arr.length - 1) {
+                        index -= 1;
+                    } else {
+                        index += 1;
+                    }
+                    if (index >= 0)
+                        this.selectOrderList(arr[index].id);
+                    else
+                        this.selectOrderList(null);
+                }
                 FB.removeOrderList(orderList.id);
+            }
+            //TODO change currentOrder
         },
         cloneOrderList: function (orderList, newName) {
             if (orderList.removable) {
@@ -102,11 +125,11 @@ var APP = new Vue({
         },
         addNewOrderList: function (name) {
             FB.newOrderList(name);
-            this.newOrderDialog.name = "";
+            this.newOrderListDialog.name = "";
         },
-        removeOrderItem: function (orderListId, itemId) {
-            FB.removeOrderItem(orderListId, itemId);
-            //TODO change currentOrder
+        removeOrderItem: function (orderItem) {
+            console.log("remove", orderItem);
+            FB.removeOrderItem(orderItem.listId, orderItem.id);
         },
         addOrderItem: function () {
             var info = this.newOrderItemDialog;
