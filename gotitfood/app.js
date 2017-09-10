@@ -45,13 +45,13 @@ var APP = new Vue({
         hasOrderList: function () {
             return this.allOrderList.array !== null && this.allOrderList.array.length > 0;
         },
-        currentOrderList: function () {
-            var orderId = this.currentOrderList.id;
-            if (orderId && this.allOrderList.map) {
-                return this.allOrderList.map[orderId];
-            }
-            return null;
-        },
+        // currentOrderList: function () {
+        //     var orderId = this.currentOrderList.id;
+        //     if (orderId && this.allOrderList.map) {
+        //         return this.allOrderList.map[orderId];
+        //     }
+        //     return null;
+        // },
         currentOrderListName: function () {
             var orderId = this.currentOrderList.id;
             if (orderId && this.allOrderList.map) {
@@ -90,6 +90,11 @@ var APP = new Vue({
                 me.currentOrderList.items.map = items;
                 console.log(currentOrderList);
             });
+
+            if (!orderListId) {
+                currentOrderList.items.array = [];
+                currentOrderList.items.map = {};
+            }
 
         },
         removeOrderList: function (orderList) {
@@ -194,7 +199,7 @@ var FB = new Firebase().init(function (allOrderList) {
 
     APP.allOrderList.map = allOrderList;
 
-    if (firstInit && arr) {
+    if ((firstInit || !APP.currentOrderList.id) && arr && arr.length) {
         APP.selectOrderList(arr[0].id);
         firstInit = false;
     }

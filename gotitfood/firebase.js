@@ -102,12 +102,13 @@ function Firebase() {
             return;
         if (mCurrentOrderListId)
             mOrderListDetail.child(mCurrentOrderListId).off('value');
-        mOrderListDetail.child(orderListId).on('value', function (snapshot) {
-            var list = snapshot.val();
-            if (onChangedCallback) {
-                onChangedCallback(list);
-            }
-        });
+        if (orderListId)
+            mOrderListDetail.child(orderListId).on('value', function (snapshot) {
+                var list = snapshot.val();
+                if (onChangedCallback) {
+                    onChangedCallback(list);
+                }
+            });
         mCurrentOrderListId = orderListId;
     }
 
