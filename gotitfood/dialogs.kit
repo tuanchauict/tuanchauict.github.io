@@ -48,11 +48,11 @@
     <md-dialog-content>
         <md-input-container>
             <label>Item name</label>
-            <md-input v-model="newOrderItemDialog.name" required></md-input>
+            <md-input v-model="newOrderItemDialog.name" required :fetch="autoCompleteMethod"></md-input>
         </md-input-container>
         <md-input-container>
             <label>Amount</label>
-            <md-input v-model="newOrderItemDialog.amount" type="number"></md-input>
+            <md-input v-model="newOrderItemDialog.amount" type="number" ></md-input>
         </md-input-container>
         <md-input-container>
             <label>Brand</label>

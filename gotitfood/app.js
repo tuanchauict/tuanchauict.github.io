@@ -11,6 +11,10 @@ var APP = new Vue({
             array: [],
             map: {}
         },
+        autoComplete: {
+            itemNames: [],
+            brands: []
+        },
         currentOrderList: {
             items: {
                 array: [],
@@ -72,7 +76,7 @@ var APP = new Vue({
             currentOrderList.selectedItemId = null;
             console.log("selectOrderList: ", orderListId);
             FB.listenToOrderListChange(orderListId, function (items) {
-                console.log("items", items);
+                // console.log("items", items);
                 var arr = [];
                 var item;
                 for (var k in items) {
@@ -83,12 +87,12 @@ var APP = new Vue({
                         arr.push(item);
                     }
                 }
-                console.log(arr);
+                // console.log(arr);
                 me.currentOrderList.items.array = arr.sort(function (a, b) {
                     return a.createdDate > b.createdDate ? -1 : a.createdDate < b.createdDate ? 1 : 0;
                 });
                 me.currentOrderList.items.map = items;
-                console.log(currentOrderList);
+                // console.log(currentOrderList);
             });
 
             if (!orderListId) {
@@ -149,6 +153,8 @@ var APP = new Vue({
             info.brand = "";
             info.note = "";
             info.amount = 1;
+
+
         },
         selectOrderItem: function (id) {
             var currentOrderList = this.currentOrderList;
@@ -178,6 +184,13 @@ var APP = new Vue({
         },
         closeDialog: function (ref) {
             this.$refs[ref].close();
+        },
+        autoCompleteMethod: function (list, query) {
+            console.log(list);
+            console.log(query);
+            return [{
+                label: 'Con heo'
+            }];
         }
     }
 });
@@ -203,4 +216,7 @@ var FB = new Firebase().init(function (allOrderList) {
         APP.selectOrderList(arr[0].id);
         firstInit = false;
     }
+}, function (itemNames, brands) {
+    APP.autoComplete.itemNames = itemNames;
+    APP.autoComplete.brands = brands;
 });

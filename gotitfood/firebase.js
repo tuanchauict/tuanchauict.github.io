@@ -7,9 +7,11 @@ function Firebase() {
     var database;
     var mOrderList;
     var mOrderListDetail;
+    var mAutoCompleteBrand;
+    var mAutoCompleteItemName;
     var mCurrentOrderListId;
 
-    this.init = function (onDataChangedCallback) {
+    this.init = function (onDataChangedCallback, onAutoCompleteResult) {
         var config = {
             apiKey: "AIzaSyDUHEsElweVtebLYGJS7TJu0svlqpXDKlI",
             authDomain: "gotitfood.firebaseapp.com",
@@ -22,6 +24,8 @@ function Firebase() {
         database = firebase.database();
         mOrderList = database.ref().child('orders');
         mOrderListDetail = database.ref().child('orderDetail');
+        mAutoCompleteBrand = database.ref().child('autoComplete').child('brand');
+        mAutoCompleteItemName = database.ref().child('autoComplete').child('itemName');
 
         mOrderList.on('value', function (snapshot) {
             var list = snapshot.val();
@@ -32,6 +36,30 @@ function Firebase() {
                 }
             }
 
+        });
+
+        database.ref().child('autoComplete').once('value').then(function(snapshot){
+            var autoComplete = snapshot.val();
+            if(!autoComplete)
+                return;
+            var mapItem = autoComplete.itemName;
+            var mapBrand = autoComplete.brand;
+            var k;
+            var arrItem = [];
+            var arrBrand = [];
+            for (k in mapItem){
+                if (mapItem.hasOwnProperty(k))
+                    arrItem.push(k);
+            }
+            for (k in mapBrand){
+                if (mapBrand.hasOwnProperty(k))
+                    arrBrand.push(k);
+            }
+            arrItem.sort();
+            arrBrand.sort();
+            console.log("autoCompleteItems", arrItem);
+            console.log("autoCompleteBrands", arrBrand);
+            onAutoCompleteResult(arrItem, arrBrand);
         });
         return me;
     };
@@ -67,9 +95,24 @@ function Firebase() {
         });
 
         mOrderListDetail.child(orderList.id).once('value').then(function (snapshot) {
+            var targetDetail = mOrderListDetail.child(id);
             var detail = snapshot.val();
+            var map = {};
             console.log("detail", detail);
             //TODO
+            for(var k in detail){
+                if(!detail.hasOwnProperty(k))
+                    return;
+                var item = detail[k];
+                if(item.removable){
+                    item.id = targetDetail.push().key;
+                    item.listId = id;
+                    map[item.id] = item;
+                } else {
+                    map[k] = item;
+                }
+            }
+            mOrderListDetail.child(id).set(map);
         });
     };
 
@@ -91,6 +134,9 @@ function Firebase() {
         }
 
         mOrderListDetail.child(orderListId).child(itemObject.id).set(itemObject);
+        mAutoCompleteItemName.child(itemObject.name).set(true);
+        if(itemObject.brand)
+            mAutoCompleteBrand.child(itemObject.brand).set(true);
     };
 
     this.removeOrderItem = function (orderListId, itemId) {
