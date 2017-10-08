@@ -29,7 +29,7 @@ function onResponse(text){
         return;
     }
     var list = arr[1].split('<br>');
-    var letters = id('letters').value;
+    var letters = id('letters').value.toLowerCase();
     var result = id('result');
     for(var i = 0; i < list.length; i++) {
         var w = list[i].trim();
@@ -55,8 +55,8 @@ function id(_id){
 
 function search(){
     id('result').innerHTML = '';
-    var pattern = id('pattern').value;
-    var letters = id('letters').value;
+    var pattern = id('pattern').value.toLowerCase();
+    var letters = id('letters').value.toLowerCase();
 
     var count = 0;
     for (var i = 0; i < pattern.length; i++){
