@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta property="og:image"
+          content="https://znews-photo-td.zadn.vn/w1920/Uploaded/Ycgmvlbp/2017_11_26/pgs_bui_hien_Zing.jpg"/>
+
     <meta charset="UTF-8">
     <title>Luật Záo Zụk</title>
     <style>
@@ -73,20 +76,19 @@
     var output = document.getElementById('output');
 
 
-
     var convert = function (word) {
         var result = '';
-        for (var i = 0; i < word.length; i++){
+        for (var i = 0; i < word.length; i++) {
             var c = word[i];
             var c1 = i < word.length - 1 ? word[i + 1] : '';
             var c2 = i < word.length - 2 ? word[i + 2] : '';
 
-            if (map.hasOwnProperty(c)){
+            if (map.hasOwnProperty(c)) {
                 result += map[c];
-            } else if (map.hasOwnProperty(c + c1)){
+            } else if (map.hasOwnProperty(c + c1)) {
                 result += map[c + c1];
-                i ++;
-            } else if (map.hasOwnProperty(c + c1 + c2)){
+                i++;
+            } else if (map.hasOwnProperty(c + c1 + c2)) {
                 result += map[c + c1 + c2];
                 i += 2;
             } else {
@@ -103,18 +105,18 @@
             var word = arr[i];
             if (word) {
                 result += convert(word) + ' ';
-            } else{
+            } else {
                 result += ' ';
             }
         }
         return result.substr(0, result.length - 1);
     };
 
-    var run = function(){
+    var run = function () {
         var sInput = input.value;
         var lines = sInput.split('\n');
         var value = '';
-        for (var i = 0; i < lines.length; i++){
+        for (var i = 0; i < lines.length; i++) {
             value += convertLine(lines[i]) + '\n';
         }
 
