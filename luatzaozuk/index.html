@@ -35,11 +35,13 @@
     <br/>
     Note:
     <ul>
-        <li>Cannot work with Gi -> J</li>
+        <li>Not cover all cases of Gi -> J</li>
     </ul>
 
 </div>
 <script>
+    var vowels = 'àáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ';
+    var VOWELS = vowels.toUpperCase();
     var map = {
         'Ch': 'C',
         'CH': 'C',
@@ -55,7 +57,10 @@
         'Gh': 'G',
         'GH': 'G',
         'gh': 'g',
-//        'Gi': 'J',
+    //    'Gi': 'Ji',
+    //    'Gí': 'Jí',
+    //    'Gi': 'J',
+    //    'Gi': 'J',
 //        'gi': 'j',
         'C': 'K',
         'c': 'k',
@@ -99,8 +104,11 @@
             var c = word[i];
             var c1 = i < word.length - 1 ? word[i + 1] : '';
             var c2 = i < word.length - 2 ? word[i + 2] : '';
-
-            if (map.hasOwnProperty(c)) {
+            if((c === 'G' || c === 'g') && (('iìíỉĩị'.indexOf(c1) >= 0 || 'IÌÍỈĨỊ'.indexOf(c1) >= 0) && 
+                    (c2 === '' || VOWELS.indexOf(c2) < 0 && vowels.indexOf(c2) < 0))){
+                result += c === 'G' ? 'J' : 'j';
+            }
+            else if (map.hasOwnProperty(c)) {
                 result += map[c];
             } else if (map.hasOwnProperty(c + c1)) {
                 result += map[c + c1];
