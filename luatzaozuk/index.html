@@ -5,7 +5,7 @@
     <title>Luật Záo Zụk</title>
     <style>
         body, body * {
-            font-family: monospace;
+            font-family: "Courier New";
             font-size: 12pt;
         }
     </style>
@@ -22,14 +22,18 @@
 <script>
     var map = {
         'Ch': 'C',
+        'CH': 'C',
         'ch': 'c',
         'Tr': 'C',
+        'TR': 'C',
         'tr': 'c',
         'Đ': 'D',
         'đ': 'd',
         'Ph': 'F',
+        'PH': 'F',
         'ph': 'p',
         'Gh': 'G',
+        'GH': 'G',
         'gh': 'g',
 //        'Gi': 'J',
 //        'gi': 'j',
@@ -38,20 +42,27 @@
         'Q': 'K',
         'q': 'k',
         'Nh': "N'",
+        'NH': "N'",
         'nh': "n'",
         'Ng': 'Q',
+        'NG': 'Q',
         'ng': 'q',
         'Ngh': 'Q',
+        'NGh': 'Q',
+        'NGH': 'Q',
         'ngh': 'q',
         'X': 'S',
         'x': 's',
         'Th': 'W',
+        'TH': 'W',
         'th': 'w',
         'Kh': 'X',
+        'KH': 'X',
         'kh': 'x',
         'D': 'Z',
         'd': 'z',
         'Gi': 'Z',
+        'GI': 'Z',
         'gi': 'z',
         'R': 'Z',
         'r': 'z'
@@ -91,12 +102,12 @@
         for (var i = 0; i < arr.length; i++) {
             var word = arr[i];
             if (word) {
-                result += ' ' + convert(word);
+                result += convert(word) + ' ';
             } else{
                 result += ' ';
             }
         }
-        return result;
+        return result.substr(0, result.length - 1);
     };
 
     input.onkeyup = function(){
@@ -106,7 +117,8 @@
         for (var i = 0; i < lines.length; i++){
             value += convertLine(lines[i]) + '\n';
         }
-        output.value = value;
+
+        output.value = value.substr(0, value.length - 1);
     }
 </script>
 </body>
