@@ -36,6 +36,7 @@
     Note:
     <ul>
         <li>Not covered all Gi -> J cases</li>
+        <li>For fun, copy link to share your words</li>
     </ul>
 
 </div>
@@ -92,6 +93,7 @@
     var input = document.getElementById('input');
     var output = document.getElementById('output');
 
+    
 
     var convert = function (word) {
         var result = '';
@@ -140,6 +142,7 @@
         }
 
         output.value = value.substr(0, value.length - 1);
+        window.location.hash = encodeURI(input.value);
     };
 
     input.onkeyup = run;
@@ -147,6 +150,10 @@
     input.onblur = run;
     input.onfocus = run;
 
+    if (window.location.hash.length > 1){
+        input.value = decodeURI(window.location.hash.substr(1));
+        run();
+    }
 </script>
 </body>
 </html>
