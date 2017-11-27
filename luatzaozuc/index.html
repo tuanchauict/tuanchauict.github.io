@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Luật Záo Zụk</title>
+    <style>
+        body, body * {
+            font-family: monospace;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>Luật giáo dục</p>
+    <textarea id="input" style="width: 50em; height: 20em"></textarea>
+</div>
+<div>
+    <p>Luật záo zụk</p>
+    <textarea id="output" style="width: 50em; height: 20em"></textarea>
+</div>
+<script>
+    var map = {
+        'Ch': 'C',
+        'ch': 'c',
+        'Tr': 'C',
+        'tr': 'c',
+        'Đ': 'D',
+        'đ': 'd',
+        'Ph': 'F',
+        'ph': 'p',
+        'Gh': 'G',
+        'gh': 'g',
+//        'Gi': 'J',
+//        'gi': 'j',
+        'C': 'K',
+        'c': 'k',
+        'Q': 'K',
+        'q': 'k',
+        'Nh': "N'",
+        'nh': "n'",
+        'Ng': 'Q',
+        'ng': 'q',
+        'Ngh': 'Q',
+        'ngh': 'q',
+        'X': 'S',
+        'x': 's',
+        'Th': 'W',
+        'th': 'w',
+        'Kh': 'X',
+        'kh': 'x',
+        'D': 'Z',
+        'd': 'z',
+        'Gi': 'Z',
+        'gi': 'z',
+        'R': 'Z',
+        'r': 'z'
+    }
+</script>
+<script>
+    var input = document.getElementById('input');
+    var output = document.getElementById('output');
+
+
+
+    var convert = function (word) {
+        var result = '';
+        for (var i = 0; i < word.length; i++){
+            var c = word[i];
+            var c1 = i < word.length - 1 ? word[i + 1] : '';
+            var c2 = i < word.length - 2 ? word[i + 2] : '';
+
+            if (map.hasOwnProperty(c)){
+                result += map[c];
+            } else if (map.hasOwnProperty(c + c1)){
+                result += map[c + c1];
+                i ++;
+            } else if (map.hasOwnProperty(c + c1 + c2)){
+                result += map[c + c1 + c2];
+                i += 2;
+            } else {
+                result += c;
+            }
+        }
+        return result;
+    };
+
+    var convertLine = function (line) {
+        var arr = line.split(' ');
+        var result = '';
+        for (var i = 0; i < arr.length; i++) {
+            var word = arr[i];
+            if (word) {
+                result += ' ' + convert(word);
+            } else{
+                result += ' ';
+            }
+        }
+        return result;
+    };
+
+    input.onkeyup = function(){
+        var sInput = input.value;
+        var lines = sInput.split('\n');
+        var value = '';
+        for (var i = 0; i < lines.length; i++){
+            value += convertLine(lines[i]) + '\n';
+        }
+        output.value = value;
+    }
+</script>
+</body>
+</html>
