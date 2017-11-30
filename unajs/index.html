@@ -12,10 +12,10 @@
     <div>
         Call function bar() = {{bar()}}
     </div>
-    <div u-if="foo % 2 === 0">
-        Counter % 2 == 0 {{bar()}}
+    <div id="even" u-if="foo % 2 === 0">
+        Counter % 2 == 0
     </div>
-    <div u-if="foo % 2 !== 0">
+    <div id="odd" u-if="foo % 2 !== 0">
         Counter % 2 != 0 {{bar()}}
     </div>
     <div>
