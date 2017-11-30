@@ -9,11 +9,14 @@
 </head>
 <body>
 <div id="app">
-    <div u-if="foo % 2 === 0">
+    <div>
         Call function bar() = {{bar()}}
     </div>
+    <div u-if="foo % 2 === 0">
+        Counter % 2 == 0 {{bar()}}
+    </div>
     <div u-if="foo % 2 !== 0">
-        Con meo {{bar()}}
+        Counter % 2 != 0 {{bar()}}
     </div>
     <div>
         <button u-click="onClick()">Click me</button>
