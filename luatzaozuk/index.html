@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Luật Záo Zụk" />
+    <meta property="og:description" content="A tool helps to migrate Tiếng Việt to new Tiếq Việt" />
+    <meta property="og:image" content="https://znews-photo-td.zadn.vn/w1920/Uploaded/Ycgmvlbp/2017_11_26/pgs_bui_hien_Zing.jpg"
+    />
+
+    <meta charset="UTF-8">
+    <title>Luật Záo Zụk</title>
+    <style>
+        body,
+        body * {
+            font-family: "Courier New";
+            font-size: 12pt;
+        }
+    </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110238076-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-110238076-1');
+    </script>
+
+</head>
+
+<body>
+    <div>
+        <p>Luật giáo dục</p>
+        <textarea id="input" style="width: 50em; height: 8em">Nhập từ tiếng Việt thông thường ở đây</textarea>
+    </div>
+    <div>
+        <p>Luật záo zụk</p>
+        <textarea id="output" style="width: 50em; height: 8em"></textarea>
+
+    </div>
+    <div>
+        <br/> Reference:
+        <ul>
+            <li>
+                <a href="https://news.zing.vn/toan-bo-de-xuat-cai-tien-phu-am-tieq-viet-cua-pgs-bui-hien-post799107.html">https://news.zing.vn/toan-bo-de-xuat-cai-tien-phu-am-tieq-viet-cua-pgs-bui-hien-post799107.html</a>
+            </li>
+        </ul>
+        <br/> Note:
+        <ul>
+            <li>Not covered all Gi -> J cases</li>
+            <li>For fun, copy link to share your words</li>
+        </ul>
+
+    </div>
+    <script>
+        var vowels = 'aàáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ';
+        vowels += vowels.toLocaleUpperCase();
+        var map = {
+            'Ch': 'C',
+            'CH': 'C',
+            'ch': 'c',
+            'Tr': 'C',
+            'TR': 'C',
+            'tr': 'c',
+            'Đ': 'D',
+            'đ': 'd',
+            'Ph': 'F',
+            'PH': 'F',
+            'ph': 'p',
+            'Gh': 'G',
+            'GH': 'G',
+            'gh': 'g',
+            'C': 'K',
+            'c': 'k',
+            'Q': 'K',
+            'q': 'k',
+            'Nh': "N'",
+            'NH': "N'",
+            'nh': "n'",
+            'Ng': 'Q',
+            'NG': 'Q',
+            'ng': 'q',
+            'Ngh': 'Q',
+            'NGh': 'Q',
+            'NGH': 'Q',
+            'ngh': 'q',
+            'X': 'S',
+            'x': 's',
+            'Th': 'W',
+            'TH': 'W',
+            'th': 'w',
+            'Kh': 'X',
+            'KH': 'X',
+            'kh': 'x',
+            'D': 'Z',
+            'd': 'z',
+            'Gi': 'Z',
+            'GI': 'Z',
+            'gi': 'z',
+            'R': 'Z',
+            'r': 'z'
+        }
+    </script>
+    <script>
+        var input = document.getElementById('input');
+        var output = document.getElementById('output');
+
+
+
+        var convert = function (word) {
+            var result = '';
+            for (var i = 0; i < word.length; i++) {
+                var c = word[i];
+                var c1 = i < word.length - 1 ? word[i + 1] : '';
+                var c2 = i < word.length - 2 ? word[i + 2] : '';
+                if ((c === 'G' || c === 'g') && 'iìíỉĩịIÌÍỈĨỊ'.indexOf(c1) >= 0 && (c2 === '' || vowels.indexOf(c2) < 0)) {
+                    result += c === 'G' ? 'J' : 'j';
+                }
+                else if (map.hasOwnProperty(c)) {
+                    result += map[c];
+                } else if (map.hasOwnProperty(c + c1)) {
+                    result += map[c + c1];
+                    i++;
+                } else if (map.hasOwnProperty(c + c1 + c2)) {
+                    result += map[c + c1 + c2];
+                    i += 2;
+                } else {
+                    result += c;
+                }
+            }
+            return result;
+        };
+
+        var convertLine = function (line) {
+            var arr = line.split(' ');
+            var result = '';
+            for (var i = 0; i < arr.length; i++) {
+                var word = arr[i];
+                if (word) {
+                    result += convert(word) + ' ';
+                } else {
+                    result += ' ';
+                }
+            }
+            return result.substr(0, result.length - 1);
+        };
+
+        var run = function () {
+            var sInput = input.value;
+            var lines = sInput.split('\n');
+            var value = '';
+            for (var i = 0; i < lines.length; i++) {
+                value += convertLine(lines[i]) + '\n';
+            }
+
+            output.value = value.substr(0, value.length - 1);
+            window.location.hash = encodeURI(input.value);
+        };
+
+        input.onkeyup = run;
+        input.onkeydown = run;
+        input.onblur = run;
+        input.onfocus = run;
+
+        if (window.location.hash.length > 1) {
+            input.value = decodeURI(window.location.hash.substr(1));
+            run();
+        }
+    </script>
+</body>
+
+</html>
