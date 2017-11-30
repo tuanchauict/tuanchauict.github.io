@@ -10,7 +10,7 @@
 <body>
 <div id="app">
     <div u-if="foo % 2 === 0">
-        Con heo {{bar()}}
+        Call function bar() = {{bar()}}
     </div>
     <div u-if="foo % 2 !== 0">
         Con meo {{bar()}}
@@ -18,10 +18,10 @@
     <div>
         <button u-click="onClick()">Click me</button>
     </div>
-    Con {{foo}} heo {{foo + 1}}
+    Counter = {{foo}}, counter + 1 = {{foo + 1}}
     <ul>
         <li u-for="index, item in array" u-click="onItemClick(item)">
-            <span>{{index}} - Con ca heo {{item}}</span>
+            <span>{{index + 1}} - List {{item}}</span>
         </li>
     </ul>
     <div>
