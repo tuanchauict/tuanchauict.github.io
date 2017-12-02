@@ -83,3 +83,12 @@ function evalContext(js, globalContext, localContext) {
         return eval(s);
     }.call({global: globalContext, local: localContext});
 }
+
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x100000000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4();
+}

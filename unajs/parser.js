@@ -5,6 +5,7 @@ function parseHtml(html) {
 
     function Node() {
         var me = this;
+        this.id = guid();
         this.name = '';
         this.type = TYPE_TEXT;
         this.isIfNode = false;
