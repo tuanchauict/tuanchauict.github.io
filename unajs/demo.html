@@ -16,8 +16,10 @@
 <body>
     <div id="app" class="container" style="width: 40em; padding-top: 2em; padding-bottom: 2em">
         <div>
-            <input type="text" placeholder="New TODO">
+            <input u-bind="newTodo" type="text" placeholder="New TODO">
+            <button u-click="addNewTodo(newTodo, todos)">Add</button>
             <label><input id="renderDone" type="checkbox" placeholder="Show Finished" u-bind="renderDone">Show finished</label>
+
         </div>
         <div id="list">
             <div u-for="item in getRenderableTodo(renderDone, todos)" class="row">
@@ -28,9 +30,10 @@
     </div>
 
 <script>
-    var app = Una({
+    app = new Una({
         el: 'app',
         data: {
+            newTodo: '',
             renderDone: false,
             todos: [{
                 done: false,
@@ -43,15 +46,21 @@
                 text: "Todo 3"
             }]
         }, methods: {
-            getRenderableTodo: function (renderDone, todos) {
+            getRenderableTodo: function () {
                 var result = [];
-                for (var i = 0; i < todos.length; i++){
-                    if (renderDone || !todos[i].done){
-                        result.push(todos[i]);
+                for (var i = 0; i < this.todos.length; i++){
+                    if (this.renderDone || !this.todos[i].done){
+                        result.push(this.todos[i]);
                     }
                 }
-                console.log(renderDone, todos);
                 return result;
+            },
+            addNewTodo: function(){
+                this.todos.push({
+                    done: false,
+                    text: this.newTodo
+                });
+                this.newTodo = '';
             }
         }
     })

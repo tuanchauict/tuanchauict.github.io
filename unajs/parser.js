@@ -102,6 +102,7 @@ function parseHtml(html) {
 
             if (me.uAttributes.hasOwnProperty('u-click')) {
                 element.onclick = function(){
+                    console.log('globalContext', globalContext);
                     evalContext(me.uAttributes['u-click'], globalContext, context);
                     // console.log('click');
                 }

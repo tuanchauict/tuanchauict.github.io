@@ -53,11 +53,6 @@ function Una(information) {
                     updateView();
                 };
 
-                console.log("array");
-                // obj.watch('length', function (prop, old, val) {
-                //     console.log("length changed", old, val);
-                //     updateView()
-                // });
                 for (var i = 0; i < obj.length; i++) {
                     obj.watch(i, updateView);
                     if (typeof obj[i] === 'object')

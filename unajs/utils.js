@@ -57,6 +57,16 @@ if (!String.prototype.format) {
     };
 }
 
+
+function guid() {
+    if (!this.counter){
+        this.counter = 0;
+    }
+    this.counter++;
+    return '#' + this.counter;
+}
+
+
 function evalContext(js, globalContext, localContext) {
     return function () {
         var s = "";
@@ -69,7 +79,7 @@ function evalContext(js, globalContext, localContext) {
         }
         for (var k in m) {
             if (!m.hasOwnProperty(k)) continue;
-            s += "var {0} = m.{0};".format(k);
+            s += "var {0} = m.{0}.bind(g);".format(k);
         }
 
         if (l) {
@@ -79,17 +89,9 @@ function evalContext(js, globalContext, localContext) {
             }
         }
         s += js;
-        console.log(s);
+        // console.log(s);
         return eval(s);
     }.call({global: globalContext, local: localContext});
-}
-
-function guid() {
-    if (!this.counter){
-        this.counter = 0;
-    }
-    this.counter++;
-    return '#' + this.counter;
 }
 
 function evalText(text, globalContext, localContext) {
