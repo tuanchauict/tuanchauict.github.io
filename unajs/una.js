@@ -19,10 +19,17 @@ function Una(information) {
                 return path in this.nodes ? this.nodes[path].node : null;
             },
             beginUpdate: function(){
-                me.counter++;
+                this.counter++;
             },
             endUpdate: function() {
-                //TODO
+                console.log(">>", this.counter);
+                for (var k in this.nodes){
+                    console.log(">>>", this.nodes[k].counter);
+                    if (this.nodes[k].counter < this.counter){
+                        this.nodes[k].node.remove();
+                        delete this.nodes[k];
+                    }
+                }
             }
         };
 
