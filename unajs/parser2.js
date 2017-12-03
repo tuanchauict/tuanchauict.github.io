@@ -112,7 +112,8 @@ function parseHtml(html) {
             for (var k in me.attributes) {
                 if (!me.attributes.hasOwnProperty(k))
                     continue;
-                element.setAttribute(k, evalText(me.attributes[k]), globalContext, context);
+
+                element.setAttribute(k, evalText(me.attributes[k], globalContext, context));
             }
 
             if (me.uAttributes.hasOwnProperty('u-click')) {

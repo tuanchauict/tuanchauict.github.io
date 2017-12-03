@@ -43,7 +43,11 @@ function Una(information) {
                             watch(obj[i])
                     }
                 };
-                obj.remove = function () {
+                obj.remove = function (item) {
+                    // var index = obj.indexOf(item);
+                    // if (index >= 0){
+                    //     obj.splice(index, 1);
+                    // }
                     Array.prototype.remove.apply(this, arguments);
                     updateView();
                 };

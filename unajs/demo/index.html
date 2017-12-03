@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <!-- Latest compiled and minified JavaScript -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <title>Demo Una JS</title>
+
+    <script src="../utils.js"></script>
+    <script src="../parser2.js"></script>
+    <script src="../una.js"></script>
+
+    <style>
+        .row {
+            margin-bottom: 0;
+        }
+
+        #list {
+            margin-top: 1.2em;
+        }
+
+        .item {
+            cursor: pointer;
+        }
+
+        .item.done {
+            text-decoration: line-through;
+            background: #efefef;
+        }
+
+        .item .material-icons {
+            float: right;
+            color: #BBB;
+            display: none;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .item:hover .material-icons {
+            display: inherit;
+        }
+
+        .item .material-icons:hover {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container" style="width: 40em; padding-top: 2em; padding-bottom: 2em">
+    <div class="row">
+        <div class="input-field">
+            <input id="newTodo" u-bind="newTodo" type="text" class="validate" style="margin-bottom: 1em">
+            <label for="newTodo">New TODO</label>
+        </div>
+        <div style="vertical-align: center">
+            <div class="col s6" style="padding-left: 0px">
+                <button class="waves-effect waves-light btn" u-click="addNewTodo()">Add</button>
+            </div>
+            <div class="col s6">
+                <input id="renderDone" type="checkbox" class="filled-in" u-bind="renderDone">
+                <label for="renderDone" style="margin-top: 8px; float: right">Show finished</label>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="list">
+        <div u-for="item in getRenderableTodo()" class="row">
+            <div class="card-panel z-depth-2 item {{item.done ? 'done': ''}}" u-click="item.done = !item.done">
+                {{item.text}}
+                <i class="small material-icons" u-click="todos.remove(item)">delete</i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    app = new Una({
+        el: 'app',
+        data: {
+            newTodo: '',
+            renderDone: true,
+            todos: [{
+                done: false,
+                text: "Todo 1"
+            }, {
+                done: true,
+                text: "Todo 2"
+            }, {
+                done: false,
+                text: "Todo 3"
+            }]
+        }, methods: {
+            getRenderableTodo: function () {
+                var result = [];
+                for (var i = 0; i < this.todos.length; i++) {
+                    if (this.renderDone || !this.todos[i].done) {
+                        result.push(this.todos[i]);
+                    }
+                }
+                return result;
+            },
+            addNewTodo: function () {
+                if (!this.newTodo)
+                    return;
+                this.todos.push({
+                    done: false,
+                    text: this.newTodo
+                });
+                this.newTodo = '';
+            }
+        }
+    })
+</script>
+</body>
+</html>
