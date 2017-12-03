@@ -22,9 +22,7 @@ function Una(information) {
                 this.counter++;
             },
             endUpdate: function() {
-                console.log(">>", this.counter);
                 for (var k in this.nodes){
-                    console.log(">>>", this.nodes[k].counter);
                     if (this.nodes[k].counter < this.counter){
                         this.nodes[k].node.remove();
                         delete this.nodes[k];

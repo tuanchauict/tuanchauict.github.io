@@ -16,7 +16,25 @@ function parseHtml(html) {
         this.toDOM = function (nodes, parentPath, parentElement, globalContext, context) {
             // console.log(parentElement);
             if (this.isIfNode && !evalContext(this.ifNode, globalContext, context)) {
-                console.log("remove", this);
+                var path = parentPath + this.id;
+                var node = nodes.get(path );
+                if (node) {
+                    if (node.nodeType == 8){
+                        nodes.update(paht, node);
+                    } else {
+                        var cmt = document.createComment('if');
+                        parentElement.insertBefore(cmt, node);
+                        node.remove();
+                        node = cmt;
+                        nodes.update(path, node);
+                    }
+                } else {
+                    node = document.createComment("if");
+                    parentElement.appendChild(node);
+                    nodes.update(path, node);
+                }
+
+                console.log("remove", parentPath, this.id, node);
                 //TODO remove
             } else if (this.isForNode) {
                 return renderFor(nodes, parentPath, parentElement, globalContext, context);
