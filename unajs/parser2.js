@@ -19,20 +19,19 @@ function parseHtml(html) {
                 var path = parentPath + this.id;
                 var node = nodes.get(path );
                 if (node) {
-                    if (node.nodeType == 8){
+                    if (node.nodeType === 8){
                         nodes.update(paht, node);
                     } else {
                         var cmt = document.createComment('if');
                         parentElement.insertBefore(cmt, node);
                         node.remove();
                         node = cmt;
-                        nodes.update(path, node);
                     }
                 } else {
                     node = document.createComment("if");
                     parentElement.appendChild(node);
-                    nodes.update(path, node);
                 }
+                nodes.update(path, node);
 
                 console.log("remove", parentPath, this.id, node);
                 //TODO remove
@@ -99,11 +98,16 @@ function parseHtml(html) {
 
         var renderNode = function (nodes, path, parentElement, globalContext, context) {
             var element = nodes.get(path);
-            if (element) {
+            if (element && element.nodeType != 8) {
 
             } else {
                 element = document.createElement(me.name);
-                parentElement.appendChild(element);
+                if (nodes.get(path)) {
+                    parentElement.insertBefore(element, nodes.get(path));
+                    nodes.get(path).remove();
+                } else {
+                    parentElement.appendChild(element);
+                }
             }
             nodes.update(path, element);
 
