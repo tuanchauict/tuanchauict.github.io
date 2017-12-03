@@ -17,9 +17,9 @@ function parseHtml(html) {
             // console.log(parentElement);
             if (this.isIfNode && !evalContext(this.ifNode, globalContext, context)) {
                 var path = parentPath + this.id;
-                var node = nodes.get(path );
+                var node = nodes.get(path);
                 if (node) {
-                    if (node.nodeType !== 8){
+                    if (node.nodeType !== 8) {
                         var cmt = document.createComment('if');
                         parentElement.insertBefore(cmt, node);
                         node.remove();
@@ -123,26 +123,42 @@ function parseHtml(html) {
             }
             if (me.uAttributes.hasOwnProperty('u-bind')) {
                 var binder = me.uAttributes['u-bind'];
-                element.value = evalContext(binder, globalContext, context);
-                var run = function (e) {
-                    var js;
-                    if (binder.indexOf('.') >= 0) {
-                        js = '{0} = {1}'.format(binder, JSON.stringify(element.value));
-                    } else {
-                        if (context !== null && context.hasOwnProperty(binder)) {
-                            js = 'l.{0} = {1}'.format(binder, JSON.stringify(element.value));
+                var inputType = element.type;
+                if (inputType === 'checkbox' || inputType === 'radio' ){
+                    element.checked = evalContext(binder, globalContext, context);
+                    element.onchange = function(){
+                        var js;
+                        if (binder.indexOf('.') >= 0) {
+                            js = '{0} = {1}'.format(binder, element.checked);
                         } else {
-                            js = 'g.{0} = {1}'.format(binder, JSON.stringify(element.value));
+                            if (context !== null && context.hasOwnProperty(binder)) {
+                                js = 'l.{0} = {1}'.format(binder, element.checked);
+                            } else {
+                                js = 'g.{0} = {1}'.format(binder, element.checked);
+                            }
                         }
-                    }
 
-                    evalContext(js, globalContext, context);
-                };
-                element.onchange = run;
-                // element.onfocus = run;
-                // element.onkeydown = run;
-                element.onkeyup = run;
-                // element.onblur = run;
+                        evalContext(js, globalContext, context);
+                    }
+                } else {
+                    element.value = evalContext(binder, globalContext, context);
+                    var run = function (e) {
+                        var js;
+                        if (binder.indexOf('.') >= 0) {
+                            js = '{0} = {1}'.format(binder, JSON.stringify(element.value));
+                        } else {
+                            if (context !== null && context.hasOwnProperty(binder)) {
+                                js = 'l.{0} = {1}'.format(binder, JSON.stringify(element.value));
+                            } else {
+                                js = 'g.{0} = {1}'.format(binder, JSON.stringify(element.value));
+                            }
+                        }
+
+                        evalContext(js, globalContext, context);
+                    };
+                    element.onchange = run;
+                    element.onkeyup = run;
+                }
             }
             // TODO render more uAttribute
             for (var i = 0; i < me.children.length; i++) {

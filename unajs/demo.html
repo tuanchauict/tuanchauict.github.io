@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+
+    <!-- Compiled and minified JavaScript -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
+    <title>Demo Una JS</title>
+
+    <script src="utils.js"></script>
+    <script src="parser2.js"></script>
+    <script src="una.js"></script>
+</head>
+<body>
+    <div id="app" class="container" style="width: 40em; padding-top: 2em; padding-bottom: 2em">
+        <div>
+            <input type="text" placeholder="New TODO">
+            <label><input id="renderDone" type="checkbox" placeholder="Show Finished" u-bind="renderDone">Show finished</label>
+        </div>
+        <div id="list">
+            <div u-for="item in getRenderableTodo(renderDone, todos)" class="row">
+                {{item.text}}
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    var app = Una({
+        el: 'app',
+        data: {
+            renderDone: false,
+            todos: [{
+                done: false,
+                text: "Todo 1"
+            },{
+                done: true,
+                text: "Todo 2"
+            },{
+                done: false,
+                text: "Todo 3"
+            }]
+        }, methods: {
+            getRenderableTodo: function (renderDone, todos) {
+                var result = [];
+                for (var i = 0; i < todos.length; i++){
+                    if (renderDone || !todos[i].done){
+                        result.push(todos[i]);
+                    }
+                }
+                console.log(renderDone, todos);
+                return result;
+            }
+        }
+    })
+</script>
+</body>
+</html>
