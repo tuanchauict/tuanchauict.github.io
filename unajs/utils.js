@@ -85,10 +85,27 @@ function evalContext(js, globalContext, localContext) {
 }
 
 function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x100000000)
-            .toString(16)
-            .substring(1);
+    if (!this.counter){
+        this.counter = 0;
     }
-    return s4() + s4();
+    this.counter++;
+    return '#' + this.counter;
+}
+
+function evalText(text, globalContext, localContext) {
+    var re = /{{.+?}}/g;
+    var map = {};
+    var arr = text.match(re);
+    if (!arr){
+        return text;
+    }
+    for (var i = 0; i < arr.length; i++){
+        js = arr[i];
+        if (!(js in map)) {
+            var value = evalContext(js.substr(2, js.length - 4),globalContext,  localContext);
+            map[js] = value;
+            text = text.replace(js, value);
+        }
+    }
+    return text;
 }

@@ -13,7 +13,6 @@ var app = new Una({
             return 1000;
         },
         onClick: function () {
-            console.log('Click', this);
             app.$data.foo++;
         },
         onItemClick: function (item) {

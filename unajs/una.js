@@ -4,9 +4,27 @@ function Una(information) {
     function init(information) {
         me.$el = document.getElementById(information.el);
         me.$code = '<' + me.$el.nodeName + '>' + me.$el.innerHTML + '</' + me.$el.nodeName + '>';
-        me.$elementMap = {};
         me.$tree = parseHtml(me.$code);
         me.$methods = information.methods;
+        me.$nodes = {
+            counter: 0,
+            nodes: {},
+            update: function(path, node){
+                this.nodes[path] = {
+                    counter: this.counter,
+                    node: node
+                }
+            },
+            get: function (path) {
+                return path in this.nodes ? this.nodes[path].node : null;
+            },
+            beginUpdate: function(){
+                me.counter++;
+            },
+            endUpdate: function() {
+                //TODO
+            }
+        };
 
         function watch(obj) {
             if (Array.isArray(obj)) {
@@ -53,20 +71,14 @@ function Una(information) {
 
         me.$data = JSON.parse(JSON.stringify(information.data));
         watch(me.$data);
-
+        me.$el.innerHTML = '';
         updateView();
     }
 
     function updateView(prop, old, val) {
-        var newDOM = me.$tree.toDOM({data: me.$data, methods: me.$methods}, null);
-        console.log(newDOM);
-        //TODO
-        me.$el.innerHTML = '';
-        me.$el.appendChild(newDOM);
-        // for(var i = 0; i < newDOM.childNodes.length; i++){
-        //     console.log(newDOM.childNodes[i]);
-        //     me.$el.appendChild(newDOM.childNodes[i]);
-        // }
+        me.$nodes.beginUpdate();
+        me.$tree.toDOM(me.$nodes, '', me.$el, {data: me.$data, methods: me.$methods}, null);
+        me.$nodes.endUpdate();
     }
 
 

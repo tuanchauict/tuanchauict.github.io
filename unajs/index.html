@@ -4,14 +4,37 @@
     <meta charset="UTF-8">
     <title>Demo UnaJS</title>
     <script src="utils.js"></script>
-    <script src="parser.js"></script>
+    <script src="parser2.js"></script>
     <script src="una.js"></script>
 </head>
 <body>
+<!--<div id="app">-->
+    <!--<div>-->
+        <!--Call function bar() = {{bar()}}-->
+    <!--</div>-->
+    <!--<div id="even" u-if="foo % 2 === 0">-->
+        <!--Counter % 2 == 0-->
+    <!--</div>-->
+    <!--<div id="odd" u-if="foo % 2 !== 0">-->
+        <!--Counter % 2 != 0-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<button u-click="onClick()">Click me</button>-->
+    <!--</div>-->
+    <!--Counter = {{foo}}, counter + 1 = {{foo + 1}}-->
+    <!--<ul>-->
+        <!--<li u-for="index, item in array" u-click="onItemClick(item)">-->
+            <!--<span>{{index + 1}} - List {{item}}</span>-->
+        <!--</li>-->
+    <!--</ul>-->
+    <!--<div>-->
+        <!--<input u-bind="input.text" type="text"/>-->
+    <!--</div>-->
+    <!--<div>{{input.text}}</div>-->
+
+<!--</div>-->
+
 <div id="app">
-    <div>
-        Call function bar() = {{bar()}}
-    </div>
     <div id="even" u-if="foo % 2 === 0">
         Counter % 2 == 0
     </div>
@@ -21,17 +44,6 @@
     <div>
         <button u-click="onClick()">Click me</button>
     </div>
-    Counter = {{foo}}, counter + 1 = {{foo + 1}}
-    <ul>
-        <li u-for="index, item in array" u-click="onItemClick(item)">
-            <span>{{index + 1}} - List {{item}}</span>
-        </li>
-    </ul>
-    <div>
-        <input u-bind="input.text" type="text"/>
-    </div>
-    <div>{{input.text}}</div>
-
 </div>
 <script src="app.js"></script>
 </body>

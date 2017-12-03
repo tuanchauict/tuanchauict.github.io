@@ -2,7 +2,6 @@ function parseHtml(html) {
     var TYPE_TEXT = 0;
     var TYPE_NODE = 1;
 
-
     function Node() {
         var me = this;
         this.id = guid();
@@ -14,35 +13,33 @@ function parseHtml(html) {
         this.uAttributes = {};
         this.attributes = {};
 
-        this.toDOM = function (globalContext, context) {
+        this.toDOM = function (nodes, parentPath, parentElement, globalContext, context) {
+            // console.log(parentElement);
             if (this.isIfNode && !evalContext(this.ifNode, globalContext, context)) {
-                if (this.node){
-                    this.node.remove();
-                    this.node = null;
+                console.log("remove", this);
+                //TODO remove
+            } else if (this.isForNode) {
+                return renderFor(nodes, parentPath, parentElement, globalContext, context);
+            } else {
+                var path = parentPath + this.id;
+
+                if (this.type === TYPE_TEXT) {
+                    renderText(nodes, path, parentElement, globalContext, context);
+                } else {
+                    renderNode(nodes, path, parentElement, globalContext, context);
                 }
-                return null;
             }
-
-            if (this.isForNode) {
-                return renderFor(globalContext, context);
-            }
-
-            if (this.type === TYPE_TEXT) {
-                return renderText(globalContext, context);
-            }
-
-            return renderNode(globalContext, context);
         };
 
-        var renderFor = function (globalContext, context) {
+        var renderFor = function (nodes, parentPath, parentElement, globalContext, context) {
             var result = [];
             result.array = true;
             var arr = me.forNode.split(/\s+in\s+/);
-            var data = evalContext(arr[1],globalContext,  context);
+            var data = evalContext(arr[1], globalContext, context);
             var indexes = arr[0].split(',');
             var keyIndex = '';
             var keyItem = '';
-            if (indexes.length === 2){
+            if (indexes.length === 2) {
                 keyIndex = indexes[0].trim();
                 keyItem = indexes[1].trim();
             } else {
@@ -51,57 +48,55 @@ function parseHtml(html) {
 
 
             me.isForNode = false;
-            for (var i = 0; i < data.length; i++){
+            for (var i = 0; i < data.length; i++) {
                 var localContext = {};
-                if (context){
-                    for (var k in context){
-                        if (context.hasOwnProperty(k)){
+                if (context) {
+                    for (var k in context) {
+                        if (context.hasOwnProperty(k)) {
                             localContext[k] = context[k];
                         }
                     }
                 }
                 localContext[keyItem] = data[i];
-                if (keyIndex){
+                if (keyIndex) {
                     localContext[keyIndex] = i;
                 }
 
-                result.push(me.toDOM(globalContext, localContext))
+                result.push(me.toDOM(nodes, parentPath + '-' + i, parentElement, globalContext, localContext))
             }
             me.isForNode = true;
-            return result;
         };
 
-        var renderText = function (globalContext, context) {
-            var text = me.text;
-
-            var re = /{{.+?}}/g;
-            var map = {};
-            var arr = text.match(re);
-            if (!arr){
-                return document.createTextNode(text);
+        var renderText = function (nodes, path, parentElement, globalContext, context) {
+            var text = evalText(me.text, globalContext, context);
+            var node = nodes.get(path);
+            if (node) {
+                node.nodeValue = text;
+            } else {
+                node = document.createTextNode(text);
+                parentElement.appendChild(node);
             }
-            for (var i = 0; i < arr.length; i++){
-                js = arr[i];
-                if (!(js in map)) {
-                    var value = evalContext(js.substr(2, js.length - 4),globalContext,  context);
-                    map[js] = value;
-                    text = text.replace(js, value);
-                }
-            }
-
-            return document.createTextNode(text);
+            nodes.update(path, node);
         };
 
-        var renderNode = function (globalContext, context) {
-            var element = document.createElement(me.name);
+        var renderNode = function (nodes, path, parentElement, globalContext, context) {
+            var element = nodes.get(path);
+            if (element) {
+
+            } else {
+                element = document.createElement(me.name);
+                parentElement.appendChild(element);
+            }
+            nodes.update(path, element);
+
             for (var k in me.attributes) {
                 if (!me.attributes.hasOwnProperty(k))
                     continue;
-                element.setAttribute(k, me.attributes[k]);
+                element.setAttribute(k, evalText(me.attributes[k]), globalContext, context);
             }
 
             if (me.uAttributes.hasOwnProperty('u-click')) {
-                element.onclick = function(){
+                element.onclick = function () {
                     evalContext(me.uAttributes['u-click'], globalContext, context);
                     // console.log('click');
                 }
@@ -109,13 +104,12 @@ function parseHtml(html) {
             if (me.uAttributes.hasOwnProperty('u-bind')) {
                 var binder = me.uAttributes['u-bind'];
                 element.value = evalContext(binder, globalContext, context);
-                var run = function(e){
-                    console.log(element.value);
+                var run = function (e) {
                     var js;
                     if (binder.indexOf('.') >= 0) {
                         js = '{0} = {1}'.format(binder, JSON.stringify(element.value));
                     } else {
-                        if (context !== null && context.hasOwnProperty(binder)){
+                        if (context !== null && context.hasOwnProperty(binder)) {
                             js = 'l.{0} = {1}'.format(binder, JSON.stringify(element.value));
                         } else {
                             js = 'g.{0} = {1}'.format(binder, JSON.stringify(element.value));
@@ -123,30 +117,17 @@ function parseHtml(html) {
                     }
 
                     evalContext(js, globalContext, context);
-
                 };
                 element.onchange = run;
                 // element.onfocus = run;
                 // element.onkeydown = run;
-                // element.onkeyup = run;
+                element.onkeyup = run;
                 // element.onblur = run;
             }
             // TODO render more uAttribute
             for (var i = 0; i < me.children.length; i++) {
-                var childElem = me.children[i].toDOM(globalContext, context);
-
-                if (childElem) {
-                    if ('array' in childElem){
-                        for (var j = 0; j < childElem.length; j++){
-                            element.appendChild(childElem[j]);
-                        }
-                    } else {
-                        element.appendChild(childElem);
-                    }
-                }
-
+                me.children[i].toDOM(nodes, path, element, globalContext, context);
             }
-            return element;
         };
     }
 
@@ -159,7 +140,7 @@ function parseHtml(html) {
     };
 
     var parse = function (dom) {
-        if (dom.nodeType === 8){
+        if (dom.nodeType === 8) {
             return null;
         }
         var node = new Node();
@@ -190,7 +171,7 @@ function parseHtml(html) {
             var children = [];
             for (var i = 0, l = cs.length; i < l; i++) {
                 var child = parse(cs[i]);
-                if (child){
+                if (child) {
                     children.push(child);
                 }
             }
