@@ -30,9 +30,6 @@ function parseHtml(html) {
                     parentElement.appendChild(node);
                 }
                 nodes.update(path, node);
-
-                console.log("remove", parentPath, this.id, node);
-                //TODO remove
             } else if (this.isForNode) {
                 return renderFor(nodes, parentPath, parentElement, globalContext, context);
             } else {
