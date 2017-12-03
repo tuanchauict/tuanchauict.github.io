@@ -19,9 +19,7 @@ function parseHtml(html) {
                 var path = parentPath + this.id;
                 var node = nodes.get(path );
                 if (node) {
-                    if (node.nodeType === 8){
-                        nodes.update(paht, node);
-                    } else {
+                    if (node.nodeType !== 8){
                         var cmt = document.createComment('if');
                         parentElement.insertBefore(cmt, node);
                         node.remove();
