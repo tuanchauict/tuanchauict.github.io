@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/gotit.css">
+    <title>Got It</title>
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/utils.js"></script>
+    <script src="libs/component.js"></script>
+    <script src="libs/parser2.js"></script>
+    <script src="libs/una.js"></script>
+
+    <script src="components/footer.js"></script>
+    <script src="components/header.js"></script>
+    <script src="components/common.js"></script>
+    <script src="pages/about.js"></script>
+    <script src="pages/experts.js"></script>
+    <script src="pages/home.js"></script>
+    <script src="pages/kaas.js"></script>
+    <script src="pages/solutions.js"></script>
+    <script src="pages/team.js"></script>
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="site-wrapper">
+        <div class="site-wrapper__inner">
+            <page-nav-bar>
+                <li class="{{index === activeTab ? 'active' : ''}}" u-for="index, item in tabs"><a u-click="active(index)">{{item.title}}</a>
+                </li>
+            </page-nav-bar>
+            <home u-if="activeTab === 0"></home>
+            <kaas u-if="activeTab === 1"></kaas>
+            <solutions u-if="activeTab === 2"></solutions>
+            <about u-if="activeTab === 3"></about>
+            <team u-if="activeTab === 4"></team>
+            <experts u-if="activeTab === 5"></experts>
+            <footer-component/>
+        </div>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
