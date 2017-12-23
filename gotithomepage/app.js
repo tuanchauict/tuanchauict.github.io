@@ -32,7 +32,6 @@ const app = new Una({
     methods: {
         active: function(index){
             this.activeTab = index;
-            console.log(this.activeTab);
             const map = {
                 0: '',
                 1: '?tab=kaas',
