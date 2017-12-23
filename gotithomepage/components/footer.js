@@ -78,15 +78,15 @@ Una.component('footer-links', {
     data: {
         cols: [
             [
-                {title: 'KaaS Platform', url: 'https://www.got-it.co/kaas.html'},
-                {title: 'Solutions', url: 'https://www.got-it.co/solutions.html'},
-                {title: 'About', url: 'https://www.got-it.co/about.html'},
+                {title: 'KaaS Platform', url: './?tab=kaas'},
+                {title: 'Solutions', url: './?tab=solutions'},
+                {title: 'About', url: './?tab=about'},
             ],
             [
-                {title: 'Team', url: 'https://www.got-it.co/team.html'},
+                {title: 'Team', url: './?tab=team'},
                 {title: 'Careers', url: 'https://www.got-it.co/careers.html'},
                 {title: 'Press', url: 'https://www.got-it.co/press.html'},
-                {title: 'Experts', url: 'https://www.got-it.co/experts.html'},
+                {title: 'Experts', url: './?tab=experts'},
             ],
             [
                 {title: 'Contact', url: 'https://www.got-it.co/contact.html'},
