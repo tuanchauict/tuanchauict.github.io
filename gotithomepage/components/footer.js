@@ -43,7 +43,7 @@ Una.component('footer-left', {
 <div class="col-md-7 left">
     <div class="clearfix">
         <div class="footer-logo pull-left">
-            <a href="https://www.got-it.co/"><img src="imgs/logo-main-white@2x.png"></img></a>  
+            <a href="./"><img src="imgs/logo-main-white@2x.png"></img></a>  
         </div>
         <footer-stats-list></footer-stats-list>
     </div>
