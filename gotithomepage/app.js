@@ -2,7 +2,6 @@ const app = new Una({
     el: 'app',
     data: {
         activeTab: (() => {
-            console.log(window.location.search);
             let tab = window.location.search.match(/tab=(.+?)(?:&|$)/);
             if (!tab || tab.length < 2){
                 return 0
