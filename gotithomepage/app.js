@@ -3,7 +3,7 @@ const app = new Una({
     data: {
         activeTab: (() => {
             let tab = window.location.search.match(/tab=(.+?)(?:&|$)/);
-            if (!tab || tab.length < 2){
+            if (!tab || tab.length < 2) {
                 return 0
             }
             tab = tab[1];
@@ -30,7 +30,7 @@ const app = new Una({
         ]
     },
     methods: {
-        active: function(index){
+        active: function (index) {
             this.activeTab = index;
             const map = {
                 0: '',
@@ -42,7 +42,7 @@ const app = new Una({
             };
 
             history.pushState({}, null, window.location.pathname + map[index]);
-
+            window.scroll(0, 0);
         }
     }
 });
