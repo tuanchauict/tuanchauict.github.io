@@ -84,7 +84,7 @@ Una.component('footer-links', {
             ],
             [
                 {title: 'Team', url: './?tab=team'},
-                {title: 'Careers', url: 'https://www.got-it.co/careers.html'},
+                {title: 'Careers', url: './?tab=careers'},
                 {title: 'Press', url: 'https://www.got-it.co/press.html'},
                 {title: 'Experts', url: './?tab=experts'},
             ],

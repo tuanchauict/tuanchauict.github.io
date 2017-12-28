@@ -786,7 +786,7 @@ body {
       padding-bottom: 0; } }
 
 .career-photo {
-  background: url("../images/corporate/career-photo@2x.jpg") center top;
+  background: url("../imgs/career-photo@2x.jpg") center top;
   background-size: cover;
   height: 500px; }
   @media (max-width: 991px) {
@@ -852,7 +852,7 @@ body {
   height: 0; }
 
 .page-press-cover {
-  background: url("../images/corporate/press-cover@2x.png") center center;
+  background: url("../imgs/press-cover@2x.png") center center;
   background-size: cover;
   position: relative;
   min-height: 450px;
@@ -1016,7 +1016,7 @@ body {
 .section-team-bottom {
   height: 170px;
   margin-top: 30px;
-  background: url("../images/corporate/connect-illustration@2x.png") center bottom no-repeat;
+  background: url("../imgs/connect-illustration@2x.png") center bottom no-repeat;
   background-size: 100%; }
   @media (max-width: 991px) {
     .section-team-bottom {
@@ -1356,7 +1356,7 @@ fieldset[disabled] .btn-info.active {
     float: none;
     opacity: 0.7;
     z-index: 1;
-    background-image: url("../images/icon-close@2x.png");
+    background-image: url("../imgs/icon-close@2x.png");
     background-repeat: no-repeat;
     background-size: 20px 20px; }
     button.dialog-close:hover {
