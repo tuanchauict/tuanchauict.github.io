@@ -43,7 +43,7 @@ class BRow extends React.Component {
     oldPrice: PropTypes.number,
     ceiling: PropTypes.number,
     floor: PropTypes.number,
-    currentPrice: PropTypes.number,
+    currentPrice: PropTypes.number
   };
 
   getChildContext() {
@@ -53,12 +53,15 @@ class BRow extends React.Component {
   }
 
   render() {
-    <div>
-      <NameCell code={this.props.code} />
-      <OldPriceGroup />
-      
-      <MatchPriceGroup/>
-    </div>
+    return (
+      <div>
+        <NameCell code={this.props.code}/>
+        <OldPriceGroup/>
+        <BuyPriceGroup {...this.props.buy}/>
+        <MatchPriceGroup {...this.props.match}/>
+        <SellPriceGroup {...this.props.sell}/>
+      </div>
+    )
   }
 }
 
@@ -76,4 +79,3 @@ class NameCell extends React.Component {
     );
   }
 }
-
