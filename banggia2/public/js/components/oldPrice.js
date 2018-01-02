@@ -1,7 +1,7 @@
 class OldPriceGroup extends React.Component {
   render() {
     return (
-      <div style={{color: '#000'}}>
+      <div className="column ui internally celled grid row" style={{color: '#000'}}>
         <CeilingCell/>
         <OldPriceCell/>
         <FloorCell/>
@@ -10,40 +10,40 @@ class OldPriceGroup extends React.Component {
   }
 }
 
-class CeilingCell extends React.Component {
-  static contextTypes = {
-    ceiling: PropTypes.number,
-  };
+// class CeilingCell extends React.Component {
+//   static contextTypes = {
+//     ceiling: PropTypes.number,
+//   };
   
   
-  render() {
-    return (
-      <div>{this.context.ceiling}</div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div>{this.context.ceiling}</div>
+//     );
+//   }
+// }
 
-class FloorCell extends React.Component {
-  static contextTypes = {
-    floor: PropTypes.number,
-  };
+// class FloorCell extends React.Component {
+//   static contextTypes = {
+//     floor: PropTypes.number,
+//   };
   
-  render() {
-    return (
-      <div>{this.context.floor}</div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div>{this.context.floor}</div>
+//     );
+//   }
+// }
 
-class OldPriceCell extends React.Component {
-  static contextTypes = {
-    oldPrice: PropTypes.number,
-  };
+// class OldPriceCell extends React.Component {
+//   static contextTypes = {
+//     oldPrice: PropTypes.number,
+//   };
   
-  render() {
-    return (
-      <div>{this.context.oldPrice}</div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div>{this.context.oldPrice}</div>
+//     );
+//   }
+// }
 

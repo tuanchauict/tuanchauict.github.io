@@ -1,0 +1,4 @@
+.ui.celled.grid>.column:not(.row), .ui.celled.grid>.row>.column {
+    padding: 0;
+    text-align: center;
+}

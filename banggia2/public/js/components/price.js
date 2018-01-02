@@ -58,7 +58,7 @@ class PriceGroup extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="column ui internally celled grid row">
         <PriceCell price={this.props.price}/>
         <AmountCell {...this.props}/>
       </div>
@@ -77,7 +77,7 @@ class ChangeCell extends React.Component {
   render() {
     const change = this.context.currentPrice - this.context.oldPrice;
     return (
-      <div>{change}</div>
+      <div className="column">{change}</div>
     );
   }
 }
@@ -95,7 +95,7 @@ class PriceCell extends React.Component {
 
   render() {
     return (
-      <div>{this.props.price}</div>
+      <div className="column">{this.props.price}</div>
     );
   }
 }
@@ -115,7 +115,7 @@ class AmountCell extends React.Component {
 
   render() {
     return (
-      <div>{this.props.amount}</div>
+      <div className="column">{this.props.amount}</div>
     )
   }
 }

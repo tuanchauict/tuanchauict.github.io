@@ -1,10 +1,10 @@
 class PTable extends React.Component {
   render() {
     return (
-      <div>
+      <table>
         <PHead></PHead>
         <PBody></PBody>
-      </div>
+      </table>
     )
   }
 }
@@ -12,7 +12,7 @@ class PTable extends React.Component {
 class PHead extends React.Component {
   render() {
     return (
-      <div></div>
+      <thead></thead>
     )
   }
 }
@@ -23,11 +23,11 @@ class PBody extends React.Component {
     const rows = data.map((row) => {
       return <BRow key={row.code} {...row}/>
     }); //TODO
-    
+
     return (
-      <div>
+      <tbody >
         {rows}
-      </div>
+      </tbody>
     )
   }
 }
@@ -73,15 +73,44 @@ class BRow extends React.Component {
   }
 
   render() {
+    const buy = this.props.buy;
+    const match = this.props.match;
+    const sell = this.props.sell;
+    const stats = this.props.stats;
+
     return (
-      <div>
+      <tr className="row">
         <NameCell code={this.props.code}/>
-        <OldPriceGroup/>
-        <BuyPriceGroup {...this.props.buy}/>
-        <MatchPriceGroup {...this.props.match}/>
-        <SellPriceGroup {...this.props.sell}/>
-        <Stats {...this.props.stats}/>
-      </div>
+        <CeilingCell key="ceiling"/>
+        <OldPriceCell key="oldprice"/>
+        <FloorCell key="floor"/>
+        
+        <PriceCell price={buy.three.price}/>
+        <AmountCell {...buy.three}/>
+        <PriceCell price={buy.two.price}/>
+        <AmountCell {...buy.two}/>
+        <PriceCell price={buy.one.price}/>
+        <AmountCell {...buy.one}/>
+        
+        <ChangeCell />
+        <PriceCell price={match.price} />
+        <AmountCell {...match} />
+        
+        <PriceCell price={sell.one.price}/>
+        <AmountCell {...sell.one}/>
+        <PriceCell price={sell.two.price}/>
+        <AmountCell {...sell.two}/>
+        <PriceCell price={sell.three.price}/>
+        <AmountCell {...sell.three}/>
+        
+        <StatTotalAmount amount={stats.totalAmount}/>
+        <PriceCell price={stats.match.high} />
+        <PriceCell price={stats.match.average} />
+        <PriceCell price={stats.match.low} />
+        
+        <ForeignAmount amount={stats.foreign.buy} />
+        <ForeignAmount amount={stats.foreign.sell} />
+      </tr>
     )
   }
 }
@@ -96,7 +125,121 @@ class NameCell extends React.Component {
 
   render() {
     return (
-      <div>{this.props.code}</div>
+      <td className="column">{this.props.code}</td>
     );
+  }
+}
+
+class CeilingCell extends React.Component {
+  static contextTypes = {
+    ceiling: PropTypes.number
+  };
+
+  render() {
+    return (
+      <td className="column">{this.context.ceiling}</td>
+    );
+  }
+}
+
+class FloorCell extends React.Component {
+  static contextTypes = {
+    floor: PropTypes.number
+  };
+
+  render() {
+    return (
+      <td className="column">{this.context.floor}</td>
+    );
+  }
+}
+
+class OldPriceCell extends React.Component {
+  static contextTypes = {
+    oldPrice: PropTypes.number
+  };
+
+  render() {
+    return (
+      <td className="column">{this.context.oldPrice}</td>
+    );
+  }
+}
+
+class PriceCell extends React.Component {
+  static propTypes = {
+    price: PropTypes.number
+  };
+  static contextTypes = {
+    oldPrice: PropTypes.number,
+    ceiling: PropTypes.number,
+    floor: PropTypes.number,
+    currentPrice: PropTypes.number
+  };
+
+  render() {
+    return (
+      <td className="column">{this.props.price}</td>
+    );
+  }
+}
+
+class AmountCell extends React.Component {
+  static propTypes = {
+    amount: PropTypes.number,
+    price: PropTypes.number
+  };
+
+  static contextTypes = {
+    oldPrice: PropTypes.number,
+    ceiling: PropTypes.number,
+    floor: PropTypes.number,
+    currentPrice: PropTypes.number
+  };
+
+  render() {
+    return (
+      <td className="column">{this.props.amount}</td>
+    )
+  }
+}
+
+class ChangeCell extends React.Component {
+  static contextTypes = {
+    oldPrice: PropTypes.number,
+    ceiling: PropTypes.number,
+    floor: PropTypes.number,
+    currentPrice: PropTypes.number
+  };
+
+  render() {
+    const change = this.context.currentPrice - this.context.oldPrice;
+    return (
+      <td className="column">{change}</td>
+    );
+  }
+}
+
+class ForeignAmount extends React.Component {
+  static propTypes = {
+    amount: PropTypes.number
+  }
+
+  render() {
+    return (
+      <td>{this.props.amount}</td>
+    )
+  }
+}
+
+class StatTotalAmount extends React.Component {
+  static propTypes = {
+    amount: PropTypes.number
+  }
+
+  render() {
+    return (
+      <td>{this.props.amount}</td>
+    )
   }
 }
