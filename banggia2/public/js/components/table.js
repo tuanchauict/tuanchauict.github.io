@@ -19,7 +19,11 @@ class PHead extends React.Component {
 
 class PBody extends React.Component {
   render() {
-    const rows = []; //TODO
+    const data = priceTable;
+    const rows = data.map((row) => {
+      return <BRow key={row.code} {...row}/>
+    }); //TODO
+    
     return (
       <div>
         {rows}
@@ -65,7 +69,7 @@ class BRow extends React.Component {
   getChildContext() {
     const old = this.props.oldPrice;
     const price = this.props.match.price;
-    return {oldPrice: old.price, ceiling: old.ceiling, floor: old.floor, price}
+    return {oldPrice: old.price, ceiling: old.ceiling, floor: old.floor, currentPrice: price}
   }
 
   render() {

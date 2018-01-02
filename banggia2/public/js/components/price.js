@@ -56,9 +56,13 @@ class PriceGroup extends React.Component {
     amount: PropTypes.number
   };
 
-  render() { < div > <PriceCell price={this.props.price}/> < AmountCell {
-      ...this.props
-    } /> </div>
+  render() { 
+    return (
+    <div> 
+      <PriceCell price={this.props.price}/> 
+      <AmountCell {...this.props} /> 
+    </div>
+  )
   }
 }
 
@@ -71,7 +75,7 @@ class ChangeCell extends React.Component {
   };
 
   render() {
-    const change = this.context.price - this.context.oldPrice;
+    const change = this.context.currentPrice - this.context.oldPrice;
     return (
       <div>{change}</div>
     );
