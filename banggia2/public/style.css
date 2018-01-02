@@ -1,4 +1,233 @@
-.ui.celled.grid>.column:not(.row), .ui.celled.grid>.row>.column {
-    padding: 0;
+body {
+    background: #000;
+  }
+  body,
+  body * {
+    font-family: arial, helvetica, sans-serif;
+    font-size: 9pt;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  #content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  #passcodeContainer {
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
+  #passcodeContainer div {
+    width: 100pt;
+    height: 20pt;
+    position: absolute;
+    margin-left: -50pt;
+    margin-top: -10pt;
+    top: 50%;
+    left: 50%;
+  }
+  #passcodeContainer div #password {
+    width: 100%;
+    height: 100%;
     text-align: center;
-}
+  }
+  #userinfo {
+    position: absolute;
+    right: 10pt;
+    top: 10pt;
+  }
+  #userinfo a {
+    color: #0ff;
+    font-size: 14pt;
+  }
+  #mobile,
+  #mobile * {
+    font-size: 24pt;
+  }
+  #mobile .row table {
+    width: 100%;
+  }
+  #mobile .row table thead tr td {
+    height: 50pt;
+    text-align: center;
+    border-top: #fff 3pt solid;
+  }
+  #mobile .row table thead tr td .text {
+    font-weight: bold;
+  }
+  #mobile .row table td {
+    border-right: #505050 1pt solid;
+    border-bottom: #505050 1pt solid;
+    padding-left: 0;
+    padding-right: 2pt;
+    height: 20pt;
+    vertical-align: middle;
+    text-align: right;
+    width: 13%;
+  }
+  #mobile .row table td:nth-child(4) {
+    width: 22%;
+    text-align: center;
+  }
+  .title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
+    padding: 10pt;
+    color: #fff;
+  }
+  .change {
+    background: #283593 !important;
+  }
+  #desktop .col1 {
+    width: 3%;
+  }
+  #desktop .col2,
+  #desktop .col3,
+  #desktop .col4 {
+    width: 3.5%;
+  }
+  #desktop .col5,
+  #desktop .col6,
+  #desktop .col7,
+  #desktop .col8,
+  #desktop .col9,
+  #desktop .col10,
+  #desktop .col11,
+  #desktop .col12,
+  #desktop .col14,
+  #desktop .col15,
+  #desktop .col16,
+  #desktop .col17,
+  #desktop .col18,
+  #desktop .col19,
+  #desktop .col21,
+  #desktop .col22,
+  #desktop .col23,
+  #desktop .col24,
+  #desktop .col25,
+  #desktop .col26 {
+    width: 4%;
+  }
+  #desktop .col13,
+  #desktop .col20 {
+    width: 6%;
+  }
+  #desktop table {
+    width: 100%;
+  }
+  #desktop table td {
+    border-right: #505050 1pt solid;
+    border-bottom: #505050 1pt solid;
+    padding-left: 2px;
+    padding-right: 0;
+    height: 20px;
+    vertical-align: middle;
+  }
+  #desktop table thead tr {
+    text-align: center;
+  }
+  #desktop table thead tr:first-child td {
+    border-top: #888 3px solid;
+  }
+  #desktop table thead tr td {
+    color: #f0f0f0;
+  }
+  #desktop table thead tr td.group0 {
+    background-color: #333;
+  }
+  #desktop table tbody tr td {
+    text-align: right;
+  }
+  #desktop table tbody tr td.text {
+    text-align: left;
+  }
+  #desktop table tbody tr td.group0 {
+    background-color: #1d1d1d;
+  }
+  #desktop table tbody tr td.i,
+  #desktop table tbody tr td.i .text {
+    color: #0f0;
+  }
+  #desktop table tbody tr td.d,
+  #desktop table tbody tr td.d .text {
+    color: #f00;
+  }
+  #desktop table tbody tr td.c,
+  #desktop table tbody tr td.c .text {
+    color: #f0f;
+  }
+  #desktop table tbody tr td.f,
+  #desktop table tbody tr td.f .text {
+    color: #6ff;
+  }
+  #desktop table tbody tr td.e,
+  #desktop table tbody tr td.e .text {
+    color: #ff0;
+  }
+  #desktop table tbody tr td .close {
+    display: none;
+    cursor: pointer;
+    color: #888;
+    position: absolute;
+    right: 3px;
+    top: 5pt;
+  }
+  #desktop table tbody tr td .close:hover {
+    color: #fff;
+  }
+  #desktop table tbody tr td.input div {
+    width: 100%;
+    border-bottom: none;
+  }
+  #desktop table tbody tr td.input div input {
+    width: 100%;
+  }
+  #desktop table tbody tr:hover td {
+    border-bottom: #f00 1.5pt solid;
+  }
+  #desktop table tbody tr:hover td .close {
+    display: inline;
+  }
+  #desktop table tbody tr:hover td.input {
+    border-bottom: none;
+  }
+  #desktop table tbody tr .movable {
+    cursor: move;
+  }
+  #desktop table tbody tr[draggable="true"] {
+    background: #404;
+  }
+  #desktop table tbody tr[draggable="true"] .movable {
+    cursor: move;
+  }
+  #desktop table tbody tr[draggable="true"] td.group0 {
+    background: #404;
+  }
+  .i,
+  .i .text {
+    color: #0f0;
+  }
+  .d,
+  .d .text {
+    color: #f00;
+  }
+  .c,
+  .c .text {
+    color: #f0f;
+  }
+  .f,
+  .f .text {
+    color: #6ff;
+  }
+  .e,
+  .e .text {
+    color: #ff0;
+  }
+  .q {
+    color: #fff;
+  }
+  

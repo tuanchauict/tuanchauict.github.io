@@ -2,17 +2,10 @@ class PTable extends React.Component {
   render() {
     return (
       <table>
-        <PHead></PHead>
-        <PBody></PBody>
+        <ColGroup/>
+        <PHead/>
+        <PBody/>
       </table>
-    )
-  }
-}
-
-class PHead extends React.Component {
-  render() {
-    return (
-      <thead></thead>
     )
   }
 }
@@ -84,32 +77,32 @@ class BRow extends React.Component {
         <CeilingCell key="ceiling"/>
         <OldPriceCell key="oldprice"/>
         <FloorCell key="floor"/>
-        
+
         <PriceCell price={buy.three.price}/>
         <AmountCell {...buy.three}/>
         <PriceCell price={buy.two.price}/>
         <AmountCell {...buy.two}/>
         <PriceCell price={buy.one.price}/>
         <AmountCell {...buy.one}/>
-        
-        <ChangeCell />
-        <PriceCell price={match.price} />
-        <AmountCell {...match} />
-        
+
+        <ChangeCell/>
+        <PriceCell price={match.price}/>
+        <AmountCell {...match}/>
+
         <PriceCell price={sell.one.price}/>
         <AmountCell {...sell.one}/>
         <PriceCell price={sell.two.price}/>
         <AmountCell {...sell.two}/>
         <PriceCell price={sell.three.price}/>
         <AmountCell {...sell.three}/>
-        
+
         <StatTotalAmount amount={stats.totalAmount}/>
-        <PriceCell price={stats.match.high} />
-        <PriceCell price={stats.match.average} />
-        <PriceCell price={stats.match.low} />
-        
-        <ForeignAmount amount={stats.foreign.buy} />
-        <ForeignAmount amount={stats.foreign.sell} />
+        <PriceCell price={stats.match.high}/>
+        <PriceCell price={stats.match.average}/>
+        <PriceCell price={stats.match.low}/>
+
+        <ForeignAmount amount={stats.foreign.buy}/>
+        <ForeignAmount amount={stats.foreign.sell}/>
       </tr>
     )
   }
