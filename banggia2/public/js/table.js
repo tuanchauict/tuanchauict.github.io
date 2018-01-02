@@ -32,11 +32,27 @@ class BRow extends React.Component {
   static propTypes = {
     code: PropTypes.string,
     name: PropTypes.string,
-    oldPrice: PropTypes.object,
-    match: PropTypes.object,
-    buy: PropTypes.arrayOf(PropTypes.object),
-    sell: PropTypes.arrayOf(PropTypes.object),
-    stats: PropTypes.object
+    oldPrice: PropTypes.shape({oldPrice: PropTypes.number, ceiling: PropTypes.number, floor: PropTypes.number}),
+    match: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+    buy: PropTypes
+      .PropTypes
+      .shape({
+        one: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+        two: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+        three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number})
+      }),
+    sell: PropTypes
+      .PropTypes
+      .shape({
+        one: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+        two: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+        three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number})
+      }),
+    stats: PropTypes.shape({
+      totalAmount: PropTypes.number,
+      match: PropTypes.shape({average: PropTypes.number, high: PropTypes.number, low: PropTypes.number}),
+      foreign: PropTypes.shape({buy: PropTypes.number, sell: PropTypes.number})
+    })
   };
 
   static childContextTypes = {
@@ -60,6 +76,7 @@ class BRow extends React.Component {
         <BuyPriceGroup {...this.props.buy}/>
         <MatchPriceGroup {...this.props.match}/>
         <SellPriceGroup {...this.props.sell}/>
+        <Stats {...this.props.stats}/>
       </div>
     )
   }
