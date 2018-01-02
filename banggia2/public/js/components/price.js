@@ -18,7 +18,7 @@ class BuyPriceGroup extends React.Component {
   static propTypes = {
     one: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
     two: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
-    three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+    three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number})
   };
 
   render() {
@@ -36,7 +36,7 @@ class SellPriceGroup extends React.Component {
   static propTypes = {
     one: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
     two: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
-    three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number}),
+    three: PropTypes.shape({price: PropTypes.number, amount: PropTypes.number})
   };
 
   render() {
@@ -56,13 +56,13 @@ class PriceGroup extends React.Component {
     amount: PropTypes.number
   };
 
-  render() { 
+  render() {
     return (
-    <div> 
-      <PriceCell price={this.props.price}/> 
-      <AmountCell {...this.props} /> 
-    </div>
-  )
+      <div>
+        <PriceCell price={this.props.price}/>
+        <AmountCell {...this.props}/>
+      </div>
+    )
   }
 }
 
