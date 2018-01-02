@@ -1,7 +1,7 @@
 class OldPriceGroup extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{color: '#000'}}>
         <CeilingCell/>
         <OldPriceCell/>
         <FloorCell/>

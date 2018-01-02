@@ -6,7 +6,7 @@ class MatchPriceGroup extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{color: '#0f0'}}>
         <ChangeCell/>
         <PriceGroup {...this.props}/>
       </div>
@@ -23,7 +23,7 @@ class BuyPriceGroup extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{color: '#f00'}}>
         <PriceGroup {...this.props.three}/>
         <PriceGroup {...this.props.two}/>
         <PriceGroup {...this.props.one}/>
@@ -41,7 +41,7 @@ class SellPriceGroup extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{color: '#f0f'}}>
         <PriceGroup {...this.props.one}/>
         <PriceGroup {...this.props.two}/>
         <PriceGroup {...this.props.three}/>

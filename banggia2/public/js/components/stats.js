@@ -7,7 +7,7 @@ class Stats extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{color: '#00f'}}>
         <StatTotalAmount amount={this.props.totalAmount}/>
         <StatMatchPrice {...this.props.match}/>
         <StatForeignAmount {...this.props.foreign}/>
@@ -18,12 +18,12 @@ class Stats extends React.Component {
 
 class StatTotalAmount extends React.Component {
   static propTypes = {
-    totalAmount: PropTypes.number
+    amount: PropTypes.number
   }
 
   render() {
     return (
-      <div>{this.props.totalAmount}</div>
+      <div>{this.props.amount}</div>
     )
   }
 }
@@ -38,9 +38,9 @@ class StatMatchPrice extends React.Component {
   render() {
     return (
       <div>
-        <PriceCell price={this.high}/>
-        <PriceCell price={this.average}/>
-        <PriceCell price={this.low}/>
+        <PriceCell price={this.props.high}/>
+        <PriceCell price={this.props.average}/>
+        <PriceCell price={this.props.low}/>
       </div>
     )
 

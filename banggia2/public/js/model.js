@@ -9,9 +9,11 @@ const priceTable = [
     },
     stats: {
       totalAmount: 233455,
-      average: 7.37,
-      high: 7.46,
-      low: 7.33,
+      match: {
+        average: 7.37,
+        high: 7.46,
+        low: 7.33,  
+      },
       foreign: {
         buy: 714,
         sell: 100
