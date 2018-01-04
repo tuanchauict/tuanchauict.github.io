@@ -135,7 +135,7 @@ class NameCell extends Component {
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
-    const cls = ["group0", "text", "movable", changeColor];
+    const cls = ["group0", "text", "movable", changeColor].join(' ');
     return (
       <td className={cls}>
         <span className="text link">{this.props.code}</span>
@@ -196,7 +196,7 @@ class PriceCell extends Component {
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
-    const cls = [this.props.type, changeColor];
+    const cls = [this.props.type, changeColor].join(' ');
     return (
       <td className={cls}>
         {roundPrice(this.props.price)}
@@ -222,8 +222,7 @@ class AmountCell extends Component {
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
-    const cls = [this.props.type, changeColor]
-    console.log(cls);
+    const cls = [this.props.type, changeColor].join(' ')
     return (
       <td className={cls}>{roundAmount(this.props.amount)}</td>
     )
@@ -241,7 +240,7 @@ class ChangeCell extends Component {
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
-    const cls = ["group0", "text", changeColor]
+    const cls = ["group0", "text", changeColor].join(' ')
     const change = this.context.currentPrice - this.context.oldPrice;
     return (
       <td className={cls}>{roundPrice(change)}</td>
