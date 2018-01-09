@@ -13,13 +13,13 @@ export default class PTable extends Component {
       <table className="listStock" cellPadding="0" cellSpacing="0">
         <ColGroup/>
         <PHead/>
-        <PBody priceTable={this.props.priceTable}/>
+        <Rows priceTable={this.props.priceTable}/>
       </table>
     )
   }
 }
 
-class PBody extends Component {
+class Rows extends Component {
   static propTypes = {
     priceTable: PropTypes.array
   }
@@ -27,7 +27,7 @@ class PBody extends Component {
   render() {
     const data = this.props.priceTable;
     const rows = data.map((row) => {
-      return <BRow key={row.code} {...row}/>
+      return <Row key={row.code} {...row}/>
     }); //TODO
 
     return (
@@ -38,7 +38,7 @@ class PBody extends Component {
   }
 }
 
-class BRow extends Component {
+class Row extends Component {
   static propTypes = {
     code: PropTypes.string,
     name: PropTypes.string,
@@ -80,42 +80,16 @@ class BRow extends Component {
 
   render() {
     const buy = this.props.buy;
-    const match = this.props.match;
     const sell = this.props.sell;
-    const stats = this.props.stats;
 
     return (
       <tr className="row">
         <NameCell code={this.props.code}/>
-        <CeilingCell key="ceiling"/>
-        <OldPriceCell key="oldprice"/>
-        <FloorCell key="floor"/>
-
-        <PriceCell type="b" price={buy.three.price}/>
-        <AmountCell type="b" {...buy.three}/>
-        <PriceCell type="b" price={buy.two.price}/>
-        <AmountCell type="b" {...buy.two}/>
-        <PriceCell type="b" price={buy.one.price}/>
-        <AmountCell type="b" {...buy.one}/>
-
-        <PriceCell type="group0" price={match.price}/>
-        <AmountCell type="group0" {...match}/>
-        <ChangeCell/>
-
-        <PriceCell type="s" price={sell.one.price}/>
-        <AmountCell type="s" {...sell.one}/>
-        <PriceCell type="s" price={sell.two.price}/>
-        <AmountCell type="s" {...sell.two}/>
-        <PriceCell type="s" price={sell.three.price}/>
-        <AmountCell type="s" {...sell.three}/>
-
-        <StatTotalAmount amount={stats.totalAmount}/>
-        <PriceCell price={stats.match.high}/>
-        <PriceCell price={stats.match.average}/>
-        <PriceCell price={stats.match.low}/>
-
-        <ForeignAmount amount={stats.foreign.buy}/>
-        <ForeignAmount amount={stats.foreign.sell}/>
+        <OldPriceGroup />
+        <BuySellGroup type="b" one={buy.one} two={buy.two} three={buy.three} />
+        <MatchGroup {...this.props.match} />
+        <BuySellGroup type="s" one={sell.three} two={sell.two} three={sell.one} />
+        <Stat {...this.props.stats} />
       </tr>
     )
   }
@@ -144,6 +118,14 @@ class NameCell extends Component {
     );
   }
 }
+
+const OldPriceGroup = props => (
+  <React.Fragment>
+    <CeilingCell />
+    <OldPriceCell />
+    <FloorCell />
+  </React.Fragment>
+)
 
 class CeilingCell extends Component {
   static contextTypes = {
@@ -180,6 +162,28 @@ class OldPriceCell extends Component {
     );
   }
 }
+
+const MatchGroup = props => (
+  <React.Fragment>
+    <PriceAmountGroup type="group0" {...props} />
+    <ChangeCell/>
+  </React.Fragment>
+)
+
+const BuySellGroup = props => (
+  <React.Fragment>
+    <PriceAmountGroup type={props.type} {...props.three} />
+    <PriceAmountGroup type={props.type} {...props.two} />
+    <PriceAmountGroup type={props.type} {...props.one} />
+  </React.Fragment>
+)
+
+const PriceAmountGroup = props => (
+  <React.Fragment>
+    <PriceCell {...props}/>
+    <AmountCell {...props}/>
+  </React.Fragment>
+)
 
 class PriceCell extends Component {
   static propTypes = {
@@ -247,6 +251,29 @@ class ChangeCell extends Component {
     );
   }
 }
+
+const Stat = props => (
+  <React.Fragment>
+    <StatTotalAmount amount={props.totalAmount}/>
+    <StatPrices {...props.match}/>
+    <ForeignGroup {...props.foreign}/>
+  </React.Fragment>
+)
+
+const StatPrices = props => (
+  <React.Fragment>
+    <PriceCell price={props.high}/>
+    <PriceCell price={props.average}/>
+    <PriceCell price={props.low}/>
+  </React.Fragment>
+)
+
+const ForeignGroup = props => (
+  <React.Fragment>
+    <ForeignAmount amount={props.buy}/>
+    <ForeignAmount amount={props.sell}/>
+  </React.Fragment>
+)
 
 class ForeignAmount extends Component {
   static propTypes = {
