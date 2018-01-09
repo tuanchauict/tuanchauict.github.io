@@ -1,4 +1,4 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers} from 'redux'
 import {STOCKS_ADD, STOCKS_DELETE, STOCKS_INIT, STOCKS_UPDATE} from '../constants/eventTypes'
 
 const reducer = combineReducers({})

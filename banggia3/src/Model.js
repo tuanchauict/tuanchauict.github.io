@@ -56,8 +56,12 @@ const sample = {
 export const model = {
   codes: ['HAG', 'HNG', 'MBB', 'MBS'],
   data: {
-    HAG: JSON.parse(JSON.stringify(sample)),
-    HNG: JSON.parse(JSON.stringify(sample)),
-    MBB: JSON.parse(JSON.stringify(sample)),
+    HAG: createSample(),
+    HNG: createSample(),
+    MBB: createSample(),
   }
+}
+
+export function createSample() {
+  return JSON.parse(JSON.stringify(sample));
 }

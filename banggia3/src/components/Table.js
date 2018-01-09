@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {getPriceColor, roundAmount, roundPrice} from '../Utils'
 
+
 const PTable = ({rows}) => (
   <table className="listStock" cellPadding="0" cellSpacing="0">
-    <Header />
+    <Header/>
     <Rows rows={rows}/>
   </table>
 )
@@ -14,11 +15,8 @@ export default PTable
 const Rows = ({rows}) => {
   return (
     <tbody >
-      {
-        rows.map(row => (
-          <Row key={row.code} {...row}/>
-        ))
-      }
+      {rows.map(row => (<Row key={row.code} {...row}/>))
+}
     </tbody>
   )
 }
@@ -70,11 +68,11 @@ class Row extends Component {
     return (
       <tr className="row">
         <NameCell code={this.props.code}/>
-        <OldPriceGroup />
-        <BuySellGroup type="b" one={buy.one} two={buy.two} three={buy.three} />
-        <MatchGroup {...this.props.match} />
-        <BuySellGroup type="s" one={sell.three} two={sell.two} three={sell.one} />
-        <Stat {...this.props.stats} />
+        <OldPriceGroup/>
+        <BuySellGroup type="b" one={buy.one} two={buy.two} three={buy.three}/>
+        <MatchGroup {...this.props.match}/>
+        <BuySellGroup type="s" one={sell.three} two={sell.two} three={sell.one}/>
+        <Stat {...this.props.stats}/>
       </tr>
     )
   }
@@ -106,9 +104,9 @@ class NameCell extends Component {
 
 const OldPriceGroup = props => (
   <React.Fragment>
-    <CeilingCell />
-    <OldPriceCell />
-    <FloorCell />
+    <CeilingCell/>
+    <OldPriceCell/>
+    <FloorCell/>
   </React.Fragment>
 )
 
@@ -150,16 +148,16 @@ class OldPriceCell extends Component {
 
 const MatchGroup = props => (
   <React.Fragment>
-    <PriceAmountGroup type="group0" {...props} />
+    <PriceAmountGroup type="group0" {...props}/>
     <ChangeCell/>
   </React.Fragment>
 )
 
 const BuySellGroup = ({type, one, two, three}) => (
   <React.Fragment>
-    <PriceAmountGroup type={type} {...three} />
-    <PriceAmountGroup type={type} {...two} />
-    <PriceAmountGroup type={type} {...one} />
+    <PriceAmountGroup type={type} {...three}/>
+    <PriceAmountGroup type={type} {...two}/>
+    <PriceAmountGroup type={type} {...one}/>
   </React.Fragment>
 )
 
@@ -230,8 +228,10 @@ class ChangeCell extends Component {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", changeColor].join(' ')
-    
-    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined ? undefined : this.context.currentPrice - this.context.oldPrice;
+
+    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined
+      ? undefined
+      : this.context.currentPrice - this.context.oldPrice;
     return (
       <td className={cls}>{roundPrice(change)}</td>
     );
@@ -314,24 +314,24 @@ const Header = () => (
         <td rowSpan="2">NN<br/>bán</td>
       </tr>
       <tr className="header">
-          <td>Giá3</td>
-          <td>KL 3</td>
-          <td>Giá2</td>
-          <td>KL 2</td>
-          <td>Giá1</td>
-          <td>KL 1</td>
-          <td className="group0">Giá</td>
-          <td className="group0">KL</td>
-          <td className="group0">Thay đổi</td>
-          <td>Giá1</td>
-          <td>KL 1</td>
-          <td>Giá2</td>
-          <td>KL 2</td>
-          <td>Giá3</td>
-          <td>KL 3</td>
-          <td className="group0">Cao</td>
-          <td className="group0">TB</td>
-          <td className="group0">Thấp</td>
+        <td>Giá3</td>
+        <td>KL 3</td>
+        <td>Giá2</td>
+        <td>KL 2</td>
+        <td>Giá1</td>
+        <td>KL 1</td>
+        <td className="group0">Giá</td>
+        <td className="group0">KL</td>
+        <td className="group0">Thay đổi</td>
+        <td>Giá1</td>
+        <td>KL 1</td>
+        <td>Giá2</td>
+        <td>KL 2</td>
+        <td>Giá3</td>
+        <td>KL 3</td>
+        <td className="group0">Cao</td>
+        <td className="group0">TB</td>
+        <td className="group0">Thấp</td>
       </tr>
     </thead>
   </React.Fragment>

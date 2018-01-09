@@ -3,13 +3,18 @@ import PTable from './components/Table'
 import './App.css';
 import {model} from './Model'
 import {createRows} from './Utils'
-
+import {store} from './reducers/store'
 
 class App extends Component {
+  compnentDidMount() {
+    store.subscribe(() => this.forceUpdate())
+  }
+  
   render() {
+    const state = store.getState();
     return (
       <div id="desktop" className="App">
-        <PTable rows={createRows(model)}/>
+        <PTable rows={createRows(state)}/>
       </div>
     );
   }
