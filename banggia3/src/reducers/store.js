@@ -1,9 +1,8 @@
 import {createStore, combineReducers} from 'redux'
-import {STOCKS_ADD, STOCKS_DELETE, STOCKS_UPDATE, STOCKS_INIT} from '../constants/eventTypes'
 import codesReducer from './codeReducer'
 import dataReducer from './dataReducer'
 import {initStocks, updateStocks} from '../actions/actions'
-import {createSample} from '../Model'
+import {createSample} from '../MockModel'
 
 const reducer = combineReducers({
   codes: codesReducer,
@@ -12,6 +11,15 @@ const reducer = combineReducers({
 
 export const store = createStore(reducer)
 
+export function getStockCodes() {
+  return store.getState().codes;
+}
+
+export function subscribe(listener) {
+  store.subscribe(listener)
+}
+
+//TEST
 store.dispatch(initStocks(['HAG', 'HNG', 'MBB']))
 store.dispatch(updateStocks({
   HAG: createSample(),

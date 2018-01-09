@@ -68,3 +68,13 @@ export function roundAmount(amount) {
   const s = formatNumber(amount * 10, 0);
   return s.substr(0, s.length - 1);
 }
+
+export function isSetsEqual(as, bs) {
+  if (as.size !== bs.size) return false;
+  for (var a of as) if (!bs.has(a)) return false;
+  return true;
+}
+
+export function cloneObject(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}

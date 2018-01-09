@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PTable from './components/Table'
 import './App.css';
-import {model} from './Model'
 import {createRows} from './Utils'
 import {store} from './reducers/store'
+
+
 
 class App extends Component {
   compnentDidMount() {
