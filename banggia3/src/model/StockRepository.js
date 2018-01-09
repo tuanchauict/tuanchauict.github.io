@@ -1,4 +1,3 @@
-import {store, getStockCodes, subscribe} from '../store/Store'
 import {isSetsEqual, cloneObject} from '../Utils'
 import {
   MSG_REGISTER_STOCK_CODES,
@@ -33,17 +32,37 @@ export default class StockRepository {
     return ws;
   }
   
-  _onOpen(evt) {}
+  _onOpen(evt) {
+    this.heartBeatInterval = setInterval(this.sendHeartBeat, 30000)
+  }
   
-  _onClose(evt){}
+  _onClose(evt){
+    clearInterval(this.heartBeatInterval)
+  }
 
   _onMessage(evt) {
     const text = evt.data
     console.log(text);
+    if (text === RES_MSG_OPEN) {
+      
+    } else if (text[0] === 'a') {
+      const json = JSON.parse(text.substr(1))[0]
+      if (json.type === RES_TYPE_RETURN_DATA) {
+        
+      }
+    }
   }
   
   _send(message) {
-    this._ws.send(message)
+    try{
+      this._ws.send(message)
+    } catch(e) {
+      
+    }
+  }
+  
+  sendHeartBeat() {
+    this._send(convertObjectToWSMessage(MSG_HEART_BEAT))
   }
   
   sendNewCodes(codes) {
