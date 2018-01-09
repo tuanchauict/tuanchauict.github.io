@@ -1,3 +1,32 @@
+export function createRows(model) {
+  return model.codes.map(code => {
+    if (code in model.data) {
+      model.data[code].code = code;
+      return model.data[code];
+    } else {
+      return {
+        code,
+        oldPrice: {},
+        stats: {
+          match: {},
+          foreign: {}
+        },
+        match: {},
+        buy: {
+          one: {},
+          two: {},
+          three: {}
+        },
+        sell: {
+          one: {},
+          two: {},
+          three: {}
+        }
+      }
+    }
+  })
+}
+
 export function getPriceColor(ceiling, floor, oldPrice, price) {
   if (price < 0) {
     return 'atoatc';
@@ -17,6 +46,9 @@ export function getPriceColor(ceiling, floor, oldPrice, price) {
 }
 
 function formatNumber(number, fix) {
+  if (number === undefined) {
+    return ''
+  }
   const newFix = fix === 0
     ? 1
     : fix;

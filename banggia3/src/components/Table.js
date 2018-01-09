@@ -1,41 +1,26 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {ColGroup, PHead} from './TableHeader'
 import {getPriceColor, roundAmount, roundPrice} from '../Utils'
 
-export default class PTable extends Component {
-  static propTypes = {
-    priceTable: PropTypes.array
-  }
+const PTable = ({rows}) => (
+  <table className="listStock" cellPadding="0" cellSpacing="0">
+    <Header />
+    <Rows rows={rows}/>
+  </table>
+)
 
-  render() {
-    return (
-      <table className="listStock" cellPadding="0" cellSpacing="0">
-        <ColGroup/>
-        <PHead/>
-        <Rows priceTable={this.props.priceTable}/>
-      </table>
-    )
-  }
-}
+export default PTable
 
-class Rows extends Component {
-  static propTypes = {
-    priceTable: PropTypes.array
-  }
-
-  render() {
-    const data = this.props.priceTable;
-    const rows = data.map((row) => {
-      return <Row key={row.code} {...row}/>
-    }); //TODO
-
-    return (
-      <tbody >
-        {rows}
-      </tbody>
-    )
-  }
+const Rows = ({rows}) => {
+  return (
+    <tbody >
+      {
+        rows.map(row => (
+          <Row key={row.code} {...row}/>
+        ))
+      }
+    </tbody>
+  )
 }
 
 class Row extends Component {
@@ -170,11 +155,11 @@ const MatchGroup = props => (
   </React.Fragment>
 )
 
-const BuySellGroup = props => (
+const BuySellGroup = ({type, one, two, three}) => (
   <React.Fragment>
-    <PriceAmountGroup type={props.type} {...props.three} />
-    <PriceAmountGroup type={props.type} {...props.two} />
-    <PriceAmountGroup type={props.type} {...props.one} />
+    <PriceAmountGroup type={type} {...three} />
+    <PriceAmountGroup type={type} {...two} />
+    <PriceAmountGroup type={type} {...one} />
   </React.Fragment>
 )
 
@@ -245,56 +230,109 @@ class ChangeCell extends Component {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", changeColor].join(' ')
-    const change = this.context.currentPrice - this.context.oldPrice;
+    
+    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined ? undefined : this.context.currentPrice - this.context.oldPrice;
     return (
       <td className={cls}>{roundPrice(change)}</td>
     );
   }
 }
 
-const Stat = props => (
+const Stat = ({totalAmount, match, foreign}) => (
   <React.Fragment>
-    <StatTotalAmount amount={props.totalAmount}/>
-    <StatPrices {...props.match}/>
-    <ForeignGroup {...props.foreign}/>
+    <StatTotalAmount amount={totalAmount}/>
+    <StatPrices {...match}/>
+    <ForeignGroup {...foreign}/>
   </React.Fragment>
 )
 
-const StatPrices = props => (
+const StatPrices = ({high, average, low}) => (
   <React.Fragment>
-    <PriceCell price={props.high}/>
-    <PriceCell price={props.average}/>
-    <PriceCell price={props.low}/>
+    <PriceCell price={high}/>
+    <PriceCell price={average}/>
+    <PriceCell price={low}/>
   </React.Fragment>
 )
 
-const ForeignGroup = props => (
+const ForeignGroup = ({buy, sell}) => (
   <React.Fragment>
-    <ForeignAmount amount={props.buy}/>
-    <ForeignAmount amount={props.sell}/>
+    <ForeignAmount amount={buy}/>
+    <ForeignAmount amount={sell}/>
   </React.Fragment>
 )
 
-class ForeignAmount extends Component {
-  static propTypes = {
-    amount: PropTypes.number
-  }
+const ForeignAmount = (amount) => (
+  <td>{roundAmount(amount)}</td>
+)
 
-  render() {
-    return (
-      <td>{roundAmount(this.props.amount)}</td>
-    )
-  }
-}
+const StatTotalAmount = ({amount}) => (
+  <td className="group0 e">{roundAmount(amount)}</td>
+)
 
-class StatTotalAmount extends Component {
-  static propTypes = {
-    amount: PropTypes.number
-  }
-
-  render() {
-    return (
-      <td className="group0 e">{roundAmount(this.props.amount)}</td>
-    )
-  }
-}
+const Header = () => (
+  <React.Fragment>
+    <colgroup>
+      <col className="col1"/>
+      <col className="col2"/>
+      <col className="col3"/>
+      <col className="col4"/>
+      <col className="col5"/>
+      <col className="col6"/>
+      <col className="col7"/>
+      <col className="col8"/>
+      <col className="col9"/>
+      <col className="col10"/>
+      <col className="col11"/>
+      <col className="col12"/>
+      <col className="col13"/>
+      <col className="col14"/>
+      <col className="col15"/>
+      <col className="col16"/>
+      <col className="col17"/>
+      <col className="col18"/>
+      <col className="col19"/>
+      <col className="col20"/>
+      <col className="col21"/>
+      <col className="col22"/>
+      <col className="col23"/>
+      <col className="col24"/>
+      <col className="col25"/>
+      <col className="col26"/>
+    </colgroup>
+    <thead>
+      <tr className="header">
+        <td className="group0" nowrap="" rowSpan="2">Mã<br/>CK</td>
+        <td className="group0" nowrap="" rowSpan="2">Trần</td>
+        <td className="group0" rowSpan="2">TC</td>
+        <td className="group0" nowrap="" rowSpan="2">Sàn</td>
+        <td colSpan="6">Dư mua</td>
+        <td colSpan="3" className="group0">Khớp lệnh</td>
+        <td colSpan="6">Dư bán</td>
+        <td className="group0" rowSpan="2">Tổng<br/>KL</td>
+        <td className="group0" colSpan="3">Giá khớp</td>
+        <td rowSpan="2">NN<br/>mua</td>
+        <td rowSpan="2">NN<br/>bán</td>
+      </tr>
+      <tr className="header">
+          <td>Giá3</td>
+          <td>KL 3</td>
+          <td>Giá2</td>
+          <td>KL 2</td>
+          <td>Giá1</td>
+          <td>KL 1</td>
+          <td className="group0">Giá</td>
+          <td className="group0">KL</td>
+          <td className="group0">Thay đổi</td>
+          <td>Giá1</td>
+          <td>KL 1</td>
+          <td>Giá2</td>
+          <td>KL 2</td>
+          <td>Giá3</td>
+          <td>KL 3</td>
+          <td className="group0">Cao</td>
+          <td className="group0">TB</td>
+          <td className="group0">Thấp</td>
+      </tr>
+    </thead>
+  </React.Fragment>
+)

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PTable from './components/Table'
 import './App.css';
-import {priceTable} from './Model'
+import {model} from './Model'
+import {createRows} from './Utils'
 
 
 class App extends Component {
   render() {
     return (
       <div id="desktop" className="App">
-        <PTable priceTable={priceTable}/>
+        <PTable rows={createRows(model)}/>
       </div>
     );
   }
