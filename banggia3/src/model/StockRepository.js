@@ -5,6 +5,7 @@ import {
   MSG_HEART_BEAT,
   RES_MSG_OPEN,
   // RES_TYPE_INFO,
+  RES_MSG_HEART_BEAT,
   RES_TYPE_RETURN_DATA,
   RES_DATA_TYPE_STOCK,
 } from '../constants/vndmessage'
@@ -44,7 +45,7 @@ export default class StockRepository {
   }
 
   _onOpen = (evt) => {
-    this.heartBeatInterval = setInterval(this._sendHeartBeat, 30000)
+    // this.heartBeatInterval = setInterval(this._sendHeartBeat, 30000)
   }
 
   _onClose = (evt) => {
@@ -56,10 +57,14 @@ export default class StockRepository {
     if (text === RES_MSG_OPEN) {
       this._sendInfoTime()
       this._sendNewCodes(this._codes)
+    } else if (text === RES_MSG_HEART_BEAT) {
+      this._sendHeartBeat()
     } else if (text[0] === 'a') {
       const json = JSON.parse(JSON.parse(text.substr(1))[0])
       if (json.type === RES_TYPE_RETURN_DATA && json.data.name === RES_DATA_TYPE_STOCK) {
         this._parseStockData(json.data.data)
+      } else if (json.type === RES_DATA_TYPE_STOCK) {
+        this._parseStockDataSingle(json.data)
       }
     }
   }
@@ -95,7 +100,7 @@ export default class StockRepository {
   }
   
   
-  _mapStockRawToModel = (code, raw) => {
+  _mapStockRawToModel = (raw) => {
     const arr = raw.split('|')
     return {
       code: arr[3],
@@ -108,7 +113,7 @@ export default class StockRepository {
       stats: {
         totalAmount: parseInt(arr[36], 10),
         match: {
-          average: parseFloat(arr[23]),
+          average: parseFloat(arr[39]),
           high: parseFloat(arr[13]),
           low: parseFloat(arr[14]),  
         },
@@ -123,7 +128,7 @@ export default class StockRepository {
       },
       buy: {
         one: {
-          price: parseFloat(arr[39]),
+          price: parseFloat(arr[23]),
           amount: parseInt(arr[24], 10)
         },
         two: {
@@ -158,8 +163,20 @@ export default class StockRepository {
       if (!data.hasOwnProperty(k)){
         continue
       }
-      stockData[k] = this._mapStockRawToModel(k, data[k])
+      const stock = this._mapStockRawToModel(data[k])
+      stockData[stock.code] = stock
     }
-    this.listeners.forEach(l => (l(stockData)))
+    this._spreadStockData(stockData)
+  }
+  
+  _parseStockDataSingle = data => {
+    const stock = this._mapStockRawToModel(data)
+    const stockData = {}
+    stockData[stock.code] = stock
+    this._spreadStockData(stockData)
+  }
+  
+  _spreadStockData = (data) => {
+    this.listeners.forEach(l => l(data))
   }
 }
