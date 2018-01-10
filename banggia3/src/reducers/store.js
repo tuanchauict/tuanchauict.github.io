@@ -1,12 +1,12 @@
 import {createStore, combineReducers} from 'redux'
-import codesReducer from './codeReducer'
-import dataReducer from './dataReducer'
+import codes from './codeReducer'
+import data from './dataReducer'
 import {initStocks, updateStocks} from '../actions/actions'
 import {createSample} from '../MockModel'
 
 const reducer = combineReducers({
-  codes: codesReducer,
-  data: dataReducer,
+  codes,
+  data,
 })
 
 export const store = createStore(reducer)

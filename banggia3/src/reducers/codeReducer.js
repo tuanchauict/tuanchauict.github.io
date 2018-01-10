@@ -1,6 +1,6 @@
 import {STOCKS_ADD, STOCKS_DELETE, STOCKS_INIT} from '../constants/eventTypes'
 
-export default function codesReducer(state = [], action) {
+export default function codes(state = [], action) {
   switch (action.type) {
     case STOCKS_ADD: {
       return state.concat(action.codes)

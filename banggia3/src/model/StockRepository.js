@@ -8,7 +8,9 @@ import {
   RES_MSG_HEART_BEAT,
   RES_TYPE_RETURN_DATA,
   RES_DATA_TYPE_STOCK,
+  RES_DATA_TYPE_CEILING_FLOOR_COUNT,
 } from '../constants/vndmessage'
+import {PRICE_ATC, PRICE_ATO, PRICE_UNDEFINED} from '../constants/prices'
 
 const convertObjectToWSMessage = (obj) => (JSON.stringify(JSON.stringify(obj)))
 
@@ -61,11 +63,16 @@ export default class StockRepository {
       this._sendHeartBeat()
     } else if (text[0] === 'a') {
       const json = JSON.parse(JSON.parse(text.substr(1))[0])
-      if (json.type === RES_TYPE_RETURN_DATA && json.data.name === RES_DATA_TYPE_STOCK) {
-        this._parseStockData(json.data.data)
+      if (json.type === RES_TYPE_RETURN_DATA) {
+        if (json.data.name === RES_DATA_TYPE_STOCK) {
+          this._parseStockData(json.data.data)
+        } else if (json.data.name === RES_DATA_TYPE_CEILING_FLOOR_COUNT){
+          //TODO
+        }
+        
       } else if (json.type === RES_DATA_TYPE_STOCK) {
         this._parseStockDataSingle(json.data)
-      }
+      } 
     }
   }
   
@@ -102,7 +109,7 @@ export default class StockRepository {
   
   _mapStockRawToModel = (raw) => {
     const arr = raw.split('|')
-    return {
+    const value = {
       code: arr[3],
       name: 'Hoang Anh Gia Lai',
       oldPrice: {
@@ -155,6 +162,32 @@ export default class StockRepository {
         }
       }
     }
+    
+    const buyOne = value.buy.one
+    const sellOne = value.sell.one
+    const now = new Date()
+    const isATO = now.getHours() === 9 && now.getMinutes() < 15;
+    const isATC = now.getHours() === 14 && now.getMinutes() > 30;
+    if (isNaN(buyOne.price) && buyOne.amount > 0) {
+      if (isATO) {
+        buyOne.price = PRICE_ATO
+      } else if (isATC) {
+        buyOne.price = PRICE_ATC
+      } else {
+        buyOne.price = PRICE_UNDEFINED
+      }
+    }
+    if (isNaN(sellOne.price) && sellOne.amount > 0) {
+      if (isATO) {
+        sellOne.price = PRICE_ATO
+      } else if (isATC) {
+        sellOne.price = PRICE_ATC
+      } else {
+        sellOne.price = PRICE_UNDEFINED
+      }
+    }
+    
+    return value;
   }
   
   _parseStockData = (data) => {

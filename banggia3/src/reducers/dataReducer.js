@@ -1,6 +1,6 @@
 import {STOCKS_UPDATE} from '../constants/eventTypes'
 
-export default function dataReducer(state = {}, action) {
+export default function data(state = {}, action) {
   switch (action.type) {
     case STOCKS_UPDATE:
       {
