@@ -225,15 +225,20 @@ class ChangeCell extends Component {
   };
 
   render() {
+    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined || isNaN(this.context.currentPrice)
+      ? undefined
+      : this.context.currentPrice - this.context.oldPrice;
+      
+    if (change === undefined || change === 0 || isNaN(change)){
+      return <td></td>
+    } 
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", changeColor].join(' ')
-
-    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined
-      ? undefined
-      : this.context.currentPrice - this.context.oldPrice;
+    const symbol = change > 0 ?'▲' : '▼'
+    const percent = Math.abs(change) * 100 / ctx.oldPrice
     return (
-      <td className={cls}>{roundPrice(change)}</td>
+      <td className={cls}>{roundPrice(change)}{symbol}{percent}</td>
     );
   }
 }
@@ -261,8 +266,8 @@ const ForeignGroup = ({buy, sell}) => (
   </React.Fragment>
 )
 
-const ForeignAmount = (amount) => (
-  <td>{roundAmount(amount)}</td>
+const ForeignAmount = ({amount}) => (
+  <td className="q">{roundAmount(amount)}</td>
 )
 
 const StatTotalAmount = ({amount}) => (
