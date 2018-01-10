@@ -46,7 +46,7 @@ export function getPriceColor(ceiling, floor, oldPrice, price) {
 }
 
 function formatNumber(number, fix) {
-  if (number === undefined) {
+  if (number === undefined || isNaN(number)) {
     return ''
   }
   const newFix = fix === 0
