@@ -6,16 +6,18 @@ import {store} from './reducers/store'
 import StockRepository from  './model/StockRepository'
 import {updateStocks} from './actions/actions'
 
-const repo = new StockRepository('wss://price-hn04.vndirect.com.vn/realtime/472/iksx822s/websocket')
+const repo = new StockRepository('wss://price-hn04.vndirect.com.vn/realtime/472/iksx822s/websocket', store.getState().codes)
+
 
 class App extends Component {
-  compnentDidMount() {
+  
+  componentDidMount() {
     store.subscribe(() => {
       this.forceUpdate()
       repo.updateStockCodes(store.getState().codes)
     })
-    
-    repo.subscribe((data) => {
+    repo.addListener((data) => {
+      console.log(data);
       store.dispatch(updateStocks(data))
     })
   }

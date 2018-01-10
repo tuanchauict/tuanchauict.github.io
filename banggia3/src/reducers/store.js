@@ -21,8 +21,8 @@ export function subscribe(listener) {
 
 //TEST
 store.dispatch(initStocks(['HAG', 'HNG', 'MBB']))
-store.dispatch(updateStocks({
-  HAG: createSample(),
-  HNG: createSample(),
-  MBB: createSample(),
-}))
+// store.dispatch(updateStocks({
+//   HAG: createSample(),
+//   HNG: createSample(),
+//   MBB: createSample(),
+// }))

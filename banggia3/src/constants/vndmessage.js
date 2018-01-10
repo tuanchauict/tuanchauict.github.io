@@ -1,5 +1,5 @@
 export const MSG_REGISTER_STOCK_CODES = {
-  type: 'registetConsumer',
+  type: 'registConsumer',
   data: {
     sequence: 0,
     params: {
@@ -9,6 +9,12 @@ export const MSG_REGISTER_STOCK_CODES = {
   }
 }
 export const MSG_HEART_BEAT = 'heartbeat'
+export const MSG_INFO_TIME = {
+  type: "info",
+  data: {
+    time: 1515540466895
+  }
+}
 
 export const RES_MSG_OPEN = 'o'
 export const RES_MSG_HEART_BEAT = 'h'
