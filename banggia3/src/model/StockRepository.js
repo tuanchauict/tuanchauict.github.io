@@ -1,28 +1,39 @@
 import {isSetsEqual, cloneObject} from '../Utils'
 import {
+  MSG_INFO_TIME,
   MSG_REGISTER_STOCK_CODES,
   MSG_HEART_BEAT,
   RES_MSG_OPEN,
-  RES_TYPE_INFO,
+  // RES_TYPE_INFO,
   RES_TYPE_RETURN_DATA,
   RES_DATA_TYPE_STOCK,
 } from '../constants/vndmessage'
 
-const convertObjectToWSMessage = (obj) => (
-  JSON.stringify(JSON.stringify(obj))
-)
-
-
-
-
+const convertObjectToWSMessage = (obj) => (JSON.stringify(JSON.stringify(obj)))
 
 export default class StockRepository {
-  constructor(webSocketUrl) {
-    this._codes = undefined
+  constructor(webSocketUrl, codes = []) {
+    console.log(codes);
+    this._codes = codes
     this._ws = this._initWS(webSocketUrl)
     this.listeners = []
   }
   
+  addListener = (listener) => {
+    this.listeners.push(listener);
+  }
+
+  updateStockCodes = (codes) => {
+    if (this._codes === undefined || !isSetsEqual(this._codes, new Set(codes))) {
+      this._codes = new Set(codes)
+      this._sendNewCodes(codes)
+    }
+  }
+
+  closeSocket() {
+    this.ws.close()
+  }
+
   _initWS(webSocketUrl) {
     const ws = new WebSocket(webSocketUrl);
     ws.onopen = this._onOpen
@@ -31,58 +42,124 @@ export default class StockRepository {
     ws.onerror = this._onError
     return ws;
   }
-  
-  _onOpen(evt) {
-    this.heartBeatInterval = setInterval(this.sendHeartBeat, 30000)
+
+  _onOpen = (evt) => {
+    this.heartBeatInterval = setInterval(this._sendHeartBeat, 30000)
   }
-  
-  _onClose(evt){
+
+  _onClose = (evt) => {
     clearInterval(this.heartBeatInterval)
   }
 
-  _onMessage(evt) {
+  _onMessage = (evt) => {
     const text = evt.data
-    console.log(text);
     if (text === RES_MSG_OPEN) {
-      
+      this._sendInfoTime()
+      this._sendNewCodes(this._codes)
     } else if (text[0] === 'a') {
-      const json = JSON.parse(text.substr(1))[0]
-      if (json.type === RES_TYPE_RETURN_DATA) {
-        
+      const json = JSON.parse(JSON.parse(text.substr(1))[0])
+      if (json.type === RES_TYPE_RETURN_DATA && json.data.name === RES_DATA_TYPE_STOCK) {
+        this._parseStockData(json.data.data)
       }
     }
   }
   
-  _send(message) {
-    try{
-      this._ws.send(message)
-    } catch(e) {
-      
-    }
-  }
-  
-  sendHeartBeat() {
-    this._send(convertObjectToWSMessage(MSG_HEART_BEAT))
-  }
-  
-  sendNewCodes(codes) {
-    const obj = cloneObject(MSG_REGISTER_STOCK_CODES)
-    obj.data.params.codes = codes
-    this._send(convertObjectToWSMessage(obj))
-  }
-  
-  subscribe(listener) {
-    this.listeners.push(listener);
-  }
-  
-  updateStockCodes(codes) {
-    if (this.codes === undefined || !isSetsEqual(this.codes, codes)) {
-      this.codes = new Set(codes)
-      this.sendNewCodes(codes)
-    }
+  _onError = (evt) => {
+    console.error(evt);
   }
 
-  closeSocket() {
-    this.ws.close()
+  _send(message) {
+    try {
+      this._ws.send(message)
+    } catch (e) {}
+  }
+
+  _sendObject = (obj) => {
+    this._send([convertObjectToWSMessage(obj)])
+  }
+
+  _sendInfoTime() {
+    const obj = cloneObject(MSG_INFO_TIME)
+    obj.data.time = Date.now()
+    this._sendObject(obj)
+  }
+
+  _sendHeartBeat = () => {
+    this._sendObject(MSG_HEART_BEAT)
+  }
+
+  _sendNewCodes = (codes) => {
+    const obj = cloneObject(MSG_REGISTER_STOCK_CODES)
+    obj.data.params.codes = codes
+    this._sendObject(obj)
+  }
+  
+  
+  _mapStockRawToModel = (code, raw) => {
+    const arr = raw.split('|')
+    return {
+      code: arr[3],
+      name: 'Hoang Anh Gia Lai',
+      oldPrice: {
+        ceiling: parseFloat(arr[15]),
+        floor: parseFloat(arr[16]),
+        price: parseFloat(arr[8]),
+      },
+      stats: {
+        totalAmount: parseInt(arr[36], 10),
+        match: {
+          average: parseFloat(arr[23]),
+          high: parseFloat(arr[13]),
+          low: parseFloat(arr[14]),  
+        },
+        foreign: {
+          buy: parseInt(arr[37], 10),
+          sell: parseInt(arr[38], 10)
+        }
+      },
+      match: {
+        price: parseFloat(arr[19]),
+        amount: parseInt(arr[20], 10)
+      },
+      buy: {
+        one: {
+          price: parseFloat(arr[39]),
+          amount: parseInt(arr[24], 10)
+        },
+        two: {
+          price: parseFloat(arr[25]),
+          amount: parseInt(arr[26], 10)
+        },
+        three: {
+          price: parseFloat(arr[27]),
+          amount: parseInt(arr[28], 10)
+        }
+      },
+      sell: {
+        one: {
+          price: parseFloat(arr[29]),
+          amount: parseInt(arr[30], 10)
+        },
+        two: {
+          price: parseFloat(arr[31]),
+          amount: parseInt(arr[32], 10)
+        },
+        three: {
+          price: parseFloat(arr[33]),
+          amount: parseInt(arr[34], 10)
+        }
+      }
+    }
+  }
+  
+  _parseStockData = (data) => {
+    const stockData = {}
+    for (let k in data) {
+      if (!data.hasOwnProperty(k)){
+        continue
+      }
+      stockData[k] = this._mapStockRawToModel(k, data[k])
+    }
+    this.listeners.forEach(l => (l(stockData)))
   }
 }
