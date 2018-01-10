@@ -179,16 +179,42 @@ class PriceCell extends Component {
     floor: PropTypes.number,
     currentPrice: PropTypes.number
   };
-
+  
+  lastChange = {
+    value: -1,
+    time: Date.now()
+  }
+  
+  lastPrice = -1
   render() {
-    const ctx = this.context;
-    const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
-    const cls = [this.props.type, changeColor].join(' ');
+    const ctx = this.context
+    const price = this.props.price
+    const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, price)
+    const cls = [this.props.type, changeColor]
+    if (this.lastChange.value !== price) {
+      cls.push('change')
+      this.lastChange = {
+        value: price,
+        time: Date.now()
+      }
+      
+      setTimeout(this.rerender, 1000)
+    } else if(Date.now() - this.lastChange.time < 1000){
+      cls.push('change')
+    }
     return (
-      <td className={cls}>
-        {roundPrice(this.props.price)}
+      <td className={cls.join(' ')}>
+        {roundPrice(price)}
       </td>
     );
+  }
+  
+  rerender = () => {
+    try{
+      this.forceUpdate()
+    } catch(e){
+      
+    }
   }
 }
 
@@ -206,13 +232,39 @@ class AmountCell extends Component {
     currentPrice: PropTypes.number
   };
 
+  lastChange = {
+    value: -1,
+    time: Date.now()
+  }
+  
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
-    const cls = [this.props.type, changeColor].join(' ')
+    const cls = [this.props.type, changeColor]
+    const amount = this.props.amount
+    if (amount !== this.lastChange.value) {
+      cls.push('change')
+      this.lastChange = {
+        value: amount,
+        time: Date.now(),
+      }
+      setTimeout(this.rerender, 1000)
+    } else if(Date.now() - this.lastChange.time < 1000) {
+      cls.push('change')
+    }
+    
     return (
-      <td className={cls}>{roundAmount(this.props.amount)}</td>
+      <td className={cls.join(' ')}>{roundAmount(amount)}</td>
     )
+  }
+  
+  rerender = () => {
+    try{
+      this.forceUpdate()
+    } catch(e){
+      
+    }
+    
   }
 }
 
@@ -225,20 +277,20 @@ class ChangeCell extends Component {
   };
 
   render() {
-    const change = this.context.currentPrice === undefined || this.context.oldPrice === undefined || isNaN(this.context.currentPrice)
+    const ctx = this.context;    
+    const change = ctx.currentPrice === undefined || ctx.oldPrice === undefined || isNaN(ctx.currentPrice)
       ? undefined
-      : this.context.currentPrice - this.context.oldPrice;
+      : ctx.currentPrice - ctx.oldPrice;
       
     if (change === undefined || change === 0 || isNaN(change)){
       return <td></td>
     } 
-    const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", changeColor].join(' ')
     const symbol = change > 0 ?'▲' : '▼'
-    const percent = Math.abs(change) * 100 / ctx.oldPrice
+    const percent = Math.round(Math.abs(change) * 10000 / ctx.oldPrice)/100
     return (
-      <td className={cls}>{roundPrice(change)}{symbol}{percent}</td>
+      <td className={cls}>{roundPrice(change)}{symbol}{percent}%</td>
     );
   }
 }
