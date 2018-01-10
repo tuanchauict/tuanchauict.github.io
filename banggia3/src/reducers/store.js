@@ -20,7 +20,7 @@ export function subscribe(listener) {
 }
 
 //TEST
-store.dispatch(initStocks(['HAG', 'HNG', 'MBB']))
+store.dispatch(initStocks(['HAG', 'HNG', 'MBB', 'STB', 'FPT', 'MBS', 'CTD']))
 // store.dispatch(updateStocks({
 //   HAG: createSample(),
 //   HNG: createSample(),
