@@ -1,3 +1,5 @@
+import {PRICE_ATO, PRICE_ATC, PRICE_UNDEFINED} from './constants/prices'
+
 export function createRows(model) {
   return model.codes.map(code => {
     if (code in model.data) {
@@ -61,7 +63,12 @@ function formatNumber(number, fix) {
 }
 
 export function roundPrice(price) {
-  return formatNumber(price, 2);
+  switch(price){
+    case PRICE_ATC: return 'ATC'
+    case PRICE_ATO: return 'ATO'
+    case PRICE_UNDEFINED: return ''
+    default: return formatNumber(price, 2)
+  }
 }
 
 export function roundAmount(amount) {
@@ -78,3 +85,16 @@ export function isSetsEqual(as, bs) {
 export function cloneObject(obj) {
   return JSON.parse(JSON.stringify(obj))
 }
+
+export function readUrlParam(param, defaultValue = null) {
+  const regex = /[?&]([^=#]+)=([^&#]*)/g
+  let match = regex.exec(window.location.search)
+  while (match) {
+    if (match[1] === param) {
+      return match[2]
+    }
+    match = regex.exec(window.location.search)
+  }
+  return defaultValue
+}
+

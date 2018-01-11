@@ -185,7 +185,13 @@ class PriceCell extends Component {
     time: Date.now()
   }
   
-  lastPrice = -1
+  componentWillUnmount() {
+    if (this._timeout) {
+      clearTimeout(this._timeout)
+      this._timeout = null
+    }
+  }
+  
   render() {
     const ctx = this.context
     const price = this.props.price
@@ -198,7 +204,7 @@ class PriceCell extends Component {
         time: Date.now()
       }
       
-      setTimeout(this.rerender, 1000)
+      this._timeout = setTimeout(this.rerender, 1000)
     } else if(Date.now() - this.lastChange.time < 1000){
       cls.push('change')
     }
@@ -237,6 +243,13 @@ class AmountCell extends Component {
     time: Date.now()
   }
   
+  componentWillUnmount() {
+    if (this._timeout) {
+      clearTimeout(this._timeout)
+      this._timeout = null
+    }
+  }
+  
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
@@ -248,7 +261,7 @@ class AmountCell extends Component {
         value: amount,
         time: Date.now(),
       }
-      setTimeout(this.rerender, 1000)
+      this._timeout = setTimeout(this.rerender, 1000)
     } else if(Date.now() - this.lastChange.time < 1000) {
       cls.push('change')
     }
@@ -259,12 +272,7 @@ class AmountCell extends Component {
   }
   
   rerender = () => {
-    try{
-      this.forceUpdate()
-    } catch(e){
-      
-    }
-    
+    this.forceUpdate()
   }
 }
 
