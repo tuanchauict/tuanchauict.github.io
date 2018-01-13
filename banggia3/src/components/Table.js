@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {getPriceColor, roundAmount, roundPrice} from '../Utils'
-
+import {store} from '../reducers/store'
+import {deleteStocks} from '../actions/actions'
 
 const PTable = ({rows}) => (
   <table className="listStock" cellPadding="0" cellSpacing="0">
@@ -88,15 +89,20 @@ class NameCell extends Component {
     floor: PropTypes.number,
     currentPrice: PropTypes.number
   };
-
+  
+  handleCloseClick = () => {
+    store.dispatch(deleteStocks([this.props.code]))
+  }
+  
   render() {
     const ctx = this.context;
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", "movable", changeColor].join(' ');
+    
     return (
-      <td className={cls}>
+      <td className={cls} style={{position: 'relative'}}>
         <span className="text link">{this.props.code}</span>
-        <i className="close" title="Remove"></i>
+        <i className="close" title="Remove" onClick={this.handleCloseClick}>&times;</i>
       </td>
     );
   }
@@ -195,6 +201,12 @@ class PriceCell extends Component {
   render() {
     const ctx = this.context
     const price = this.props.price
+    if (isNaN(price) || price === undefined) {
+      return (
+        <td></td>
+      )
+    }
+      
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, price)
     const cls = [this.props.type, changeColor]
     if (this.lastChange.value !== price) {
@@ -255,6 +267,13 @@ class AmountCell extends Component {
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, this.props.price)
     const cls = [this.props.type, changeColor]
     const amount = this.props.amount
+    
+    if (isNaN(amount) || amount === undefined) {
+      return (
+        <td></td>
+      )
+    }
+    
     if (amount !== this.lastChange.value) {
       cls.push('change')
       this.lastChange = {

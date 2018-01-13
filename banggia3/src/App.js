@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PTable from './components/Table'
+import StockInput from './components/Input'
 import './App.css';
 import {createRows, readUrlParam} from './Utils'
 import {store} from './reducers/store'
@@ -35,6 +36,7 @@ class App extends Component {
     const state = store.getState();
     return (
       <div id="desktop" className="App">
+        <StockInput />
         <PTable rows={createRows(state)}/>
       </div>
     );

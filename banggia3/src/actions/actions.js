@@ -14,7 +14,7 @@ export function addStocks(codes) {
   }
 }
 
-export function deteleStocks(codes) {
+export function deleteStocks(codes) {
   return {
     type: STOCKS_DELETE,
     codes,

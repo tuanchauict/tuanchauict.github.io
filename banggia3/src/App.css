@@ -123,8 +123,9 @@ body * {
   border-right: #505050 1pt solid;
   border-bottom: #505050 1pt solid;
   padding-left: 2px;
-  padding-right: 0;
-  height: 20px;
+  padding-right: 1px;
+  padding-top: 1px;
+  height: 22px;
   vertical-align: middle;
 }
 #desktop table thead tr {
@@ -174,7 +175,7 @@ body * {
   color: #888;
   position: absolute;
   right: 3px;
-  top: 5pt;
+  top: 3pt;
 }
 #desktop table tbody tr td .close:hover {
   color: #fff;
