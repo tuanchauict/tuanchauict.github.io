@@ -1,4 +1,4 @@
-import {STOCKS_ADD, STOCKS_DELETE, STOCKS_INIT} from '../constants/eventTypes'
+import {STOCKS_ADD, STOCKS_DELETE, STOCKS_INIT, STOCKS_SWAP} from '../constants/eventTypes'
 
 export default function codes(state = [], action) {
   switch (action.type) {
@@ -11,6 +11,15 @@ export default function codes(state = [], action) {
     }
     case STOCKS_INIT: {
       return action.codes
+    }
+    case STOCKS_SWAP: {
+      const {stock1, stock2} = action
+      const index1 = state.indexOf(stock1)
+      const index2 = state.indexOf(stock2)
+      const newState = [...state]
+      newState[index1] = stock2
+      newState[index2] = stock1
+      return newState
     }
     default: {
       return state

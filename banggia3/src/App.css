@@ -199,15 +199,15 @@ body * {
 #desktop table tbody tr .movable {
   cursor: move;
 }
-#desktop table tbody tr[draggable="true"] {
+/* #desktop table tbody tr[draggable="true"] {
   background: #404;
-}
+} */
 #desktop table tbody tr[draggable="true"] .movable {
   cursor: move;
 }
-#desktop table tbody tr[draggable="true"] td.group0 {
+/* #desktop table tbody tr[draggable="true"] td.group0 {
   background: #404;
-}
+} */
 .i,
 .i .text {
   color: #0f0;

@@ -2,25 +2,68 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {getPriceColor, roundAmount, roundPrice} from '../Utils'
 import {store} from '../reducers/store'
-import {deleteStocks} from '../actions/actions'
+import {deleteStocks, swapStocks} from '../actions/actions'
+import {DragDropContext, DragSource, DropTarget} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 const PTable = ({rows}) => (
   <table className="listStock" cellPadding="0" cellSpacing="0">
     <Header/>
-    <Rows rows={rows}/>
+    <DraggableRows rows={rows}/>
   </table>
 )
 
 export default PTable
 
-const Rows = ({rows}) => {
-  return (
-    <tbody >
-      {rows.map(row => (<Row key={row.code} {...row}/>))
+class Rows extends Component {
+  
+  
+  moveRow = (dragCode, hoverCode) => {
+    store.dispatch(swapStocks(dragCode, hoverCode))
+  }
+  
+  render() {
+    const rows = this.props.rows
+    return (
+      <tbody >
+        {
+          rows.map(row => (<DraggbleRow key={row.code} {...row} moveRow={this.moveRow}/>))
+        }
+      </tbody>
+    )
+  }
+  
 }
-    </tbody>
-  )
+
+const DraggableRows = DragDropContext(HTML5Backend)(Rows)
+
+const rowSource = {
+  beginDrag(props) {
+    return {code: props.code}
+  },
 }
+
+const rowTarget = {
+  hover(props, monitor) {
+    const draggedCode = monitor.getItem().code
+    if (draggedCode !== props.code) {
+      props.moveRow(draggedCode, props.code)
+    }
+  }
+}
+
+const sourceCollect = (connect, monitor) => (
+  {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }
+)
+
+const targetCollect = (connect) => ({
+  connectDropTarget: connect.dropTarget()
+})
+
+
 
 class Row extends Component {
   static propTypes = {
@@ -63,21 +106,33 @@ class Row extends Component {
   }
 
   render() {
-    const buy = this.props.buy;
-    const sell = this.props.sell;
-
-    return (
-      <tr className="row">
-        <NameCell code={this.props.code}/>
+    const {
+      code,
+      buy,
+      sell,
+      match,
+      stats,
+      connectDragSource,
+      connectDropTarget,
+      isDragging,
+    } = this.props
+    
+    const opacity = isDragging ? 0.3 : 1
+  
+    return connectDragSource(connectDropTarget(
+      <tr className="row" style={{opacity}}>
+        <NameCell code={code}/>
         <OldPriceGroup/>
         <BuySellGroup type="b" one={buy.one} two={buy.two} three={buy.three}/>
-        <MatchGroup {...this.props.match}/>
+        <MatchGroup {...match}/>
         <BuySellGroup type="s" one={sell.three} two={sell.two} three={sell.one}/>
-        <Stat {...this.props.stats}/>
+        <Stat {...stats}/>
       </tr>
-    )
+    ))
   }
 }
+
+const DraggbleRow = DropTarget('row', rowTarget, targetCollect)(DragSource('row', rowSource, sourceCollect)(Row))
 
 class NameCell extends Component {
   static propTypes = {

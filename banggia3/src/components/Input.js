@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import codes from '../reducers/codeReducer';
 import {addStocks} from '../actions/actions'
 import {store} from '../reducers/store'
 

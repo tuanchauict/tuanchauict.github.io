@@ -1,4 +1,4 @@
-import {STOCKS_INIT, STOCKS_ADD, STOCKS_DELETE, STOCKS_UPDATE} from '../constants/eventTypes'
+import {STOCKS_INIT, STOCKS_ADD, STOCKS_DELETE, STOCKS_UPDATE, STOCKS_SWAP} from '../constants/eventTypes'
 
 export function initStocks(codes) {
   return {
@@ -28,3 +28,10 @@ export function updateStocks(data) {
   }
 }
 
+export function swapStocks(a, b) {
+  return {
+    type: STOCKS_SWAP,
+    stock1: a,
+    stock2: b,
+  }
+}
