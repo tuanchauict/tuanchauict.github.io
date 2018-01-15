@@ -8,6 +8,11 @@ body * {
   margin: 0;
   box-sizing: border-box;
 }
+
+.App {
+  margin-top: 5px;
+}
+
 #content {
   position: absolute;
   width: 100%;
@@ -231,3 +236,27 @@ body * {
 .q {
   color: #fff;
 }
+
+.indexBlock {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.index {
+  float: left;
+  width: 240px;
+  text-align: center;
+  
+}
+
+.index .name {
+  color: #ffcc00;
+  margin-right: 15px;
+}
+
+.index .volume {
+  color: #cccccc;
+  text-align: center;
+  font-size: 8.5pt;
+}
+

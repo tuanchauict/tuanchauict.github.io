@@ -8,6 +8,7 @@ import StockRepository from  './model/StockRepository'
 import {updateStocks, initStocks} from './actions/actions'
 import Firebase from './model/FirebaseRepository';
 import { config } from './constants/firebase';
+import MarketInfo from './components/MarketInfo'
 
 const repo = new StockRepository('wss://price-hn04.vndirect.com.vn/realtime/472/iksx822s/websocket', store.getState().codes)
 const fb = new Firebase(config)
@@ -36,6 +37,7 @@ class App extends Component {
     const state = store.getState();
     return (
       <div id="desktop" className="App">
+        <MarketInfo />
         <StockInput />
         <PTable rows={createRows(state)}/>
       </div>

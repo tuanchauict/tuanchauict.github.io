@@ -18,7 +18,7 @@ export default class StockInput extends Component {
   
   render() {
     return (
-      <div>
+      <div style={{float: 'right', marginRight: '5px', marginBottom: '10px'}}>
         <input type="text" ref='codes' onKeyPress={this.handleKeyDown} placeholder='MBB, FPT, VNM'/>
         
       </div>
