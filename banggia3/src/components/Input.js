@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {addStocks} from '../actions/actions'
-import {store} from '../reducers/store'
+import {store, getStockInfo} from '../reducers/store'
 
 export default class StockInput extends Component {
   state = {
@@ -11,7 +11,7 @@ export default class StockInput extends Component {
     if (e.which === 13) {
       const value = this.refs.codes.value
       this.refs.codes.value = ''
-      const codes = value.split(',').map(item => (item.trim().toUpperCase())).filter(item => item in window._ListStockInfo)
+      const codes = value.split(',').map(item => (item.trim().toUpperCase())).filter(item => getStockInfo(item))
       store.dispatch(addStocks(codes))
     }
   }

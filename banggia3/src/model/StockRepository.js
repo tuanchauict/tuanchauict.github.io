@@ -11,6 +11,7 @@ import {
   RES_DATA_TYPE_CEILING_FLOOR_COUNT,
 } from '../constants/vndmessage'
 import {PRICE_ATC, PRICE_ATO, PRICE_UNDEFINED} from '../constants/prices'
+import {getStockInfo} from '../reducers/store'
 
 const convertObjectToWSMessage = (obj) => (JSON.stringify(JSON.stringify(obj)))
 
@@ -109,9 +110,10 @@ export default class StockRepository {
   
   _mapStockRawToModel = (raw) => {
     const arr = raw.split('|')
+    const code = arr[3]
     const value = {
-      code: arr[3],
-      name: 'Hoang Anh Gia Lai',
+      code: code,
+      name: getStockInfo(code).companyName,
       oldPrice: {
         ceiling: parseFloat(arr[15]),
         floor: parseFloat(arr[16]),
@@ -120,7 +122,7 @@ export default class StockRepository {
       stats: {
         totalAmount: parseInt(arr[36], 10),
         match: {
-          average: parseFloat(arr[39]),
+          average: arr[0] === '10' ? parseFloat(arr[39]) : parseFloat(arr[9]),
           high: parseFloat(arr[13]),
           low: parseFloat(arr[14]),  
         },
