@@ -93,6 +93,7 @@ class Row extends Component {
   };
 
   static childContextTypes = {
+    code: PropTypes.string,
     oldPrice: PropTypes.number,
     ceiling: PropTypes.number,
     floor: PropTypes.number,
@@ -102,7 +103,7 @@ class Row extends Component {
   getChildContext() {
     const old = this.props.oldPrice;
     const price = this.props.match.price;
-    return {oldPrice: old.price, ceiling: old.ceiling, floor: old.floor, currentPrice: price}
+    return {code: this.props.code, oldPrice: old.price, ceiling: old.ceiling, floor: old.floor, currentPrice: price}
   }
 
   render() {
@@ -352,6 +353,7 @@ class AmountCell extends Component {
 
 class ChangeCell extends Component {
   static contextTypes = {
+    code: PropTypes.string,
     oldPrice: PropTypes.number,
     ceiling: PropTypes.number,
     floor: PropTypes.number,
@@ -365,14 +367,14 @@ class ChangeCell extends Component {
       : ctx.currentPrice - ctx.oldPrice;
       
     if (change === undefined || change === 0 || isNaN(change)){
-      return <td></td>
+      return <td className='group0 text e'><span style={{fontFamily: 'monospace'}}>{ctx.code}</span></td>
     } 
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
     const cls = ["group0", "text", changeColor].join(' ')
     const symbol = change > 0 ?'▲' : '▼'
     const percent = Math.round(Math.abs(change) * 10000 / ctx.oldPrice)/100
     return (
-      <td className={cls}>{roundPrice(change)}{symbol}{percent}%</td>
+      <td className={cls}><span style={{fontFamily: 'monospace'}}>{ctx.code}</span> {roundPrice(change)}{symbol}{percent}%</td>
     );
   }
 }
