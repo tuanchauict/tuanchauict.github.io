@@ -14,7 +14,7 @@ export function parseStockData(data) {
 }
 
 export function parseSingleStockData(data) {
-  const stock = this._mapStockRawToModel(data)
+  const stock = mapDataToModel(data)
   const stockData = {}
   stockData[stock.code] = stock
   return stockData
