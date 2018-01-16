@@ -267,14 +267,18 @@ class PriceCell extends Component {
     const cls = [this.props.type, changeColor]
     if (this.lastChange.value !== price) {
       cls.push('change')
+      const changeClass = price > this.lastChange.value ? 'increase' : 'decrease'
+      cls.push(changeClass)
       this.lastChange = {
         value: price,
-        time: Date.now()
+        time: Date.now(),
+        changeClass,
       }
       
       this._timeout = setTimeout(this.rerender, 1000)
     } else if(Date.now() - this.lastChange.time < 1000){
       cls.push('change')
+      cls.push(this.lastChange.changeClass)
     }
     return (
       <td className={cls.join(' ')}>
@@ -332,13 +336,17 @@ class AmountCell extends Component {
     
     if (amount !== this.lastChange.value) {
       cls.push('change')
+      const changeClass = amount > this.lastChange.value ? 'increase' : 'decrease'
+      cls.push(changeClass)
       this.lastChange = {
         value: amount,
         time: Date.now(),
+        changeClass
       }
       this._timeout = setTimeout(this.rerender, 1000)
     } else if(Date.now() - this.lastChange.time < 1000) {
       cls.push('change')
+      cls.push(this.lastChange.changeClass)
     }
     
     return (

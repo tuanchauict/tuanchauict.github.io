@@ -86,14 +86,23 @@ body * {
 }
 .change {
   background: #283593 !important;
+  color: #fff!important;
 }
+
+.change.increase {
+  background: #38AA3C!important;
+}
+.change.decrease {
+  background: #D32F2F!important;
+}
+
 #desktop .col1 {
-  width: 3%;
+  width: 3.5%;
 }
 #desktop .col2,
 #desktop .col3,
 #desktop .col4 {
-  width: 3.5%;
+  width: 3.3%;
 }
 #desktop .col5,
 #desktop .col6,
@@ -112,14 +121,18 @@ body * {
 #desktop .col21,
 #desktop .col22,
 #desktop .col23,
-#desktop .col24,
+#desktop .col24{
+  width: 3.3%;
+}
+#desktop .col13{
+  width: 8.5%;
+}
+#desktop .col20 {
+  width: 5%;
+}
 #desktop .col25,
 #desktop .col26 {
   width: 4%;
-}
-#desktop .col13,
-#desktop .col20 {
-  width: 6%;
 }
 #desktop table {
   width: 100%;

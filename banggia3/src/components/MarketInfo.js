@@ -4,28 +4,25 @@ export default class MarketInfo extends Component {
   state = {
     indexes: []
   }
-
-  componentDidMount() {
+  
+  fetchData = () => {
     fetch('http://banggia.cafef.vn/stockhandler.ashx?index=true')
     .then(res => res.json())
     .then(indexes => {
-      indexes = [indexes[1], indexes[4], indexes[0], indexes[2], indexes[3]]
+      indexes = [indexes[1], indexes[4], indexes[0], indexes[2]]
       this.setState({
         indexes
       })
     })
+  }
+  
+  componentDidMount() {
+    this.fetchData()
     this.interval = setInterval(() => {
       const date = new Date()
       if (date.getHours() >= 15 || date.getHours() < 9)
         return
-      fetch('http://banggia.cafef.vn/stockhandler.ashx?index=true')
-        .then(res => res.json())
-        .then(indexes => {
-          indexes = [indexes[1], indexes[4], indexes[0], indexes[2], indexes[3]]
-          this.setState({
-            indexes
-          })
-        })
+      this.fetchData()
     }, 1000)
   }
 
