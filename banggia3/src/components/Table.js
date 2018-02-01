@@ -374,7 +374,7 @@ class ChangeCell extends Component {
       ? undefined
       : ctx.currentPrice - ctx.oldPrice;
       
-    if (change === undefined || isNaN(change)|| change <= 0 ){
+    if (change === undefined || isNaN(change)|| change === 0 || ctx.currentPrice < 0 ){
       return <td className='group0 text e'><span style={{fontFamily: 'monospace'}}>{ctx.code}</span></td>
     } 
     const changeColor = getPriceColor(ctx.ceiling, ctx.floor, ctx.oldPrice, ctx.currentPrice)
