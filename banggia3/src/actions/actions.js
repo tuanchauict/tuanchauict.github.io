@@ -1,4 +1,5 @@
-import {STOCKS_INIT, STOCKS_ADD, STOCKS_DELETE, STOCKS_UPDATE, STOCKS_SWAP} from '../constants/eventTypes'
+import {STOCKS_INIT, STOCKS_ADD, STOCKS_DELETE, STOCKS_UPDATE, STOCKS_SWAP, INDEXES_UPDATE} from '../constants/eventTypes'
+// import indexes from '../reducers/indexReducer';
 
 export function initStocks(codes) {
   return {
@@ -33,5 +34,12 @@ export function swapStocks(a, b) {
     type: STOCKS_SWAP,
     stock1: a,
     stock2: b,
+  }
+}
+
+export function updateIndexes(indexes) {
+  return {
+    type: INDEXES_UPDATE,
+    indexes,
   }
 }

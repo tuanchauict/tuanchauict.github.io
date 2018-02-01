@@ -1,4 +1,6 @@
 import * as firebase from 'firebase'
+import {store} from '../reducers/store'
+import {updateStocks, updateIndexes} from '../actions/actions'
 
 export default class Firebase {
   constructor(config) {
@@ -20,6 +22,16 @@ export default class Firebase {
         this.listeners.forEach(l => l(codes))
       }
       this.writeEnabled = true
+    })
+    
+    this.fbRepoListener = this.database.ref('repository/users/' + this._owner + '/' + this._group).on('value', snapshot => {
+      const stocks = snapshot.val()
+      store.dispatch(updateStocks(stocks))
+    })
+    
+    this.fbMarketListener = this.database.ref('repository/indexes').on('value', snapshot => {
+      const indexes = snapshot.val()
+      store.dispatch(updateIndexes(indexes))
     })
   }
 

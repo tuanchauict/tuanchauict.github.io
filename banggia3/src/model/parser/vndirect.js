@@ -34,7 +34,7 @@ function mapDataToModel(raw) {
     stats: {
       totalAmount: parseInt(arr[36], 10),
       match: {
-        average: arr[0] === '10' ? parseFloat(arr[39]) : parseFloat(arr[9]),
+        average: arr[0] === '10' ? parseFloat(arr[39]) : parseFloat(arr[22]),
         high: parseFloat(arr[13]),
         low: parseFloat(arr[14]),  
       },

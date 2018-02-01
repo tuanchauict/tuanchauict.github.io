@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import PTable from './components/Table'
 import StockInput from './components/Input'
 import './App.css';
-import {createRows, readUrlParam} from './Utils'
+import {createRows, readUrlParam, createIndexTable} from './Utils'
 import {store} from './reducers/store'
-import StockRepository from  './model/StockRepository'
-import {updateStocks, initStocks} from './actions/actions'
+// import StockRepository from  './model/StockRepository'
+import {initStocks} from './actions/actions'
 import Firebase from './model/FirebaseRepository';
 import { config } from './constants/firebase';
 import MarketInfo from './components/MarketInfo'
 
-const repo = new StockRepository('wss://price-hn04.vndirect.com.vn/realtime/472/iksx822s/websocket', store.getState().codes)
+// const repo = new StockRepository('wss://price-hn04.vndirect.com.vn/realtime/472/iksx822s/websocket', store.getState().codes)
 const fb = new Firebase(config)
 fb.addListener(codes => {
   store.dispatch(initStocks(codes))
@@ -24,20 +24,20 @@ class App extends Component {
   componentDidMount() {
     store.subscribe(() => {
       this.forceUpdate()
-      repo.updateStockCodes(store.getState().codes)
+      // repo.updateStockCodes(store.getState().codes)
       fb.writeCodes(store.getState().codes)
     })
-    repo.addListener((data) => {
-      console.log(data);
-      store.dispatch(updateStocks(data))
-    })
+    // repo.addListener((data) => {
+    //   console.log(data);
+    //   store.dispatch(updateStocks(data))
+    // })
   }
   
   render() {
     const state = store.getState();
     return (
       <div id="desktop" className="App">
-        <MarketInfo />
+        <MarketInfo indexes={createIndexTable(state.indexes)}/>
         <StockInput />
         <PTable rows={createRows(state)}/>
       </div>

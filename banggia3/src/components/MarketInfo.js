@@ -1,50 +1,20 @@
-import React, {Component} from 'react';
+import React, {} from 'react';
 
-export default class MarketInfo extends Component {
-  state = {
-    indexes: []
-  }
-  
-  fetchData = () => {
-    fetch('http://banggia.cafef.vn/stockhandler.ashx?index=true')
-    .then(res => res.json())
-    .then(indexes => {
-      indexes = [indexes[1], indexes[4], indexes[0], indexes[2]]
-      this.setState({
-        indexes
-      })
-    })
-  }
-  
-  componentDidMount() {
-    this.fetchData()
-    this.interval = setInterval(() => {
-      const date = new Date()
-      if (date.getHours() >= 15 || date.getHours() < 9)
-        return
-      this.fetchData()
-    }, 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval)
-  }
-
-  render() {
-    return (
-      <div className='indexBlock'>
-        {this.state.indexes.map(index => <IndexInfo key={index.name} {...index}/>)}
+const MarketInfo = ({indexes}) => {
+  return (
+    <div className='indexBlock'>
+        {indexes.map(index => <IndexInfo key={index.code} {...index}/>)}
       </div>
-    )
-  }
-
+  )
 }
 
+export default MarketInfo
+
 const IndexInfo = ({
-  name,
+  code,
   index,
   change,
-  percent,
+  changeRate,
   volume,
   value
 }) => {
@@ -53,10 +23,11 @@ const IndexInfo = ({
   return (
     <div className='index'>
       <div >
-        <b className='name' >{name}</b>
-        <span className={cls}>{index}  &nbsp;{char}{change} ({percent}%)</span>
+        <b className='name' >{code}</b>
+        <span className={cls}>{index}  &nbsp;{char}{change} ({changeRate}%)</span>
       </div>
       <div className='volume' >{volume} cp • {value} tỷ</div>
     </div>
   )
 }
+

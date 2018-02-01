@@ -1,5 +1,18 @@
 import {PRICE_ATO, PRICE_ATC, PRICE_UNDEFINED} from './constants/prices'
 
+export function createIndexTable(indexMap) {
+  if (indexMap && 'HOSE' in indexMap && 'HNX' in indexMap && 'UPCOM' in indexMap) {
+    return [
+      Object.assign({}, indexMap['HOSE'], {'code': 'VNINDEX'}),
+      indexMap['HNX'],
+      indexMap['UPCOM'],
+    ]
+  } else {
+    return []
+  }
+  
+}
+
 export function createRows(model) {
   return model.codes.map(code => {
     if (code in model.data) {

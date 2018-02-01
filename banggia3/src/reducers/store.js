@@ -1,10 +1,12 @@
 import {createStore, combineReducers} from 'redux'
 import codes from './codeReducer'
 import data from './dataReducer'
+import indexes from './indexReducer';
 
 const reducer = combineReducers({
   codes,
   data,
+  indexes,
 })
 
 export const store = createStore(reducer)

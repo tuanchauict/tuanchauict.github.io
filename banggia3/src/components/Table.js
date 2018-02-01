@@ -275,8 +275,8 @@ class PriceCell extends Component {
         changeClass,
       }
       
-      this._timeout = setTimeout(this.rerender, 1000)
-    } else if(Date.now() - this.lastChange.time < 1000){
+      this._timeout = setTimeout(this.rerender, 1500)
+    } else if(Date.now() - this.lastChange.time < 1500){
       cls.push('change')
       cls.push(this.lastChange.changeClass)
     }
@@ -343,8 +343,8 @@ class AmountCell extends Component {
         time: Date.now(),
         changeClass
       }
-      this._timeout = setTimeout(this.rerender, 1000)
-    } else if(Date.now() - this.lastChange.time < 1000) {
+      this._timeout = setTimeout(this.rerender, 1500)
+    } else if(Date.now() - this.lastChange.time < 1500) {
       cls.push('change')
       cls.push(this.lastChange.changeClass)
     }
