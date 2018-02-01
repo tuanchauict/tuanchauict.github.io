@@ -1,4 +1,5 @@
 import React, {} from 'react';
+import {roundAmount, formatNumber} from '../Utils'
 
 const MarketInfo = ({indexes}) => {
   return (
@@ -15,8 +16,8 @@ const IndexInfo = ({
   index,
   change,
   changeRate,
+  amount,
   volume,
-  value
 }) => {
   const cls = change === 0 ? 'e' : change > 0 ? 'i' : 'd'
   const char = change === 0 ? '≈' : change > 0 ? '▲' : '▼'
@@ -26,7 +27,7 @@ const IndexInfo = ({
         <b className='name' >{code}</b>
         <span className={cls}>{index}  &nbsp;{char}{change} ({changeRate}%)</span>
       </div>
-      <div className='volume' >{volume} cp • {value} tỷ</div>
+      <div className='volume' >{roundAmount(amount)} cp • {formatNumber(volume/1000, 3)} tỷ</div>
     </div>
   )
 }

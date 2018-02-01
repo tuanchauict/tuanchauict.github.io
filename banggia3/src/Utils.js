@@ -60,7 +60,7 @@ export function getPriceColor(ceiling, floor, oldPrice, price) {
   }
 }
 
-function formatNumber(number, fix) {
+export function formatNumber(number, fix) {
   if (number === undefined || isNaN(number)) {
     return ''
   }
