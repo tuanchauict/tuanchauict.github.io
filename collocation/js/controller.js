@@ -2,10 +2,10 @@
  * Created by tuanchauict on 4/7/15.
  */
 app.controller("CollocationController", ["$scope", "$http", "$timeout", function ($scope, $http, $timeout) {
-	// checkVersion($scope, $http, $timeout)
+	checkVersion($scope, $http, $timeout)
 
 	$scope.version = {
-		current: 1
+		current: version
 	};
 
 	$scope.options = {
