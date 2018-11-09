@@ -30,23 +30,23 @@ var checkVersion = function($scope, $http, $timeout){
 		}
 	};
 
-// 	$http.jsonp("https://simon-ielts.herokuapp.com/data/collocation/version?callback=JSON_CALLBACK", httpConfig)
-// 	.success(function(data, status, headers, config){
-// 		// console.log(data);
-// 		dbVersion = data.dbVersion;
-// 		if(data.version > version){
-// 			//TODO notify refresh
-// 		}
-// 		if(!checkDataAAvailable() || data.dbVersion > readDBVersion()){
-// 			reloadHttpData($http, loadDataCallback);
-// 		}
-// 		else {
-// 			loadIndexFromStorage(loadDataCallback);
-// 		}
-// 	}).error(function(data, status, headers, config){
-// 		if(checkDataAAvailable()) {
-// 			loadIndexFromStorage(loadDataCallback);
-// 		}
-// 	});
+	$http.jsonp("https://simon-ielts.herokuapp.com/data/collocation/version?callback=JSON_CALLBACK", httpConfig)
+	.success(function(data, status, headers, config){
+		// console.log(data);
+		dbVersion = data.dbVersion;
+		if(data.version > version){
+			//TODO notify refresh
+		}
+		if(!checkDataAAvailable() || data.dbVersion > readDBVersion()){
+			reloadHttpData($http, loadDataCallback);
+		}
+		else {
+			loadIndexFromStorage(loadDataCallback);
+		}
+	}).error(function(data, status, headers, config){
+		if(checkDataAAvailable()) {
+			loadIndexFromStorage(loadDataCallback);
+		}
+	});
 };
 
