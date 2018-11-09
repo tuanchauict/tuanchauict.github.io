@@ -5,7 +5,7 @@ app.controller("CollocationController", ["$scope", "$http", "$timeout", function
 	// checkVersion($scope, $http, $timeout)
 
 	$scope.version = {
-		current: version
+		current: 1
 	};
 
 	$scope.options = {
