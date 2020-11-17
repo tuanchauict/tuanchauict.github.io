@@ -1,8 +1,0 @@
-export const STOCKS_ADD = 'ADD_STOCKS'
-export const STOCKS_DELETE = 'DELETE_STOCKS'
-export const STOCKS_UPDATE = 'UPDATE_STOCKS'
-export const STOCKS_INIT = 'INIT_STOCK_TABLE'
-export const STOCKS_SWAP = 'SWAP_STOCKS'
-
-export const INDEXES_UPDATE = 'UPDATE_INDEXES'
-

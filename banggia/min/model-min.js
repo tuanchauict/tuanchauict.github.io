@@ -1,1 +1,0 @@
-var storage={codes:["HAG","HNG","MBB","STB","MBS"],allStocks:[]};
